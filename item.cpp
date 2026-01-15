@@ -8,6 +8,38 @@
 #define LEGENDARY_PROCENT 98
 #define MYTHIE_PROCENT 100
 
+
+Item::Item() {}
+
+Item::Item(const std::string &name, int maxQuantity, int price) : name(name),
+    level(0),
+    durability(100),
+    maxQuantity(maxQuantity),
+    price(price)
+{
+    srand(time(NULL));
+    int randNum = rand() % 101;
+    if(randNum < COMMON_PROCENT){
+        rarity = common;
+    }
+    if(randNum >= COMMON_PROCENT && randNum < UNCMMON_PROCENT){
+        rarity = uncommon;
+    }
+    if(randNum >= UNCMMON_PROCENT && randNum < RARE_PROCENT){
+        rarity = rare;
+    }
+    if(randNum >= RARE_PROCENT && randNum < EPIC_PROCENT){
+        rarity = epic;
+    }
+    if(randNum >= EPIC_PROCENT && randNum < LEGENDARY_PROCENT){
+        rarity = legendary;
+    }
+    if(randNum >= LEGENDARY_PROCENT && randNum < MYTHIE_PROCENT){
+        rarity = mythie;
+    }
+}
+
+
 std::string Item::getName() const
 {
     return name;
@@ -66,34 +98,4 @@ int Item::getPrice() const
 void Item::setPrice(int newPrice)
 {
     price = newPrice;
-}
-
-Item::Item() {}
-
-Item::Item(const std::string &name, int maxQuantity, int price) : name(name),
-    level(0),
-    durability(100),
-    maxQuantity(maxQuantity),
-    price(price)
-{
-    srand(time(NULL));
-    int randNum = rand() % 101;
-    if(randNum < COMMON_PROCENT){
-        rarity = common;
-    }
-    if(randNum >= COMMON_PROCENT && randNum < UNCMMON_PROCENT){
-        rarity = uncommon;
-    }
-    if(randNum >= UNCMMON_PROCENT && randNum < RARE_PROCENT){
-        rarity = rare;
-    }
-    if(randNum >= RARE_PROCENT && randNum < EPIC_PROCENT){
-        rarity = epic;
-    }
-    if(randNum >= EPIC_PROCENT && randNum < LEGENDARY_PROCENT){
-        rarity = legendary;
-    }
-    if(randNum >= LEGENDARY_PROCENT && randNum < MYTHIE_PROCENT){
-        rarity = mythie;
-    }
 }
