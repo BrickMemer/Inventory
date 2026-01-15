@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(Inventory-New main.cpp
-    item.hpp item.cpp)
+    item.hpp item.cpp
+    inventory.hpp inventory.cpp)
 
 include(GNUInstallDirs)
 install(TARGETS Inventory-New
