@@ -1,10 +1,45 @@
 #ifndef ITEM_HPP
 #define ITEM_HPP
 
+#include <string>
+
+enum Rarity{
+    common,
+    uncommon,
+    rare,
+    epic,
+    legendary,
+    mythie,
+    unique
+};
+
 class Item
 {
+protected:
+    std::string name;
+    Rarity rarity;
+    int level;
+    int durability;
+    int maxQuantity;
+    int price;
 public:
     Item();
+    Item(const std::string &name, int maxQuantity, int price);
+
+
+    //Getters and Setters
+    std::string getName() const;
+    void setName(const std::string &newName);
+    Rarity getRarity() const;
+    void setRarity(Rarity newRarity);
+    int getLevel() const;
+    void setLevel(int newLevel);
+    int getDurability() const;
+    void setDurability(int newDurability);
+    int getMaxQuantity() const;
+    void setMaxQuantity(int newMaxQuantity);
+    int getPrice() const;
+    void setPrice(int newPrice);
 };
 
 #endif // ITEM_HPP
