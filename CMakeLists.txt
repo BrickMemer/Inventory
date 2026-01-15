@@ -5,7 +5,8 @@ project(Inventory-New LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(Inventory-New main.cpp)
+add_executable(Inventory-New main.cpp
+    item.hpp item.cpp)
 
 include(GNUInstallDirs)
 install(TARGETS Inventory-New
