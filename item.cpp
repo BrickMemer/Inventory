@@ -9,16 +9,24 @@
 #define MYTHIE_PROCENT 100
 
 
-Item::Item() {}
+Item::Item() {
+    this->name = "Stick";
+    this->level = 1;
+    this->rarity = common;
+    this->durability = 100;
+    this->maxQuantity = 64;
+    this->price = 0;
+}
 
-Item::Item(const std::string &name, int maxQuantity, int price) : name(name),
-    level(0),
+Item::Item(const std::string &name, int maxQuantity, int price) :
+    name(name),
+    level(1),
     durability(100),
     maxQuantity(maxQuantity),
     price(price)
 {
     srand(time(NULL));
-    int randNum = rand() % 101;
+    int randNum = rand() % 100;
     if(randNum < COMMON_PROCENT){
         rarity = common;
     }

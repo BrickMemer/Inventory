@@ -3,7 +3,7 @@
 
 #include <string>
 #include "attribute.h"
-
+#include <iostream>
 enum Rarity{
     common,
     uncommon,
@@ -43,7 +43,7 @@ public:
     int getPrice() const;
     void setPrice(int newPrice);
 
-    void virtual use();
+    void virtual use() = 0;
 };
 
 #endif // ITEM_HPP
