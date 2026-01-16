@@ -9,7 +9,7 @@ add_executable(Inventory-New main.cpp
     item.hpp item.cpp
 
     attribute.h attribute.cpp
-    sword.h sword.cpp)
+)
 
 include(GNUInstallDirs)
 install(TARGETS Inventory-New
