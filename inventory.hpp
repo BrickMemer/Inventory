@@ -1,6 +1,8 @@
 #ifndef INVENTORY_HPP
 #define INVENTORY_HPP
 #include "item.hpp"
+#include <iostream>
+#include <queue>
 
 class Inventory
 {
@@ -18,6 +20,11 @@ public:
     bool Remove(const unsigned int x,const unsigned int y);
     Item* Drop(const unsigned int x,const unsigned int y);
     bool AddItem(Item* Item);
+    bool MoveOrSwap(int x,int y,int newx,int newy);
+    void DisplayInventory();
+    void Align();
+
+    ~Inventory();
 };
 
 #endif // INVENTORY_HPP

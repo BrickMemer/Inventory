@@ -1,5 +1,6 @@
 #include <iostream>
-
+#include "inventory.hpp"
+/*
 #ifdef _WIN32
 #include <conio.h> // For _getch() on Windows
 #define OS_NAME "Windows"
@@ -44,4 +45,16 @@ int main() {
     std::cout << "Detected OS: " << OS_NAME << std::endl;
     performAction();
     return 0;
+}
+*/
+int main()
+{
+    Inventory inv(5,5);
+
+    inv.Set(new Item("Sword", 5, 3), 4, 3);
+    inv.Set(new Item("Shield", 5, 3), 3, 3);
+
+    inv.MoveOrSwap(4,3,3,3);
+
+    inv.DisplayInventory();
 }

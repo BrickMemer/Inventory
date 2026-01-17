@@ -7,12 +7,13 @@ Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
     for(unsigned int i = 0; i < this->Rows; i++)
     {
         this->Items[i] = new Item*[Columns];
-        for(unsigned int j = 0; i < this->Columns; j++)
+        for(unsigned int j = 0; j < this->Columns; j++)
         {
             this->Items[i][j] = nullptr;
         }
     }
 }
+
 
 Item* Inventory::Get(const unsigned int x,const unsigned int y)
 {
@@ -43,11 +44,31 @@ bool Inventory::Set(Item* Item, const unsigned int x,const unsigned int y)
     }
 }
 
+bool Inventory::MoveOrSwap(int x,int y,int newx,int newy)
+{
+    if(x >= this->Rows || y >= this->Columns || newx >= this->Rows || newy >= this->Columns)
+    {
+        return false;
+    }
+    else if(!this->Items[x][y] && !this->Items[newx][newy])
+    {
+        return false;
+    }
+    else
+    {
+        Item* TempItem = Get(x, y);
+        Item* TempItem2 = Get(newx, newy);
+        Set(TempItem, newx, newy);
+        Set(TempItem2, x, y);
+        return true;
+    }
+}
+
 bool Inventory::AddItem(Item* Item)
 {
-    for(int i = 0; i < this->Rows; i++)
+    for(int i = 0; i < this->Rows - 1; i++)
     {
-        for(int j = 0; j < this->Columns; j++)
+        for(int j = 0; j < this->Columns - 1; j++)
         {
             if(!this->Items[i][j])
             {
@@ -93,4 +114,81 @@ bool Inventory::Remove(const unsigned int x,const unsigned int y)
     {
         return false;
     }
+}
+
+void Inventory::DisplayInventory()
+{
+    unsigned short SpaceBetween = 24;
+    std::string NameToDisplay;
+    for(size_t i = 0; i < this->Rows; i++)
+    {
+        for(size_t j = 0; j < this->Rows; j++)
+        {
+            std::cout << "[";
+            if(this->Items[i][j])
+            {
+                for(size_t z = 0; z < static_cast<short>((SpaceBetween - Items[i][j]->getName().length()) / 2); z++)
+                {
+                    NameToDisplay.append(" ");
+                }
+                NameToDisplay.append(Items[i][j]->getName());
+                for(size_t z = 0; z < static_cast<short>((SpaceBetween - Items[i][j]->getName().length()) / 2); z++)
+                {
+                    NameToDisplay.append(" ");
+                }
+                if(Items[i][j]->getName().length() % 2 != 0)
+                {
+                    NameToDisplay.append(" ");
+                }
+            }
+            else
+            {
+                for(size_t z = 0; z < SpaceBetween; z++)
+                {
+                    NameToDisplay.append(" ");
+                }
+            }
+            std::cout << NameToDisplay;
+            std::cout << "]";
+            NameToDisplay.clear();
+        }
+        std::cout << '\n';
+    }
+}
+
+void Inventory::Align()
+{
+    std::queue<std::pair<int, int>> FreeCordinates;
+
+    for(int i = 0; i < this->Rows; i++)
+    {
+        for(int j = 0; j < this->Columns; j++)
+        {
+            if(!this->Items[i][j])
+            {
+                FreeCordinates.push(std::make_pair(i,j));
+            }
+            else
+            {
+                this->MoveOrSwap(i,j,FreeCordinates.front().first, FreeCordinates.front().second);
+                FreeCordinates.pop();
+            }
+        }
+    }
+}
+
+Inventory::~Inventory()
+{
+    for(int i = 0; i < this->Rows; i++)
+    {
+        for(int j = 0; j < this->Columns; j++)
+        {
+            if(this->Items[i][j])
+            {
+                delete this->Items[i][j];
+            }
+        }
+        delete this->Items[i];
+    }
+    delete this->Items;
 }
