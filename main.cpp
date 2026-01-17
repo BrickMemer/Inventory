@@ -40,7 +40,7 @@ char getSingleChar() {
     return getchar();
 #endif
 }
-
+static bool run = true;
 void performAction(Inventory& inventory)
 {
     char input = getSingleChar();
@@ -53,20 +53,19 @@ void performAction(Inventory& inventory)
             inventory.Align();
             break;
         case 'q':
-            exit(0);
+            run = false;
             break;
-        /*
         case 'h':
-            while(getchar())
+            do
             {
+                std::system(CLEAR);
                 std::cout << "Press 'a' to add a new item" << '\n'
                           << "Press 'A' to align all the items in order" << '\n'
                           << "Press 'q' to quit" << '\n'
                           << '\n'
                           << "Press any key to continue ...";
-            }
+            }while(!getchar());
             break;
-        */
     }
 }
 
@@ -85,9 +84,9 @@ int main()
     std::system(CLEAR);
 
     //Disabled due to bugs
-    //std::cout << "Welcome to Inventory Symulator, if you need help, press 'h'" << '\n';
+    std::cout << "Welcome to Inventory Symulator, if you need help, press 'h'" << '\n';
 
-    while(true)
+    while(run == true)
     {
         inv.DisplayInventory();
 
@@ -95,6 +94,10 @@ int main()
 
         std::system(CLEAR);
     }
+
+    std::system("stty echo");
+    std::system("stty -cbreak");
+
     return 0;
 }
 
