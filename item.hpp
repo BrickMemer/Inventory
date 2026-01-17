@@ -27,7 +27,7 @@ protected:
 public:
     Item();
     Item(const std::string &name, int maxQuantity, int price);
-
+    ~Item();
 
     //Getters and Setters
     std::string getName() const;

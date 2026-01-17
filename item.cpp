@@ -16,13 +16,15 @@ Item::Item() {
     this->durability = 100;
     this->maxQuantity = 64;
     this->price = 0;
+    this->attribute = new Attribute();
 }
 
 Item::Item(const std::string &name, int maxQuantity, int price) :
     name(name),
     level(1),
     durability(100),
-    maxQuantity(maxQuantity)
+    maxQuantity(maxQuantity),
+    attribute(new Attribute())
 {
     std::random_device dev;
     std::mt19937 rng(dev());
@@ -54,6 +56,9 @@ Item::Item(const std::string &name, int maxQuantity, int price) :
     }
 }
 
+Item::~Item(){
+    delete attribute;
+}
 
 std::string Item::getName() const
 {
@@ -141,11 +146,12 @@ void Item::getInfo()
         nameOfRarity = "unique";
         break;
     }
-    std::cout << "Info for " << name << std::endl;
-    std::cout << "1. Level: " << level << std::endl;
-    std::cout << "2. Rarity: " << nameOfRarity << std::endl;
-    std::cout << "3. Max Quantity: " << maxQuantity << std::endl;
-    std::cout << "4. Durability: " << durability << std::endl;
-    std::cout << "5. Price: " << price << std::endl;
+    std::cout << "Info for " << name << "\n";
+    std::cout << "1. Level: " << level << "\n";
+    std::cout << "2. Rarity: " << nameOfRarity << "\n";
+    std::cout << "3. Max Quantity: " << maxQuantity << "\n";
+    std::cout << "4. Durability: " << durability << "\n";
+    std::cout << "5. Price: " << price << "\n";
+    std::cout << "6. Attributes :\n";
 
 }
