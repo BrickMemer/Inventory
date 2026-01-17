@@ -164,14 +164,14 @@ void Inventory::Align()
     {
         for(int j = 0; j < this->Columns; j++)
         {
-            if(!this->Items[i][j])
-            {
-                FreeCordinates.push(std::make_pair(i,j));
-            }
-            else
+            if(this->Items[i][j] && FreeCordinates.size() > 0)
             {
                 this->MoveOrSwap(i,j,FreeCordinates.front().first, FreeCordinates.front().second);
                 FreeCordinates.pop();
+            }
+            else if(!this->Items[i][j])
+            {
+                FreeCordinates.push(std::make_pair(i,j));
             }
         }
     }

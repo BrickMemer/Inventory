@@ -41,11 +41,33 @@ char getSingleChar() {
 #endif
 }
 
-void performAction() {
-    std::cout << "Press any key: ";
-    char ch = getSingleChar(); // Get single key press
-    std::system(CLEAR);
-    std::cout << "\nYou pressed: " << ch << std::endl;
+void performAction(Inventory& inventory)
+{
+    char input = getSingleChar();
+    switch(input)
+    {
+        case 'a':
+            inventory.AddItem(new Item("Sword", 5, 4));
+            break;
+        case 'A':
+            inventory.Align();
+            break;
+        case 'q':
+            exit(0);
+            break;
+        /*
+        case 'h':
+            while(getchar())
+            {
+                std::cout << "Press 'a' to add a new item" << '\n'
+                          << "Press 'A' to align all the items in order" << '\n'
+                          << "Press 'q' to quit" << '\n'
+                          << '\n'
+                          << "Press any key to continue ...";
+            }
+            break;
+        */
+    }
 }
 
 
@@ -58,16 +80,20 @@ int main()
         system("stty cbreak");
     #endif
 
-    char input = ' ';
+    inv.Set(new Item("Sdord", 5, 4), 3, 3);
+
+    std::system(CLEAR);
+
+    //Disabled due to bugs
+    //std::cout << "Welcome to Inventory Symulator, if you need help, press 'h'" << '\n';
+
     while(true)
     {
         inv.DisplayInventory();
-        input = getSingleChar();
-        if(input == 'a')
-        {
-            inv.AddItem(new Item("Sword", 5, 4));
-        }
-        std::system("clear");
+
+        performAction(inv);
+
+        std::system(CLEAR);
     }
     return 0;
 }
