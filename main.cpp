@@ -1,6 +1,9 @@
 #include <iostream>
 #include "inventory.hpp"
 /*
+#include <cstdlib>
+#include <unistd.h>
+*/
 #ifdef _WIN32
 #include <conio.h> // For _getch() on Windows
 #define OS_NAME "Windows"
@@ -9,10 +12,12 @@
 #include <TargetConditionals.h>
 #include <termios.h>
 #include <unistd.h>
-#if TARGET_OS_MAC
+#elif TARGET_OS_MAC
 #define OS_NAME "macOS"
 #define CLEAR "clear"
-#endif
+#elif unix
+#define OS_NAME "unix"
+#define CLEAR "clear"
 #else
 #define OS_NAME "Unknown OS"
 #define CLEAR "clear"
@@ -31,30 +36,39 @@ char getSingleChar() {
     ch = getchar(); // Read single character
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // Restore old attributes
     return ch;
+#elif unix
+    return getchar();
 #endif
 }
 
 void performAction() {
     std::cout << "Press any key: ";
     char ch = getSingleChar(); // Get single key press
-    system(CLEAR);
+    std::system(CLEAR);
     std::cout << "\nYou pressed: " << ch << std::endl;
 }
 
-int main() {
-    std::cout << "Detected OS: " << OS_NAME << std::endl;
-    performAction();
-    return 0;
-}
-*/
+
 int main()
 {
     Inventory inv(5,5);
 
-    inv.Set(new Item("Sword", 5, 3), 4, 3);
-    inv.Set(new Item("Shield", 5, 3), 3, 3);
+    #ifdef unix
+        system("stty -echo");
+        system("stty cbreak");
+    #endif
 
-    inv.MoveOrSwap(4,3,3,3);
-
-    inv.DisplayInventory();
+    char input = ' ';
+    while(true)
+    {
+        inv.DisplayInventory();
+        input = getSingleChar();
+        if(input == 'a')
+        {
+            inv.AddItem(new Item("Sword", 5, 4));
+        }
+        std::system("clear");
+    }
+    return 0;
 }
+

@@ -66,9 +66,9 @@ bool Inventory::MoveOrSwap(int x,int y,int newx,int newy)
 
 bool Inventory::AddItem(Item* Item)
 {
-    for(int i = 0; i < this->Rows - 1; i++)
+    for(int i = 0; i < this->Rows; i++)
     {
-        for(int j = 0; j < this->Columns - 1; j++)
+        for(int j = 0; j < this->Columns; j++)
         {
             if(!this->Items[i][j])
             {
