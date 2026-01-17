@@ -1,12 +1,12 @@
 #include "item.hpp"
-#include <time.h>
+#include <random>
 
-#define COMMON_PROCENT 60
-#define UNCMMON_PROCENT 80
-#define RARE_PROCENT 90
-#define EPIC_PROCENT 96
-#define LEGENDARY_PROCENT 98
-#define MYTHIE_PROCENT 100
+#define COMMON_PROCENT 600 // 60%
+#define UNCMMON_PROCENT 800 // 20%
+#define RARE_PROCENT 950 // 15%
+#define EPIC_PROCENT 990 // 4%
+#define LEGENDARY_PROCENT 998 // 0,8%
+#define MYTHIE_PROCENT 1000 // 0,2%
 
 
 Item::Item() {
@@ -22,28 +22,35 @@ Item::Item(const std::string &name, int maxQuantity, int price) :
     name(name),
     level(1),
     durability(100),
-    maxQuantity(maxQuantity),
-    price(price)
+    maxQuantity(maxQuantity)
 {
-    srand(time(NULL));
-    int randNum = rand() % 100;
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(1,1000);
+    int randNum = dist6(rng);
     if(randNum < COMMON_PROCENT){
         rarity = common;
+        this->price = price;
     }
     if(randNum >= COMMON_PROCENT && randNum < UNCMMON_PROCENT){
         rarity = uncommon;
+        this->price = price + 5;
     }
     if(randNum >= UNCMMON_PROCENT && randNum < RARE_PROCENT){
         rarity = rare;
+        this->price = price + 10;
     }
     if(randNum >= RARE_PROCENT && randNum < EPIC_PROCENT){
         rarity = epic;
+        this->price = price * 2;
     }
     if(randNum >= EPIC_PROCENT && randNum < LEGENDARY_PROCENT){
         rarity = legendary;
+        this->price = price * 4;
     }
     if(randNum >= LEGENDARY_PROCENT && randNum < MYTHIE_PROCENT){
         rarity = mythie;
+        this->price = price * 10;
     }
 }
 
@@ -106,4 +113,39 @@ int Item::getPrice() const
 void Item::setPrice(int newPrice)
 {
     price = newPrice;
+}
+
+void Item::getInfo()
+{
+    std::string nameOfRarity;
+    switch (rarity) {
+    case 0:
+        nameOfRarity = "common";
+        break;
+    case 1:
+        nameOfRarity = "uncommon";
+        break;
+    case 2:
+        nameOfRarity = "rare";
+        break;
+    case 3:
+        nameOfRarity = "epic";
+        break;
+    case 4:
+        nameOfRarity = "legendary";
+        break;
+    case 5:
+        nameOfRarity = "mythie";
+        break;
+    default:
+        nameOfRarity = "unique";
+        break;
+    }
+    std::cout << "Info for " << name << std::endl;
+    std::cout << "1. Level: " << level << std::endl;
+    std::cout << "2. Rarity: " << nameOfRarity << std::endl;
+    std::cout << "3. Max Quantity: " << maxQuantity << std::endl;
+    std::cout << "4. Durability: " << durability << std::endl;
+    std::cout << "5. Price: " << price << std::endl;
+
 }

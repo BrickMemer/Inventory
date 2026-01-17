@@ -9,6 +9,8 @@ add_executable(Inventory-New main.cpp
     item.hpp item.cpp
 
     attribute.h attribute.cpp
+    weapon.h weapon.cpp
+    block.h block.cpp
 )
 
 include(GNUInstallDirs)

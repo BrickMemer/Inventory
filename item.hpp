@@ -44,6 +44,7 @@ public:
     void setPrice(int newPrice);
 
     void virtual use() = 0;
+    void getInfo();
 };
 
 #endif // ITEM_HPP

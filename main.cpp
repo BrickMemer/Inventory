@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "weapon.h"
 #ifdef _WIN32
 #include <conio.h> // For _getch() on Windows
 #define OS_NAME "Windows"
@@ -41,7 +41,15 @@ void performAction() {
 }
 
 int main() {
-    std::cout << "Detected OS: " << OS_NAME << std::endl;
-    performAction();
+    // std::cout << "Detected OS: " << OS_NAME << std::endl;
+    // performAction();
+    for(int i = 0; i < 100; i++){
+        std::string name;
+        name = std::to_string(i) + " Wood Sword";
+        Weapon sw(name , 1, 10, 5);
+        std::cout << sw.getRarity() << "\n";
+    }
+    Weapon sw("bob" , 1, 10, 5);
+    sw.getInfo();
     return 0;
 }
