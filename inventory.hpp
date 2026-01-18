@@ -3,6 +3,8 @@
 #include "item.hpp"
 #include <iostream>
 #include <queue>
+#include <mutex>
+#include <shared_mutex>
 
 class Inventory
 {
@@ -12,8 +14,9 @@ private:
     Item*** Items;
     unsigned int CurrentRow;
     unsigned int CurrentColumns;
+    std::shared_mutex& shared_mtx;
 public:
-    Inventory(unsigned int Rows, unsigned int Columns);
+    Inventory(unsigned int Rows, unsigned int Columns, std::shared_mutex& shared_mtx);
 
     bool Set(Item* Item, const unsigned int x,const unsigned int y);
     Item* Get(const unsigned int x,const unsigned int y);
@@ -23,6 +26,9 @@ public:
     bool MoveOrSwap(int x,int y,int newx,int newy);
     void DisplayInventory();
     void Align();
+    void Clear();
+    unsigned int GetRowsMaxSize();
+    unsigned int GetColumnsMaxSize();
 
     ~Inventory();
 };

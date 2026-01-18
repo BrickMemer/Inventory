@@ -1,7 +1,7 @@
 #include "inventory.hpp"
 
-Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
-    Columns(Columns)
+Inventory::Inventory(unsigned int Rows, unsigned int Columns, std::shared_mutex& shared_mtx) : Rows(Rows),
+    Columns(Columns), shared_mtx(shared_mtx)
 {
     this->Items = new Item**[Rows];
     for(unsigned int i = 0; i < this->Rows; i++)
@@ -122,7 +122,7 @@ void Inventory::DisplayInventory()
     std::string NameToDisplay;
     for(size_t i = 0; i < this->Rows; i++)
     {
-        for(size_t j = 0; j < this->Rows; j++)
+        for(size_t j = 0; j < this->Columns; j++)
         {
             std::cout << "[";
             if(this->Items[i][j])
@@ -177,6 +177,31 @@ void Inventory::Align()
     }
 }
 
+void Inventory::Clear()
+{
+    for(int i = 0; i < this->Rows; i++)
+    {
+        for(int j = 0; j < this->Columns; j++)
+        {
+            if(this->Items[i][j])
+            {
+                delete this->Items[i][j];
+                this->Items[i][j] = nullptr;
+            }
+        }
+    }
+}
+
+unsigned int Inventory::GetColumnsMaxSize()
+{
+    return this->Columns;
+}
+
+unsigned int Inventory::GetRowsMaxSize()
+{
+    return this->Rows;
+}
+
 Inventory::~Inventory()
 {
     for(int i = 0; i < this->Rows; i++)
@@ -186,6 +211,7 @@ Inventory::~Inventory()
             if(this->Items[i][j])
             {
                 delete this->Items[i][j];
+                this->Items[i][j] = nullptr;
             }
         }
         delete this->Items[i];

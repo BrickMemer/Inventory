@@ -1,5 +1,6 @@
 #include <iostream>
-#include "inventory.hpp"
+#include <mutex>
+#include "player.hpp"
 /*
 #include <cstdlib>
 #include <unistd.h>
@@ -41,17 +42,24 @@ char getSingleChar() {
 #endif
 }
 static bool run = true;
-void performAction(Inventory& inventory)
+static std::shared_mutex mtx;
+
+void performAction(player& CurrentPlayer)
 {
     char input = getSingleChar();
     switch(input)
     {
         case 'a':
-            inventory.AddItem(new Item("Sword", 5, 4));
+            CurrentPlayer.AddItem(new Item("Sword", 5, 4));
             break;
         case 'A':
-            inventory.Align();
+            CurrentPlayer.AlignItems();
             break;
+        /*
+        case 'c':
+            inventory.Clear();
+            break;
+        */
         case 'q':
             run = false;
             break;
@@ -62,6 +70,7 @@ void performAction(Inventory& inventory)
                 std::cout << "Press 'a' to add a new item" << '\n'
                           << "Press 'A' to align all the items in order" << '\n'
                           << "Press 'q' to quit" << '\n'
+                          << "Press 'c' to clear inventory" << '\n'
                           << '\n'
                           << "Press any key to continue ...";
             }while(!getchar());
@@ -72,14 +81,12 @@ void performAction(Inventory& inventory)
 
 int main()
 {
-    Inventory inv(5,5);
+    player player1(mtx);
 
     #ifdef unix
         system("stty -echo");
         system("stty cbreak");
     #endif
-
-    inv.Set(new Item("Sdord", 5, 4), 3, 3);
 
     std::system(CLEAR);
 
@@ -88,9 +95,9 @@ int main()
 
     while(run == true)
     {
-        inv.DisplayInventory();
+        player1.DisplayInventory();
 
-        performAction(inv);
+        performAction(player1);
 
         std::system(CLEAR);
     }
