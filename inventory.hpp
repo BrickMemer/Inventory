@@ -3,16 +3,18 @@
 #include "item.hpp"
 #include <iostream>
 #include <queue>
-#include <atomic>
+#include <shared_mutex>
+#include <mutex>
 
 class Inventory
 {
 private:
     unsigned int Rows;
     unsigned int Columns;
-    std::atomic<Item***> Items;
+    Item*** Items;
     unsigned int CurrentRow;
     unsigned int CurrentColumns;
+    std::shared_mutex Shared_mtx;
 public:
     Inventory(unsigned int Rows, unsigned int Columns);
 
