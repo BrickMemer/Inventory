@@ -1,5 +1,4 @@
 #include <iostream>
-#include <mutex>
 #include "player.hpp"
 /*
 #include <cstdlib>
@@ -42,7 +41,6 @@ char getSingleChar() {
 #endif
 }
 static bool run = true;
-static std::shared_mutex mtx;
 
 void performAction(player& CurrentPlayer)
 {
@@ -81,7 +79,7 @@ void performAction(player& CurrentPlayer)
 
 int main()
 {
-    player player1(mtx);
+    player player1;
 
     #ifdef unix
         system("stty -echo");

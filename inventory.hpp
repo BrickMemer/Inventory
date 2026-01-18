@@ -3,20 +3,18 @@
 #include "item.hpp"
 #include <iostream>
 #include <queue>
-#include <mutex>
-#include <shared_mutex>
+#include <atomic>
 
 class Inventory
 {
 private:
     unsigned int Rows;
     unsigned int Columns;
-    Item*** Items;
+    std::atomic<Item***> Items;
     unsigned int CurrentRow;
     unsigned int CurrentColumns;
-    std::shared_mutex& shared_mtx;
 public:
-    Inventory(unsigned int Rows, unsigned int Columns, std::shared_mutex& shared_mtx);
+    Inventory(unsigned int Rows, unsigned int Columns);
 
     bool Set(Item* Item, const unsigned int x,const unsigned int y);
     Item* Get(const unsigned int x,const unsigned int y);

@@ -15,7 +15,7 @@ private:
     bool MoveY(bool UpOrDown);
     std::mutex mtx;
 public:
-    player(std::shared_mutex& mtx);
+    player();
 
     void DisplayInventory();
 

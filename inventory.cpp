@@ -1,7 +1,7 @@
 #include "inventory.hpp"
 
-Inventory::Inventory(unsigned int Rows, unsigned int Columns, std::shared_mutex& shared_mtx) : Rows(Rows),
-    Columns(Columns), shared_mtx(shared_mtx)
+Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
+    Columns(Columns)
 {
     this->Items = new Item**[Rows];
     for(unsigned int i = 0; i < this->Rows; i++)

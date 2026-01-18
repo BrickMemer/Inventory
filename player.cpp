@@ -1,11 +1,16 @@
 #include "player.hpp"
 
 
-player::player(std::shared_mutex& mtx) : PlayerInventory(5,5, mtx) {}
+player::player() : PlayerInventory(8,5)
+{
+    this->PlayerInventory.Set(new Item("Sdord", 5 ,4), 3 , 4);
+}
 
 void player::DisplayInventory()
 {
-    this->PlayerInventory.DisplayInventory();
+    std::thread tD(&Inventory::DisplayInventory, &this->PlayerInventory);
+
+    tD.join();
 }
 bool player::MoveX(bool RightOrLeft)
 {
@@ -49,5 +54,7 @@ bool player::AddItem(Item* Item)
 
 void player::AlignItems()
 {
-    this->PlayerInventory.Align();
+    std::thread tA(&Inventory::Align, &this->PlayerInventory);
+
+    tA.join();
 }
