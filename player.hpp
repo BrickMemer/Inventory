@@ -21,6 +21,7 @@ public:
 
     bool AddItem(Item* Item);
     void AlignItems();
+    void ClearItems();
 };
 
 #endif // PLAYER_HPP

@@ -53,11 +53,9 @@ void performAction(player& CurrentPlayer)
         case 'A':
             CurrentPlayer.AlignItems();
             break;
-        /*
         case 'c':
-            inventory.Clear();
+            CurrentPlayer.ClearItems();
             break;
-        */
         case 'q':
             run = false;
             break;

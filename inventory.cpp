@@ -127,7 +127,7 @@ void Inventory::DisplayInventory()
             std::cout << "[";
             if(this->Items[i][j])
             {
-                std::shared_lock<std::shared_mutex> lock(this->Shared_mtx);
+                std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
                 for(size_t z = 0; z < static_cast<short>((SpaceBetween - Items[i][j]->getName().length()) / 2); z++)
                 {
                     NameToDisplay.append(" ");
@@ -146,11 +146,12 @@ void Inventory::DisplayInventory()
             {
                 for(size_t z = 0; z < SpaceBetween; z++)
                 {
+                    std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
                     NameToDisplay.append(" ");
                 }
             }
             std::cout << NameToDisplay;
-             std::cout << "]";
+            std::cout << "]";
             NameToDisplay.clear();
         }
         std::cout << '\n';

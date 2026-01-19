@@ -1,7 +1,7 @@
 #include "player.hpp"
 
 
-player::player() : PlayerInventory(8,5)
+player::player() : PlayerInventory(16,5)
 {
     this->PlayerInventory.Set(new Item("Sdord", 5 ,4), 3 , 4);
 }
@@ -50,6 +50,11 @@ bool player::MoveY(bool UpOrDown)
 bool player::AddItem(Item* Item)
 {
     return this->PlayerInventory.AddItem(Item);
+}
+
+ void player::ClearItems()
+{
+    this->PlayerInventory.Clear();
 }
 
 void player::AlignItems()
