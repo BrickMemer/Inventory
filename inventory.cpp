@@ -72,11 +72,13 @@ bool Inventory::AddItem(Item* Item)
         {
             if(!this->Items[i][j])
             {
+                std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
                 this->Items[i][j] = Item;
                 return true;
             }
         }
     }
+    delete Item;
     return false;
 }
 
@@ -119,21 +121,21 @@ bool Inventory::Remove(const unsigned int x,const unsigned int y)
 void Inventory::DisplayInventory()
 {
     unsigned short SpaceBetween = 24;
-    std::string NameToDisplay;
     for(size_t i = 0; i < this->Rows; i++)
     {
         for(size_t j = 0; j < this->Columns; j++)
         {
-            std::cout << "[";
+            std::string NameToDisplay = " ";
             if(this->Items[i][j])
             {
                 std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
-                for(size_t z = 0; z < static_cast<short>((SpaceBetween - Items[i][j]->getName().length()) / 2); z++)
+                short MiddleSpot = static_cast<short>((SpaceBetween - Items[i][j]->getName().length()) / 2);
+                for(size_t z = 0; z < MiddleSpot; z++)
                 {
                     NameToDisplay.append(" ");
                 }
                 NameToDisplay.append(Items[i][j]->getName());
-                for(size_t z = 0; z < static_cast<short>((SpaceBetween - Items[i][j]->getName().length()) / 2); z++)
+                for(size_t z = 0; z < MiddleSpot; z++)
                 {
                     NameToDisplay.append(" ");
                 }
@@ -150,9 +152,8 @@ void Inventory::DisplayInventory()
                     NameToDisplay.append(" ");
                 }
             }
+            NameToDisplay.append("]");
             std::cout << NameToDisplay;
-            std::cout << "]";
-            NameToDisplay.clear();
         }
         std::cout << '\n';
     }
