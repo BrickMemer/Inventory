@@ -118,14 +118,22 @@ bool Inventory::Remove(const unsigned int x,const unsigned int y)
     }
 }
 
-void Inventory::DisplayInventory()
+void Inventory::DisplayInventory(unsigned int x, unsigned int y)
 {
     unsigned short SpaceBetween = 24;
     for(size_t i = 0; i < this->Rows; i++)
     {
         for(size_t j = 0; j < this->Columns; j++)
         {
-            std::string NameToDisplay = "[";
+            std::string NameToDisplay;
+            if(i == y && j == x)
+            {
+                NameToDisplay.append("{");
+            }
+            else
+            {
+                NameToDisplay.append("[");
+            }
             if(this->Items[i][j])
             {
                 std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
@@ -152,7 +160,14 @@ void Inventory::DisplayInventory()
                     NameToDisplay.append(" ");
                 }
             }
-            NameToDisplay.append("]");
+            if(i == y && j == x)
+            {
+                NameToDisplay.append("}");
+            }
+            else
+            {
+                NameToDisplay.append("]");
+            }
             std::cout << NameToDisplay;
         }
         std::cout << '\n';

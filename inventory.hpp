@@ -24,7 +24,7 @@ public:
     Item* Drop(const unsigned int x,const unsigned int y);
     bool AddItem(Item* Item);
     bool MoveOrSwap(int x,int y,int newx,int newy);
-    void DisplayInventory();
+    void DisplayInventory(unsigned int x, unsigned int y);
     void Align();
     void Clear();
     unsigned int GetRowsMaxSize();

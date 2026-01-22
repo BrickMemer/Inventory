@@ -71,6 +71,18 @@ void performAction(player& CurrentPlayer)
                           << "Press any key to continue ...";
             }while(!getchar());
             break;
+        case 'v':
+            CurrentPlayer.MoveX(true);
+            break;
+        case 'b':
+            CurrentPlayer.MoveY(true);
+            break;
+        case 'm':
+            CurrentPlayer.MoveX(false);
+            break;
+        case 'n':
+            CurrentPlayer.MoveY(false);
+            break;
     }
 }
 

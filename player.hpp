@@ -8,11 +8,9 @@
 class player
 {
 private:
-    size_t CurrentX = 0;
-    size_t CurrentY = 0;
+    unsigned int CurrentX = 0;
+    unsigned int CurrentY = 0;
     Inventory PlayerInventory;
-    bool MoveX(bool RightOrLeft);
-    bool MoveY(bool UpOrDown);
     std::mutex mtx;
 public:
     player();
@@ -22,6 +20,8 @@ public:
     bool AddItem(Item* Item);
     void AlignItems();
     void ClearItems();
+    bool MoveX(bool RightOrLeft);
+    bool MoveY(bool UpOrDown);
 };
 
 #endif // PLAYER_HPP
