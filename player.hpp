@@ -1,6 +1,7 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 #include "inventory.hpp"
+#include "weapon.h"
 #include <algorithm>
 #include <thread>
 #include <future>

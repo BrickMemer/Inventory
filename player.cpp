@@ -1,9 +1,8 @@
 #include "player.hpp"
 
-
 player::player() : PlayerInventory(5,5)
 {
-    this->PlayerInventory.Set(new Item("Sdord", 5 ,4), 3 , 4);
+    this->PlayerInventory.Set(new Weapon(), 3 , 4);
 }
 
 void player::DisplayInventory()

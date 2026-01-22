@@ -1,5 +1,6 @@
 #include <iostream>
 #include "player.hpp"
+#include "weapon.h"
 /*
 #include <cstdlib>
 #include <unistd.h>
@@ -48,7 +49,7 @@ void performAction(player& CurrentPlayer)
     switch(input)
     {
         case 'a':
-            CurrentPlayer.AddItem(new Item("Sword", 5, 4));
+            CurrentPlayer.AddItem(new Weapon("Sword", 5, 4, 5));
             break;
         case 'A':
             CurrentPlayer.AlignItems();
