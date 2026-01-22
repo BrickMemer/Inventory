@@ -2,7 +2,7 @@
 #define ITEM_HPP
 
 #include <string>
-
+#include "attribute.h"
 enum Rarity{
     common,
     uncommon,
@@ -20,12 +20,13 @@ protected:
     Rarity rarity;
     int level;
     int durability;
+    Attribute* attribute;
     int maxQuantity;
     int price;
 public:
     Item();
     Item(const std::string &name, int maxQuantity, int price);
-
+    ~Item();
 
     //Getters and Setters
     std::string getName() const;
@@ -40,6 +41,9 @@ public:
     void setMaxQuantity(int newMaxQuantity);
     int getPrice() const;
     void setPrice(int newPrice);
+
+    void virtual use() = 0;
+    void getInfo();
 };
 
 #endif // ITEM_HPP
