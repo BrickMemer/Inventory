@@ -125,7 +125,7 @@ void Inventory::DisplayInventory()
     {
         for(size_t j = 0; j < this->Columns; j++)
         {
-            std::string NameToDisplay = " ";
+            std::string NameToDisplay = "[";
             if(this->Items[i][j])
             {
                 std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
@@ -187,11 +187,7 @@ void Inventory::Clear()
     {
         for(int j = 0; j < this->Columns; j++)
         {
-            if(this->Items[i][j])
-            {
-                delete this->Items[i][j];
-                this->Items[i][j] = nullptr;
-            }
+            this->Remove(i,j);
         }
     }
 }
@@ -210,15 +206,7 @@ Inventory::~Inventory()
 {
     for(int i = 0; i < this->Rows; i++)
     {
-        for(int j = 0; j < this->Columns; j++)
-        {
-            if(this->Items[i][j])
-            {
-                delete this->Items[i][j];
-                this->Items[i][j] = nullptr;
-            }
-        }
-        delete this->Items[i];
+        delete[] this->Items[i];
     }
-    delete this->Items;
+    delete[] this->Items;
 }
