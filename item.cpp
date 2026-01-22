@@ -152,6 +152,4 @@ void Item::getInfo()
     std::cout << "3. Max Quantity: " << maxQuantity << "\n";
     std::cout << "4. Durability: " << durability << "\n";
     std::cout << "5. Price: " << price << "\n";
-    std::cout << "6. Attributes :\n";
-
 }

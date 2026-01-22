@@ -67,8 +67,3 @@ void Attribute::setDamage(int newDamage)
 {
     damage = newDamage;
 }
-
-void Attribute::getInfo()
-{
-    std::cout << "Mana: ";
-}

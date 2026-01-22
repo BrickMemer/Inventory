@@ -3,7 +3,6 @@
 
 #include <string>
 #include "attribute.h"
-#include <iostream>
 enum Rarity{
     common,
     uncommon,

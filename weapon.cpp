@@ -20,9 +20,3 @@ void Weapon::use()
     std::cout << "Damage : " << attribute->getDamage() << " Hp" << std::endl;
     durability-=1;
 }
-
-void Weapon::getInfo()
-{
-    Item::getInfo();
-    std::cout << "5. Damage: " << damage << std::endl;
-}
