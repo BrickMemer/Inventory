@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(Inventory-New main.cpp
     item.hpp item.cpp
+    inventory.hpp inventory.cpp
+    player.hpp player.cpp
 
     attribute.h attribute.cpp
     weapon.h weapon.cpp
