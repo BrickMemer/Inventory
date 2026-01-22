@@ -20,8 +20,6 @@ public:
     void setDefense(int newDefense);
     int getDamage() const;
     void setDamage(int newDamage);
-
-    void getInfo();
 };
 
 #endif // ATTRIBUTE_H
