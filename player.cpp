@@ -52,9 +52,14 @@ bool player::AddItem(Item* Item)
     return this->PlayerInventory.AddItem(Item);
 }
 
- void player::ClearItems()
+void player::ClearItems()
 {
     this->PlayerInventory.Clear();
+}
+
+bool player::GetInfo()
+{
+    return this->PlayerInventory.GetInfo(this->CurrentY, this->CurrentX);
 }
 
 void player::AlignItems()

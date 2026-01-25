@@ -65,6 +65,36 @@ std::string Item::getName() const
     return name;
 }
 
+std::string Item::getRarityName() const
+{
+    switch (rarity) {
+    case 0:
+        return "common";
+        break;
+    case 1:
+        return "uncommon";
+        break;
+    case 2:
+        return "rare";
+        break;
+    case 3:
+        return "epic";
+        break;
+    case 4:
+        return "legendary";
+        break;
+    case 5:
+        return "mythie";
+        break;
+    case 6:
+        return "unique";
+        break;
+    default:
+        return "error";
+        break;
+    }
+}
+
 void Item::setName(const std::string &newName)
 {
     name = newName;
@@ -122,33 +152,9 @@ void Item::setPrice(int newPrice)
 
 void Item::getInfo()
 {
-    std::string nameOfRarity;
-    switch (rarity) {
-    case 0:
-        nameOfRarity = "common";
-        break;
-    case 1:
-        nameOfRarity = "uncommon";
-        break;
-    case 2:
-        nameOfRarity = "rare";
-        break;
-    case 3:
-        nameOfRarity = "epic";
-        break;
-    case 4:
-        nameOfRarity = "legendary";
-        break;
-    case 5:
-        nameOfRarity = "mythie";
-        break;
-    default:
-        nameOfRarity = "unique";
-        break;
-    }
     std::cout << "Info for " << name << "\n";
     std::cout << "1. Level: " << level << "\n";
-    std::cout << "2. Rarity: " << nameOfRarity << "\n";
+    std::cout << "2. Rarity: " << this->getRarityName() << "\n";
     std::cout << "3. Max Quantity: " << maxQuantity << "\n";
     std::cout << "4. Durability: " << durability << "\n";
     std::cout << "5. Price: " << price << "\n";

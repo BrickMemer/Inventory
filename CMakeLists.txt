@@ -10,9 +10,9 @@ add_executable(Inventory-New main.cpp
     inventory.hpp inventory.cpp
     player.hpp player.cpp
 
-    attribute.h attribute.cpp
-    weapon.h weapon.cpp
-    block.h block.cpp
+    attribute.hpp attribute.cpp
+    weapon.hpp weapon.cpp
+    block.hpp block.cpp
     inventory.hpp inventory.cpp
 )
 

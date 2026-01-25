@@ -1,6 +1,6 @@
 #include <iostream>
 #include "player.hpp"
-#include "weapon.h"
+#include "weapon.hpp"
 /*
 #include <cstdlib>
 #include <unistd.h>
@@ -72,6 +72,17 @@ void performAction(player& CurrentPlayer)
                           << "Press any key to continue ...";
             }while(!getchar());
             break;
+        case 'i':
+            do
+            {
+                std::system(CLEAR);
+                if(CurrentPlayer.GetInfo() == false)
+                {
+                    std::cout << "No valid item is present under your selection, please try again" << '\n'
+                              << "Press any key to continue ...";
+                }
+            }while(!getchar());
+            break;
         case 'v':
             CurrentPlayer.MoveX(true);
             break;
@@ -110,6 +121,7 @@ int main()
 
         std::system(CLEAR);
     }
+
 
     std::system("stty echo");
     std::system("stty -cbreak");
