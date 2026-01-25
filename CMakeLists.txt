@@ -14,6 +14,8 @@ add_executable(Inventory-New main.cpp
     weapon.hpp weapon.cpp
     block.hpp block.cpp
     inventory.hpp inventory.cpp
+    singleCharacter.hpp singleCharacter.cpp
+    game.hpp game.cpp
 )
 
 include(GNUInstallDirs)
