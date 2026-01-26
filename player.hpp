@@ -1,6 +1,7 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 #include "inventory.hpp"
+#include "weapon.hpp"
 #include <algorithm>
 #include <thread>
 #include <future>
@@ -22,6 +23,7 @@ public:
     void ClearItems();
     bool MoveX(bool RightOrLeft);
     bool MoveY(bool UpOrDown);
+    bool GetInfo();
 };
 
 #endif // PLAYER_HPP

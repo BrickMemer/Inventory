@@ -1,9 +1,8 @@
 #include "player.hpp"
 
-
 player::player() : PlayerInventory(5,5)
 {
-    this->PlayerInventory.Set(new Item("Sdord", 5 ,4), 3 , 4);
+    this->PlayerInventory.Set(new Weapon(), 3 , 4);
 }
 
 void player::DisplayInventory()
@@ -53,9 +52,14 @@ bool player::AddItem(Item* Item)
     return this->PlayerInventory.AddItem(Item);
 }
 
- void player::ClearItems()
+void player::ClearItems()
 {
     this->PlayerInventory.Clear();
+}
+
+bool player::GetInfo()
+{
+    return this->PlayerInventory.GetInfo(this->CurrentY, this->CurrentX);
 }
 
 void player::AlignItems()

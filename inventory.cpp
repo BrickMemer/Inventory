@@ -118,7 +118,24 @@ bool Inventory::Remove(const unsigned int x,const unsigned int y)
     }
 }
 
-void Inventory::DisplayInventory(unsigned int x, unsigned int y)
+bool Inventory::GetInfo(const unsigned int x, const unsigned int y)
+{
+    if(x >= this->Rows || y >= this->Columns)
+    {
+        return false;
+    }
+    else if(this->Items[x][y])
+    {
+        this->Items[x][y]->getInfo();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void Inventory::DisplayInventory(const unsigned int x, const unsigned int y)
 {
     unsigned short SpaceBetween = 24;
     for(size_t i = 0; i < this->Rows; i++)

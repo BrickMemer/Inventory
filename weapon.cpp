@@ -1,4 +1,4 @@
-#include "weapon.h"
+#include "weapon.hpp"
 
 Weapon::Weapon() {
     this->level = 1;

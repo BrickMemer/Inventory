@@ -2,7 +2,7 @@
 #define ITEM_HPP
 
 #include <string>
-#include "attribute.h"
+#include "attribute.hpp"
 enum Rarity{
     common,
     uncommon,
@@ -33,6 +33,7 @@ public:
     void setName(const std::string &newName);
     Rarity getRarity() const;
     void setRarity(Rarity newRarity);
+    std::string getRarityName() const;
     int getLevel() const;
     void setLevel(int newLevel);
     int getDurability() const;

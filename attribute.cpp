@@ -1,4 +1,4 @@
-#include "attribute.h"
+#include "attribute.hpp"
 Attribute::Attribute() {
     mana = 0;
     health = 0;

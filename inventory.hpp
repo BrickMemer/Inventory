@@ -18,13 +18,14 @@ private:
 public:
     Inventory(unsigned int Rows, unsigned int Columns);
 
-    bool Set(Item* Item, const unsigned int x,const unsigned int y);
-    Item* Get(const unsigned int x,const unsigned int y);
-    bool Remove(const unsigned int x,const unsigned int y);
-    Item* Drop(const unsigned int x,const unsigned int y);
+    bool Set(Item* Item, const unsigned int x, const unsigned int y);
+    Item* Get(const unsigned int x, const unsigned int y);
+    bool Remove(const unsigned int x, const unsigned int y);
+    Item* Drop(const unsigned int x, const unsigned int y);
     bool AddItem(Item* Item);
     bool MoveOrSwap(int x,int y,int newx,int newy);
-    void DisplayInventory(unsigned int x, unsigned int y);
+    bool GetInfo(const unsigned int x, const unsigned int y);
+    void DisplayInventory(const unsigned int x,const unsigned int y);
     void Align();
     void Clear();
     unsigned int GetRowsMaxSize();
