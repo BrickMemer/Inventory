@@ -12,11 +12,10 @@ public:
     ~InventoryCell();
 
     int getQuantity() const;
-    void setQuantity(int newQuantity);
+    bool setQuantity(int newQuantity);
     Item *getItem() const;
     void setItem(Item *newItem);
 
-    std::string display(int level);
     std::string display(int level, bool isSelected);
 };
 

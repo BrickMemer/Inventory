@@ -5,9 +5,10 @@ int InventoryCell::getQuantity() const
     return quantity;
 }
 
-void InventoryCell::setQuantity(int newQuantity)
+bool InventoryCell::setQuantity(int newQuantity)
 {
     quantity = newQuantity;
+    return true;
 }
 
 Item *InventoryCell::getItem() const
@@ -20,33 +21,60 @@ void InventoryCell::setItem(Item *newItem)
     item = newItem;
 }
 
-std::string InventoryCell::display(int level)
+std::string InventoryCell::display(int level, bool isSelected)
 {
     std::string NameToDisplay;
     unsigned short SpaceBetween = 24;
+    short MiddleSpot;
+
     switch (level) {
     case 0:
+        //Start of line
         NameToDisplay.append(" +");
+
+
         for (int i = 0; i < SpaceBetween; ++i) {
             NameToDisplay.append("-");
         }
+
+        //End of line
         NameToDisplay.append("+ ");
         break;
     case 1:
-        NameToDisplay.append(" |");
+        //Start of line
+        if(isSelected){
+            NameToDisplay.append(">|");
+        }else {
+            NameToDisplay.append(" |");
+        }
+
+
         for (int i = 0; i < SpaceBetween; ++i) {
             NameToDisplay.append(" ");
         }
-        NameToDisplay.append("| ");
+
+        //End of line
+        if(isSelected){
+            NameToDisplay.append("|<");
+        }else {
+            NameToDisplay.append("| ");
+        }
         break;
     case 2:
-        NameToDisplay.append(" |");
+        //Start of line
+        if(isSelected){
+            NameToDisplay.append(">|");
+        }else {
+            NameToDisplay.append(" |");
+        }
+
+
         if(this->item == nullptr){
             for (int i = 0; i < SpaceBetween; ++i) {
                 NameToDisplay.append(" ");
             }
         }else{
-            short MiddleSpot = static_cast<short>((SpaceBetween - item->getName().length()) / 2);
+            MiddleSpot = static_cast<short>((SpaceBetween - item->getName().length()) / 2);
             for(size_t z = 0; z < MiddleSpot; z++)
             {
                 NameToDisplay.append(" ");
@@ -61,20 +89,76 @@ std::string InventoryCell::display(int level)
                 NameToDisplay.append(" ");
             }
         }
-        NameToDisplay.append("| ");
+
+        //End of line
+        if(isSelected){
+            NameToDisplay.append("|<");
+        }else {
+            NameToDisplay.append("| ");
+        }
+        break;
         break;
     case 3:
-        NameToDisplay.append(" |");
+        //Start of line
+        if(isSelected){
+            NameToDisplay.append(">|");
+        }else {
+            NameToDisplay.append(" |");
+        }
+
+
         for (int i = 0; i < SpaceBetween; ++i) {
             NameToDisplay.append(" ");
         }
-        NameToDisplay.append("| ");
+
+        //End of line
+        if(isSelected){
+            NameToDisplay.append("|<");
+        }else {
+            NameToDisplay.append("| ");
+        }
+        break;
         break;
     case 4:
+        //Start of line
+        if(isSelected){
+            NameToDisplay.append(">|");
+        }else {
+            NameToDisplay.append(" |");
+        }
+
+
+        MiddleSpot = static_cast<short>((SpaceBetween - std::to_string(this->getQuantity()).length()) / 2);
+        for(size_t z = 0; z < MiddleSpot; z++)
+        {
+            NameToDisplay.append(" ");
+        }
+        NameToDisplay.append(std::to_string(this->getQuantity()));
+        for(size_t z = 0; z < MiddleSpot; z++)
+        {
+            NameToDisplay.append(" ");
+        }
+        if(std::to_string(this->getQuantity()).length() % 2 != 0)
+        {
+            NameToDisplay.append(" ");
+        }
+
+        //End of line
+        if(isSelected){
+            NameToDisplay.append("|<");
+        }else {
+            NameToDisplay.append("| ");
+        }
+        break;
+    case 5:
+        //Start of line
         NameToDisplay.append(" +");
+
         for (int i = 0; i < SpaceBetween; ++i) {
             NameToDisplay.append("-");
         }
+
+        //End of line
         NameToDisplay.append("+ ");
         break;
     default:
