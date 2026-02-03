@@ -26,7 +26,7 @@ protected:
 public:
     Item();
     Item(const std::string &name, int maxQuantity, int price);
-    virtual ~Item() = default;
+    ~Item();
 
     //Getters and Setters
     std::string getName() const;

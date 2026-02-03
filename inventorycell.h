@@ -11,13 +11,13 @@ public:
     InventoryCell();
     ~InventoryCell();
 
-
-
-    void display(int level);
     int getQuantity() const;
     void setQuantity(int newQuantity);
     Item *getItem() const;
     void setItem(Item *newItem);
+
+    std::string display(int level);
+    std::string display(int level, bool isSelected);
 };
 
 #endif // INVENTORYCELL_H
