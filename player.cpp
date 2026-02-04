@@ -2,7 +2,7 @@
 
 player::player() : PlayerInventory(5,5)
 {
-    this->PlayerInventory.Set(new Weapon(), 3 , 4);
+    //this->PlayerInventory.Set(new Weapon(), 3 , 4);
 }
 
 void player::DisplayInventory()
@@ -12,16 +12,16 @@ void player::DisplayInventory()
     tD.join();
     //std::cout << "x: " << this->CurrentX << "y: " << this->CurrentY << '\r';
 }
-bool player::MoveX(bool RightOrLeft)
+bool player::MoveY(bool RightOrLeft)
 {
-    if(RightOrLeft == true && this->CurrentX > 0)
+    if(RightOrLeft == true && this->CurrentY > 0)
     {
-        this->CurrentX--;
+        this->CurrentY--;
         return true;
     }
-    else if(RightOrLeft == false && this->CurrentX + 1 < this->PlayerInventory.GetRowsMaxSize())
+    else if(RightOrLeft == false && this->CurrentY + 1 < this->PlayerInventory.GetRowsMaxSize())
     {
-        this->CurrentX++;
+        this->CurrentY++;
         return true;
     }
     else
@@ -29,16 +29,16 @@ bool player::MoveX(bool RightOrLeft)
         return false;
     }
 }
-bool player::MoveY(bool UpOrDown)
+bool player::MoveX(bool UpOrDown)
 {
-    if(UpOrDown == true && this->CurrentY > 0)
+    if(UpOrDown == true && this->CurrentX > 0)
     {
-        this->CurrentY--;
+        this->CurrentX--;
         return true;
     }
-    else if(UpOrDown == false && this->CurrentY + 1 < this->PlayerInventory.GetColumnsMaxSize())
+    else if(UpOrDown == false && this->CurrentX + 1 < this->PlayerInventory.GetColumnsMaxSize())
     {
-        this->CurrentY++;
+        this->CurrentX++;
         return true;
     }
     else
@@ -59,7 +59,7 @@ void player::ClearItems()
 
 bool player::GetInfo()
 {
-    return this->PlayerInventory.GetInfo(this->CurrentY, this->CurrentX);
+    return this->PlayerInventory.GetInfo(this->CurrentX, this->CurrentY);
 }
 
 void player::AlignItems()

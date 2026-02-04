@@ -143,7 +143,7 @@ void Inventory::DisplayInventory(const unsigned int x, const unsigned int y)
         for(size_t j = 0; j < this->Columns; j++)
         {
             std::string NameToDisplay;
-            if(i == y && j == x)
+            if(i == x && j == y)
             {
                 NameToDisplay.append("{");
             }
@@ -177,7 +177,7 @@ void Inventory::DisplayInventory(const unsigned int x, const unsigned int y)
                     NameToDisplay.append(" ");
                 }
             }
-            if(i == y && j == x)
+            if(i == x && j == y)
             {
                 NameToDisplay.append("}");
             }

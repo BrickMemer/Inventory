@@ -21,8 +21,8 @@ public:
     bool AddItem(Item* Item);
     void AlignItems();
     void ClearItems();
-    bool MoveX(bool RightOrLeft);
-    bool MoveY(bool UpOrDown);
+    bool MoveX(bool UpOrDown);
+    bool MoveY(bool RightOrLeft);
     bool GetInfo();
 };
 
