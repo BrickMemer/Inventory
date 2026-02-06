@@ -7,7 +7,11 @@ int InventoryCell::getQuantity() const
 
 bool InventoryCell::setQuantity(int newQuantity)
 {
-    quantity = newQuantity;
+    if(newQuantity < 0){
+        quantity = 0;
+    }else{
+        quantity = newQuantity;
+    }
     return true;
 }
 
@@ -133,7 +137,12 @@ std::string InventoryCell::display(int level, bool isSelected)
         {
             NameToDisplay.append(" ");
         }
-        NameToDisplay.append(std::to_string(this->getQuantity()));
+        if(this->getQuantity() > 0){
+            NameToDisplay.append(std::to_string(this->getQuantity()));
+        }else{
+            NameToDisplay.append(" ");
+        }
+
         for(size_t z = 0; z < MiddleSpot; z++)
         {
             NameToDisplay.append(" ");

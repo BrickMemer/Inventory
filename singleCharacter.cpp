@@ -23,7 +23,7 @@ bool performAction(player& CurrentPlayer)
     char input = getSingleChar();
     switch(input)
     {
-    case 'a':
+    case 'n':
         CurrentPlayer.AddItem(new Weapon("Sword", 5, 4, 5));
         break;
     case 'A':
@@ -58,16 +58,16 @@ bool performAction(player& CurrentPlayer)
             }
         }while(!getchar());
         break;
-    case 'v':
+    case 'a':
         CurrentPlayer.MoveX(true);
         break;
-    case 'b':
+    case 'w':
         CurrentPlayer.MoveY(true);
         break;
-    case 'm':
+    case 'd':
         CurrentPlayer.MoveX(false);
         break;
-    case 'n':
+    case 's':
         CurrentPlayer.MoveY(false);
         break;
     default:
