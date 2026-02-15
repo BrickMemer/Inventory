@@ -9,6 +9,7 @@
 class player
 {
 private:
+    unsigned int Money = 0;
     unsigned int CurrentX = 0;
     unsigned int CurrentY = 0;
     Inventory PlayerInventory;
@@ -23,7 +24,14 @@ public:
     void ClearItems();
     bool MoveX(bool RightOrLeft);
     bool MoveY(bool UpOrDown);
+    void ResetCorrdinates();
     bool GetInfo();
+    Item* GetItem();
+    void RemoveItem();
+
+    unsigned int getMoney() const;
+    void AddMoney(unsigned int MoneyToAdd);
+    void SubstractMoney(unsigned int AmountOfMoneyToSubstract);
 };
 
 #endif // PLAYER_HPP

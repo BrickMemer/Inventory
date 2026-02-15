@@ -16,7 +16,11 @@ add_executable(Inventory-New main.cpp
     inventory.hpp inventory.cpp
     singleCharacter.hpp singleCharacter.cpp
     game.hpp game.cpp
-    inventorycell.h inventorycell.cpp
+    inventorycell.hpp inventorycell.cpp
+    store.cpp
+    store.hpp
+
+
 )
 
 include(GNUInstallDirs)

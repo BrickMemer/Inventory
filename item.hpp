@@ -20,7 +20,7 @@ protected:
     Rarity rarity;
     int level;
     int durability;
-    Attribute* attribute;
+    Attribute attribute;
     int maxQuantity;
     int price;
 public:
@@ -43,8 +43,10 @@ public:
     int getPrice() const;
     void setPrice(int newPrice);
 
+
     void virtual use() = 0;
     void getInfo();
+    Attribute getAttribute() const;
 };
 
 #endif // ITEM_HPP

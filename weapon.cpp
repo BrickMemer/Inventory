@@ -7,16 +7,26 @@ Weapon::Weapon() {
     this->rarity = common;
     this->durability = 100;
     this->price = 2;
-    this->attribute->setDamage(5);
+    this->attribute.setDamage(5);
 }
 
 Weapon::Weapon(const std::string &name,int maxQuantity, int price, int damage) : Item(name, maxQuantity, price)
 {
-    attribute->setDamage(damage);
+    attribute.setDamage(damage);
 }
 void Weapon::use()
 {
     std::cout << "Attack!! " << std::endl;
-    std::cout << "Damage : " << attribute->getDamage() << " Hp" << std::endl;
+    std::cout << "Damage : " << attribute.getDamage() << " Hp" << std::endl;
     durability-=1;
+}
+
+int Weapon::getDamage() const
+{
+    return this->attribute.getDamage();
+}
+
+void Weapon::setDamage(int newDamage)
+{
+    this->attribute.setDamage(newDamage);
 }

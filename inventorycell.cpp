@@ -1,4 +1,4 @@
-#include "inventorycell.h"
+#include "inventorycell.hpp"
 
 int InventoryCell::getQuantity() const
 {

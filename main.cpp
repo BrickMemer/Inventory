@@ -16,16 +16,7 @@ int main()
     //Disabled due to bugs
     std::cout << "Welcome to Inventory Symulator, if you need help, press 'h'" << '\n';
 
-    while(true)
-    {
-        game1.Run();
-
-        if(game1.getIsRunning() == false)
-        {
-            break;
-        }
-    }
-
+    game1.RunGame();
 
     std::system("stty echo");
     std::system("stty -cbreak");

@@ -1,7 +1,7 @@
 #ifndef INVENTORY_HPP
 #define INVENTORY_HPP
 #include "item.hpp"
-#include "inventorycell.h"
+#include "inventorycell.hpp"
 #include <iostream>
 #include <queue>
 #include <shared_mutex>

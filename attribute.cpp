@@ -4,7 +4,7 @@ Attribute::Attribute() {
     health = 0;
     energy = 0;
     defense = 0;
-    damage = 1;
+    damage = 0;
 }
 
 Attribute::Attribute(int mana, int health, int energy, int defense, int damage):
