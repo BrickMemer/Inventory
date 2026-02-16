@@ -117,7 +117,7 @@ int performActionStore(player& CurrentPlayer, Store& GameStore)
         {
             std::system(CLEAR);
             std::cout << "Press a-d to move" << '\n'
-                      << "Press 'b' to buy an new item, price determent by the store may differ from the value it actually isstd::cout << "Welcome to Inventory Symulator, if you need help, press 'h'" << '\n';" << '\n'
+                      << "Press 'b' to buy an new item, price determent by the store may differ from the value it actually is << '\n';" << '\n'
                       << '\n'
                       << "Press any key to continue ...";
         }while(!getchar());
