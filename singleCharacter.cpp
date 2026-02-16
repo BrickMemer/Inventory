@@ -41,6 +41,7 @@ int performActionGame(player& CurrentPlayer)
                       << "Press 'q' to quit" << '\n'
                       << "Press 'c' to clear inventory" << '\n'
                       << "Press 'n' to open store" << '\n'
+                      << "Press 'S' to sell item" << '\n'
                       << '\n'
                       << "Press any key to continue ...";
         }while(!getchar());
@@ -87,8 +88,7 @@ int performActionGame(player& CurrentPlayer)
             }
             else
             {
-                unsigned int ItemPrice = Store::CalculatePrice(CurrentPlayer.GetItem());
-                CurrentPlayer.AddMoney(ItemPrice);
+                CurrentPlayer.AddMoney(CurrentPlayer.GetItem()->getPrice());
                 CurrentPlayer.RemoveItem();
                 break;
             }
@@ -117,7 +117,7 @@ int performActionStore(player& CurrentPlayer, Store& GameStore)
         {
             std::system(CLEAR);
             std::cout << "Press a-d to move" << '\n'
-                      << "Press 'b' to buy an new item" << '\n'
+                      << "Press 'b' to buy an new item, price determent by the store may differ from the value it actually isstd::cout << "Welcome to Inventory Symulator, if you need help, press 'h'" << '\n';" << '\n'
                       << '\n'
                       << "Press any key to continue ...";
         }while(!getchar());

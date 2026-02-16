@@ -1,4 +1,5 @@
 #include "weapon.hpp"
+#include "store.hpp"
 
 Weapon::Weapon() {
     this->level = 1;
@@ -6,8 +7,8 @@ Weapon::Weapon() {
     this->maxQuantity = 1;
     this->rarity = common;
     this->durability = 100;
-    this->price = 2;
     this->attribute.setDamage(5);
+    this->price = Store::CalculatePrice(this);
 }
 
 Weapon::Weapon(const std::string &name,int maxQuantity, int price, int damage) : Item(name, maxQuantity, price)

@@ -60,7 +60,7 @@ Item* Store::AddNewItem()
 
 unsigned int Store::CalculatePrice(Item* ItemToCalculate)
 {
-    return ItemToCalculate->getDurability() + ItemToCalculate->getAttribute().getDamage() + ItemToCalculate->getAttribute().getDefense() + ItemToCalculate->getAttribute().getEnergy() + ItemToCalculate->getAttribute().getHealth() + ItemToCalculate->getAttribute().getMana() + (ItemToCalculate->getLevel() * 10) - 20;
+    return ItemToCalculate->getDurability() + ItemToCalculate->getAttribute().getDamage() + ItemToCalculate->getAttribute().getDefense() + ItemToCalculate->getAttribute().getEnergy() + ItemToCalculate->getAttribute().getHealth() + ItemToCalculate->getAttribute().getMana() + (ItemToCalculate->getLevel() * 10);
 }
 
 void Store::Display()
@@ -99,6 +99,7 @@ bool Store::BuyItem(player& CurrentPlayer)
         return false;
     }
     CurrentPlayer.SubstractMoney(TempItem->getPrice());
+    TempItem->setPrice(this->CalculatePrice(TempItem));
     this->FillStore();
     return true;
 }
