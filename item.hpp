@@ -20,13 +20,13 @@ protected:
     Rarity rarity;
     int level;
     int durability;
-    Attribute* attribute;
+    Attribute attribute;
     int maxQuantity;
     int price;
 public:
     Item();
     Item(const std::string &name, int maxQuantity, int price);
-    ~Item();
+    virtual ~Item();
 
     //Getters and Setters
     std::string getName() const;
@@ -43,8 +43,10 @@ public:
     int getPrice() const;
     void setPrice(int newPrice);
 
+
     void virtual use() = 0;
     void getInfo();
+    Attribute getAttribute() const;
 };
 
 #endif // ITEM_HPP

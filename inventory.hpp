@@ -1,6 +1,7 @@
 #ifndef INVENTORY_HPP
 #define INVENTORY_HPP
 #include "item.hpp"
+#include "inventorycell.hpp"
 #include <iostream>
 #include <queue>
 #include <shared_mutex>
@@ -11,7 +12,7 @@ class Inventory
 private:
     unsigned int Rows;
     unsigned int Columns;
-    Item*** Items;
+    InventoryCell*** Items;
     unsigned int CurrentRow;
     unsigned int CurrentColumns;
     std::shared_mutex Shared_mtx;

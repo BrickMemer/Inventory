@@ -8,7 +8,6 @@
 #define LEGENDARY_PROCENT 998 // 0,8%
 #define MYTHIE_PROCENT 1000 // 0,2%
 
-
 Item::Item() {
     this->name = "Stick";
     this->level = 1;
@@ -16,15 +15,13 @@ Item::Item() {
     this->durability = 100;
     this->maxQuantity = 64;
     this->price = 0;
-    this->attribute = new Attribute();
 }
 
 Item::Item(const std::string &name, int maxQuantity, int price) :
     name(name),
     level(1),
     durability(100),
-    maxQuantity(maxQuantity),
-    attribute(new Attribute())
+    maxQuantity(maxQuantity)
 {
     std::random_device dev;
     std::mt19937 rng(dev());
@@ -57,7 +54,7 @@ Item::Item(const std::string &name, int maxQuantity, int price) :
 }
 
 Item::~Item(){
-    delete attribute;
+    //Empty for now
 }
 
 std::string Item::getName() const
@@ -103,6 +100,11 @@ void Item::setName(const std::string &newName)
 Rarity Item::getRarity() const
 {
     return rarity;
+}
+
+Attribute Item::getAttribute() const
+{
+    return attribute;
 }
 
 void Item::setRarity(Rarity newRarity)

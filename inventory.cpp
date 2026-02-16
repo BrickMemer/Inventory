@@ -3,13 +3,13 @@
 Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
     Columns(Columns)
 {
-    this->Items = new Item**[Rows];
+    this->Items = new InventoryCell**[Rows];
     for(unsigned int i = 0; i < this->Rows; i++)
     {
-        this->Items[i] = new Item*[Columns];
+        this->Items[i] = new InventoryCell*[Columns];
         for(unsigned int j = 0; j < this->Columns; j++)
         {
-            this->Items[i][j] = nullptr;
+            this->Items[i][j] = new InventoryCell();
         }
     }
 }
@@ -23,7 +23,7 @@ Item* Inventory::Get(const unsigned int x,const unsigned int y)
     }
     if(this->Items[x][y])
     {
-        return Items[x][y];
+        return Items[x][y]->getItem();
     }
     else
     {
@@ -39,7 +39,7 @@ bool Inventory::Set(Item* Item, const unsigned int x,const unsigned int y)
     }
     else
     {
-        this->Items[x][y] = Item;
+        this->Items[x][y]->setItem(Item);
         return true;
     }
 }
@@ -70,10 +70,10 @@ bool Inventory::AddItem(Item* Item)
     {
         for(int j = 0; j < this->Columns; j++)
         {
-            if(!this->Items[i][j])
+            if(this->Items[i][j]->getItem() == nullptr)
             {
                 std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
-                this->Items[i][j] = Item;
+                this->Items[i][j]->setItem(Item);
                 return true;
             }
         }
@@ -88,10 +88,10 @@ Item* Inventory::Drop(const unsigned int x,const unsigned int y)
     {
         return nullptr;
     }
-    else if(this->Items[x][y])
+    else if(this->Items[x][y]->getItem())
     {
         Item* TempItem = Get(x, y);
-        this->Items[x][y] = nullptr;
+        this->Items[x][y]->setItem(nullptr);
         return TempItem;
     }
     else
@@ -106,10 +106,10 @@ bool Inventory::Remove(const unsigned int x,const unsigned int y)
     {
         return false;
     }
-    else if(this->Items[x][y])
+    else if(this->Items[x][y]->getItem())
     {
-        delete this->Items[x][y];
-        this->Items[x][y] = nullptr;
+        delete this->Items[x][y]->getItem();
+        this->Items[x][y]->setItem(nullptr);
         return true;
     }
     else
@@ -124,9 +124,9 @@ bool Inventory::GetInfo(const unsigned int x, const unsigned int y)
     {
         return false;
     }
-    else if(this->Items[x][y])
+    else if(this->Items[x][y]->getItem())
     {
-        this->Items[x][y]->getInfo();
+        this->Items[x][y]->getItem()->getInfo();
         return true;
     }
     else
@@ -138,56 +138,23 @@ bool Inventory::GetInfo(const unsigned int x, const unsigned int y)
 void Inventory::DisplayInventory(const unsigned int x, const unsigned int y)
 {
     unsigned short SpaceBetween = 24;
-    for(size_t i = 0; i < this->Rows; i++)
+    for(size_t row = 0; row < this->Rows; row++)
     {
-        for(size_t j = 0; j < this->Columns; j++)
-        {
-            std::string NameToDisplay;
-            if(i == y && j == x)
+        int levels = 6;
+        std::string NameToDisplay;
+        for (int level = 0; level < levels; ++level) {
+            bool isSelected = false;
+            for(size_t col = 0; col < this->Columns; col++)
             {
-                NameToDisplay.append("{");
-            }
-            else
-            {
-                NameToDisplay.append("[");
-            }
-            if(this->Items[i][j])
-            {
-                std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
-                short MiddleSpot = static_cast<short>((SpaceBetween - Items[i][j]->getName().length()) / 2);
-                for(size_t z = 0; z < MiddleSpot; z++)
-                {
-                    NameToDisplay.append(" ");
+                if(col == x && row == y){
+                    isSelected = true;
                 }
-                NameToDisplay.append(Items[i][j]->getName());
-                for(size_t z = 0; z < MiddleSpot; z++)
-                {
-                    NameToDisplay.append(" ");
-                }
-                if(Items[i][j]->getName().length() % 2 != 0)
-                {
-                    NameToDisplay.append(" ");
-                }
+                std::cout << this->Items[row][col]->display(level, isSelected);
+                isSelected = false;
             }
-            else
-            {
-                for(size_t z = 0; z < SpaceBetween; z++)
-                {
-                    std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
-                    NameToDisplay.append(" ");
-                }
-            }
-            if(i == y && j == x)
-            {
-                NameToDisplay.append("}");
-            }
-            else
-            {
-                NameToDisplay.append("]");
-            }
-            std::cout << NameToDisplay;
+            std::cout << "\n";
         }
-        std::cout << '\n';
+
     }
 }
 
@@ -195,19 +162,19 @@ void Inventory::Align()
 {
     std::queue<std::pair<int, int>> FreeCordinates;
 
-    for(int i = 0; i < this->Rows; i++)
+    for(int row = 0; row < this->Rows; row++)
     {
-        for(int j = 0; j < this->Columns; j++)
+        for(int col = 0; col < this->Columns; col++)
         {
-            if(this->Items[i][j] && FreeCordinates.size() > 0)
+            if(this->Items[row][col]->getItem() && FreeCordinates.size() > 0)
             {
                 std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
-                this->MoveOrSwap(i,j,FreeCordinates.front().first, FreeCordinates.front().second);
+                this->MoveOrSwap(row,col,FreeCordinates.front().first, FreeCordinates.front().second);
                 FreeCordinates.pop();
             }
-            else if(!this->Items[i][j])
+            else if(!this->Items[row][col]->getItem())
             {
-                FreeCordinates.push(std::make_pair(i,j));
+                FreeCordinates.push(std::make_pair(row,col));
             }
         }
     }
@@ -215,11 +182,11 @@ void Inventory::Align()
 
 void Inventory::Clear()
 {
-    for(int i = 0; i < this->Rows; i++)
+    for(int row = 0; row < this->Rows; row++)
     {
-        for(int j = 0; j < this->Columns; j++)
+        for(int col = 0; col < this->Columns; col++)
         {
-            this->Remove(i,j);
+            this->Remove(row,col);
         }
     }
 }

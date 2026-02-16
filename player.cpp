@@ -1,5 +1,20 @@
 #include "player.hpp"
 
+unsigned int player::getMoney() const
+{
+    return Money;
+}
+
+void player::AddMoney(unsigned int MoneyToAdd)
+{
+    this->Money = this->Money + MoneyToAdd;
+}
+
+void player::SubstractMoney(unsigned int AmountOfMoneyToSubstract)
+{
+    this->Money = this->Money - AmountOfMoneyToSubstract;
+}
+
 player::player() : PlayerInventory(5,5)
 {
     this->PlayerInventory.Set(new Weapon(), 3 , 4);
@@ -62,9 +77,25 @@ bool player::GetInfo()
     return this->PlayerInventory.GetInfo(this->CurrentY, this->CurrentX);
 }
 
+Item* player::GetItem()
+{
+    return this->PlayerInventory.Get(CurrentY, CurrentX);
+}
+
 void player::AlignItems()
 {
     std::thread tA(&Inventory::Align, &this->PlayerInventory);
 
     tA.join();
+}
+
+void player::ResetCorrdinates()
+{
+    this->CurrentX = 0;
+    this->CurrentY = 0;
+}
+
+void player::RemoveItem()
+{
+    this->PlayerInventory.Remove(CurrentY, CurrentX);
 }

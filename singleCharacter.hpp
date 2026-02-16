@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "player.hpp"
+#include "store.hpp"
 
 #ifdef _WIN32
 #include <conio.h> // For _getch() on Windows
@@ -22,7 +23,8 @@
 #endif
 
 char getSingleChar();
-bool performAction(player& CurrentPlayer);
-
+int performActionGame(player& CurrentPlayer);
+int performActionStore(player& CurrentPlayer, Store& GameStore);
+void ClearTerminal();
 
 #endif // SINGLECHARACTER_H

@@ -3,17 +3,21 @@
 
 #include "player.hpp"
 #include "singleCharacter.hpp"
+#include "store.hpp"
 
 class game
 {
 private:
     player& CurrentPlayer;
-    bool IsRunning = false;
+    Store store;
+    bool IsRunning = true;
 public:
     game(player &CurrentPlayer);
 
-    void Run();
+    void RunGame();
+    void RunStore();
     bool getIsRunning() const;
+    void SellItem();
 };
 
 #endif // GAME_HPP
