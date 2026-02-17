@@ -8,7 +8,7 @@ Weapon::Weapon() {
     this->rarity = common;
     this->durability = 100;
     this->attribute.setDamage(5);
-    this->price = Store::CalculatePrice(this);
+    this->price = this->CalculatePrice(*this);
 }
 
 Weapon::Weapon(const std::string &name,int maxQuantity, int price, int damage) : Item(name, maxQuantity, price)

@@ -42,6 +42,7 @@ public:
     void setMaxQuantity(int newMaxQuantity);
     int getPrice() const;
     void setPrice(int newPrice);
+    static unsigned int CalculatePrice(Item& ItemToCalculate);
 
 
     void virtual use() = 0;

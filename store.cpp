@@ -58,11 +58,6 @@ Item* Store::AddNewItem()
     return std::move(TempItem);
 }
 
-unsigned int Store::CalculatePrice(Item* ItemToCalculate)
-{
-    return ItemToCalculate->getDurability() + ItemToCalculate->getAttribute().getDamage() + ItemToCalculate->getAttribute().getDefense() + ItemToCalculate->getAttribute().getEnergy() + ItemToCalculate->getAttribute().getHealth() + ItemToCalculate->getAttribute().getMana() + (ItemToCalculate->getLevel() * 10);
-}
-
 void Store::Display()
 {
     StoreInventory.DisplayInventory(this->CurrentX, 0);
@@ -98,8 +93,8 @@ bool Store::BuyItem(player& CurrentPlayer)
     {
         return false;
     }
+    TempItem->setPrice(Item::CalculatePrice(*TempItem));
     CurrentPlayer.SubstractMoney(TempItem->getPrice());
-    TempItem->setPrice(this->CalculatePrice(TempItem));
     this->FillStore();
     return true;
 }

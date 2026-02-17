@@ -29,28 +29,24 @@ Item::Item(const std::string &name, int maxQuantity, int price) :
     int randNum = dist6(rng);
     if(randNum < COMMON_PROCENT){
         rarity = common;
-        this->price = price;
     }
     if(randNum >= COMMON_PROCENT && randNum < UNCMMON_PROCENT){
         rarity = uncommon;
-        this->price = price + 5;
     }
     if(randNum >= UNCMMON_PROCENT && randNum < RARE_PROCENT){
         rarity = rare;
-        this->price = price + 10;
     }
     if(randNum >= RARE_PROCENT && randNum < EPIC_PROCENT){
         rarity = epic;
-        this->price = price * 2;
     }
     if(randNum >= EPIC_PROCENT && randNum < LEGENDARY_PROCENT){
         rarity = legendary;
-        this->price = price * 4;
     }
     if(randNum >= LEGENDARY_PROCENT && randNum < MYTHIE_PROCENT){
         rarity = mythie;
-        this->price = price * 10;
     }
+
+    this->price = this->CalculatePrice(*this);
 }
 
 Item::~Item(){
@@ -160,4 +156,9 @@ void Item::getInfo()
     std::cout << "3. Max Quantity: " << maxQuantity << "\n";
     std::cout << "4. Durability: " << durability << "\n";
     std::cout << "5. Price: " << price << "\n";
+}
+
+unsigned int Item::CalculatePrice(Item& ItemToCalculate)
+{
+    return ItemToCalculate.getDurability() + ItemToCalculate.getAttribute().getDamage() + ItemToCalculate.getAttribute().getDefense() + ItemToCalculate.getAttribute().getEnergy() + ItemToCalculate.getAttribute().getHealth() + ItemToCalculate.getAttribute().getMana() + (ItemToCalculate.getLevel() * 10);
 }

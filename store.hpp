@@ -22,7 +22,6 @@ public:
     void Display();
     void MoveRightOrLeft(bool RightOrLeft);
     bool BuyItem(player& CurrentPlayer);
-    static unsigned int CalculatePrice(Item* ItemToCalculate);
 };
 
 #endif // STORE_H

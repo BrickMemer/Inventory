@@ -66,9 +66,6 @@ int performActionGame(player& CurrentPlayer)
     case 'd':
         CurrentPlayer.MoveX(false);
         break;
-    case 's':
-        CurrentPlayer.MoveY(false);
-        break;
     case 'n':
         return 2;
     case 'm':
@@ -88,12 +85,14 @@ int performActionGame(player& CurrentPlayer)
             }
             else
             {
-                CurrentPlayer.AddMoney(CurrentPlayer.GetItem()->getPrice());
+                unsigned int ItemPrice = CurrentPlayer.GetItem()->getPrice();
+                CurrentPlayer.AddMoney(ItemPrice);
                 CurrentPlayer.RemoveItem();
                 break;
             }
         }while(!getchar());
         break;
+    
     default:
         break;
     }
