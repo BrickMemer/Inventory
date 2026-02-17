@@ -13,26 +13,30 @@ private:
     unsigned int Rows;
     unsigned int Columns;
     InventoryCell*** Items;
-    unsigned int CurrentRow;
-    unsigned int CurrentColumns;
+    unsigned int CurrentX = 0;
+    unsigned int CurrentY = 0;
     std::shared_mutex Shared_mtx;
 public:
     Inventory(unsigned int Rows, unsigned int Columns);
 
-    bool Set(Item* Item, const unsigned int x, const unsigned int y);
-    Item* Get(const unsigned int x, const unsigned int y);
-    bool Remove(const unsigned int x, const unsigned int y);
-    Item* Drop(const unsigned int x, const unsigned int y);
+    bool Set(Item* Item);
+    Item* Get();
+    bool Remove();
+    Item* Drop();
     bool AddItem(Item* Item);
     bool MoveOrSwap(int x,int y,int newx,int newy);
-    bool GetInfo(const unsigned int x, const unsigned int y);
-    void DisplayInventory(const unsigned int x,const unsigned int y);
+    bool GetInfo();
+    void DisplayInventory();
     void Align();
     void Clear();
-    unsigned int GetRowsMaxSize();
-    unsigned int GetColumnsMaxSize();
+    void ResetCorrdinates();
+    bool SetCorrdinates(const unsigned int newX, const unsigned int newY);
+    unsigned int GetRowsMaxSize() const;
+    unsigned int GetColumnsMaxSize() const;
 
     ~Inventory();
+    unsigned int getCurrentX() const;
+    unsigned int getCurrentY() const;
 };
 
 #endif // INVENTORY_HPP

@@ -14,13 +14,12 @@ private:
 
     void FillStore();
     Item* AddNewItem();
-    unsigned short CurrentX = 0;
 public:
     Store();
 
     void GetInfo();
     void Display();
-    void MoveRightOrLeft(bool RightOrLeft);
+    void MoveY(bool LeftOrRight);
     bool BuyItem(player& CurrentPlayer);
 };
 

@@ -17,48 +17,36 @@ void player::SubstractMoney(unsigned int AmountOfMoneyToSubstract)
 
 player::player() : PlayerInventory(5,5)
 {
-    this->PlayerInventory.Set(new Weapon(), 3 , 4);
+    this->PlayerInventory.AddItem(new Weapon());
 }
 
 void player::DisplayInventory()
 {
-    std::thread tD(&Inventory::DisplayInventory, &this->PlayerInventory, this->CurrentX, this->CurrentY);
+    std::thread tD(&Inventory::DisplayInventory, &this->PlayerInventory);
 
     tD.join();
     //std::cout << "x: " << this->CurrentX << "y: " << this->CurrentY << '\r';
 }
-bool player::MoveX(bool RightOrLeft)
+bool player::MoveX(bool UpOrDown)
 {
-    if(RightOrLeft == true && this->CurrentX > 0)
+    if(UpOrDown == true)
     {
-        this->CurrentX--;
-        return true;
-    }
-    else if(RightOrLeft == false && this->CurrentX + 1 < this->PlayerInventory.GetRowsMaxSize())
-    {
-        this->CurrentX++;
-        return true;
+        return this->PlayerInventory.SetCorrdinates(this->PlayerInventory.getCurrentX() - 1, this->PlayerInventory.getCurrentY());
     }
     else
     {
-        return false;
+        return this->PlayerInventory.SetCorrdinates(this->PlayerInventory.getCurrentX() + 1, this->PlayerInventory.getCurrentY());
     }
 }
-bool player::MoveY(bool UpOrDown)
+bool player::MoveY(bool LeftOrRight)
 {
-    if(UpOrDown == true && this->CurrentY > 0)
+    if(LeftOrRight == true)
     {
-        this->CurrentY--;
-        return true;
-    }
-    else if(UpOrDown == false && this->CurrentY + 1 < this->PlayerInventory.GetColumnsMaxSize())
-    {
-        this->CurrentY++;
-        return true;
+        return this->PlayerInventory.SetCorrdinates(this->PlayerInventory.getCurrentX(), this->PlayerInventory.getCurrentY() - 1);
     }
     else
     {
-        return false;
+        return this->PlayerInventory.SetCorrdinates(this->PlayerInventory.getCurrentX(), this->PlayerInventory.getCurrentY() + 1);
     }
 }
 
@@ -74,12 +62,12 @@ void player::ClearItems()
 
 bool player::GetInfo()
 {
-    return this->PlayerInventory.GetInfo(this->CurrentY, this->CurrentX);
+    return this->PlayerInventory.GetInfo();
 }
 
 Item* player::GetItem()
 {
-    return this->PlayerInventory.Get(CurrentY, CurrentX);
+    return this->PlayerInventory.Get();
 }
 
 void player::AlignItems()
@@ -89,13 +77,12 @@ void player::AlignItems()
     tA.join();
 }
 
-void player::ResetCorrdinates()
-{
-    this->CurrentX = 0;
-    this->CurrentY = 0;
-}
-
 void player::RemoveItem()
 {
-    this->PlayerInventory.Remove(CurrentY, CurrentX);
+    this->PlayerInventory.Remove();
+}
+
+void player::ResetCorrdinates()
+{
+    this->PlayerInventory.ResetCorrdinates();
 }

@@ -58,12 +58,15 @@ int performActionGame(player& CurrentPlayer)
         }while(!getchar());
         break;
     case 'a':
-        CurrentPlayer.MoveX(true);
-        break;
-    case 'w':
         CurrentPlayer.MoveY(true);
         break;
+    case 'w':
+        CurrentPlayer.MoveX(true);
+        break;
     case 'd':
+        CurrentPlayer.MoveY(false);
+        break;
+    case 's':
         CurrentPlayer.MoveX(false);
         break;
     case 'n':
@@ -106,10 +109,10 @@ int performActionStore(player& CurrentPlayer, Store& GameStore)
     switch(input)
     {
     case 'a':
-        GameStore.MoveRightOrLeft(false);
+        GameStore.MoveY(true);
         break;
     case 'd':
-        GameStore.MoveRightOrLeft(true);
+        GameStore.MoveY(false);
         break;
     case 'h':
         do

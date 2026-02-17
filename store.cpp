@@ -60,30 +60,29 @@ Item* Store::AddNewItem()
 
 void Store::Display()
 {
-    StoreInventory.DisplayInventory(this->CurrentX, 0);
+    StoreInventory.DisplayInventory();
 }
 
 void Store::GetInfo()
 {
-    StoreInventory.GetInfo(0, this->CurrentX);
+    StoreInventory.GetInfo();
 }
 
-void Store::MoveRightOrLeft(bool RightOrLeft)
+void Store::MoveY(bool LeftOrRight)
 {
-    if(RightOrLeft == true && CurrentX + 1 <= this->StoreSize)
+    if(LeftOrRight == true)
     {
-        CurrentX += 1;
+        this->StoreInventory.SetCorrdinates(this->StoreInventory.getCurrentX(), this->StoreInventory.getCurrentY() - 1);
     }
-    else if(CurrentX - 1 >= 0)
+    else
     {
-        CurrentX -= 1;
+        this->StoreInventory.SetCorrdinates(this->StoreInventory.getCurrentX(), this->StoreInventory.getCurrentY() + 1);
     }
-    std::cout << this->CurrentX << '\n';
 }
 
 bool Store::BuyItem(player& CurrentPlayer)
 {
-    Item* TempItem = this->StoreInventory.Get(0, this->CurrentX);
+    Item* TempItem = this->StoreInventory.Get();
     //std::cout << (int) CurrentPlayer.getMoney() - TempItem->getPrice() << '\n';
     if(((int)CurrentPlayer.getMoney() - TempItem->getPrice()) < 0)
     {
