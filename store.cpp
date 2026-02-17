@@ -93,8 +93,8 @@ bool Store::BuyItem(player& CurrentPlayer)
     {
         return false;
     }
-    TempItem->setPrice(Item::CalculatePrice(*TempItem));
     CurrentPlayer.SubstractMoney(TempItem->getPrice());
+    TempItem->setPrice(Item::CalculatePrice(*TempItem));
     this->FillStore();
     return true;
 }
