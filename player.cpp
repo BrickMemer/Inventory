@@ -10,9 +10,9 @@ void player::AddMoney(unsigned int MoneyToAdd)
     this->Money = this->Money + MoneyToAdd;
 }
 
-void player::SubstractMoney(unsigned int AmountOfMoneyToSubstract)
+void player::SubstractMoney(unsigned int MoneyToSubstract)
 {
-    this->Money = this->Money - AmountOfMoneyToSubstract;
+    this->Money = this->Money - MoneyToSubstract;
 }
 
 player::player() : PlayerInventory(5,5)
@@ -47,9 +47,9 @@ bool player::MoveY(bool LeftOrRight)
     }
 }
 
-bool player::AddItem(Item* Item)
+bool player::AddItem(Item* item)
 {
-    return this->PlayerInventory.AddItem(Item);
+    return this->PlayerInventory.AddItem(item);
 }
 
 void player::ClearItems()
@@ -64,7 +64,7 @@ bool player::GetInfo()
 
 Item* player::GetItem()
 {
-    return this->PlayerInventory.Get();
+    return this->PlayerInventory.GetItem();
 }
 
 void player::AlignItems()

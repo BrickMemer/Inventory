@@ -14,7 +14,7 @@ public:
 
     void DisplayInventory();
 
-    bool AddItem(Item* Item);
+    bool AddItem(Item* item);
     void AlignItems();
     void ClearItems();
     bool MoveX(bool UpOrDown);
@@ -26,7 +26,7 @@ public:
 
     unsigned int getMoney() const;
     void AddMoney(unsigned int MoneyToAdd);
-    void SubstractMoney(unsigned int AmountOfMoneyToSubstract);
+    void SubstractMoney(unsigned int MoneyToSubstract);
 };
 
 #endif // PLAYER_HPP

@@ -4,8 +4,6 @@
 #include "inventorycell.hpp"
 #include <iostream>
 #include <queue>
-#include <shared_mutex>
-#include <mutex>
 
 class Inventory
 {
@@ -15,15 +13,14 @@ private:
     InventoryCell*** Items;
     unsigned int CurrentX = 0;
     unsigned int CurrentY = 0;
-    std::shared_mutex Shared_mtx;
 public:
     Inventory(unsigned int Rows, unsigned int Columns);
 
-    bool Set(Item* Item);
-    Item* Get();
+    bool SetItem(Item* item);
+    Item* GetItem();
     bool Remove();
     Item* Drop();
-    bool AddItem(Item* Item);
+    bool AddItem(Item* item);
     bool MoveOrSwap(int x,int y,int newx,int newy);
     bool GetInfo();
     void DisplayInventory();

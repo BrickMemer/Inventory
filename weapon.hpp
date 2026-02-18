@@ -12,7 +12,7 @@ public:
     int getDamage() const;
     void setDamage(int newDamage);
 
-    void use();
+    void use() override;
 };
 
 #endif // WEAPON_H

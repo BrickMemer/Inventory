@@ -1,5 +1,4 @@
 #include "weapon.hpp"
-#include "store.hpp"
 
 Weapon::Weapon() {
     this->level = 1;

@@ -15,7 +15,7 @@ Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
 }
 
 
-Item* Inventory::Get()
+Item* Inventory::GetItem()
 {
     if(!this->Items[this->CurrentX][this->CurrentY])
     {
@@ -27,9 +27,9 @@ Item* Inventory::Get()
     }
 }
 
-bool Inventory::Set(Item* Item)
+bool Inventory::SetItem(Item* item)
 {
-    this->Items[this->CurrentX][this->CurrentY]->setItem(Item);
+    this->Items[this->CurrentX][this->CurrentY]->setItem(item);
     return true;
 }
 
@@ -53,7 +53,7 @@ bool Inventory::MoveOrSwap(int x,int y,int newx,int newy)
     }
 }
 
-bool Inventory::AddItem(Item* Item)
+bool Inventory::AddItem(Item* item)
 {
     for(int i = 0; i < this->Rows; i++)
     {
@@ -61,13 +61,13 @@ bool Inventory::AddItem(Item* Item)
         {
             if(this->Items[i][j]->getItem() == nullptr)
             {
-                std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
-                this->Items[i][j]->setItem(Item);
+                this->Items[i][j]->setItem(item);
                 return true;
             }
         }
     }
-    delete Item;
+
+    delete item;
     return false;
 }
 
@@ -146,7 +146,6 @@ void Inventory::Align()
         {
             if(this->Items[row][col]->getItem() && FreeCordinates.size() > 0)
             {
-                std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
                 this->MoveOrSwap(row,col,FreeCordinates.front().first, FreeCordinates.front().second);
                 FreeCordinates.pop();
             }

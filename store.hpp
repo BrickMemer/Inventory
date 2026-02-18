@@ -18,9 +18,10 @@ public:
     Store();
 
     void GetInfo();
-    void Display();
+    void DisplayStore();
     void MoveY(bool LeftOrRight);
     bool BuyItem(player& CurrentPlayer);
+    static void SellItem(player& CurrentPlayer);
 };
 
 #endif // STORE_H

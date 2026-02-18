@@ -58,7 +58,7 @@ Item* Store::AddNewItem()
     return std::move(TempItem);
 }
 
-void Store::Display()
+void Store::DisplayStore()
 {
     StoreInventory.DisplayInventory();
 }
@@ -82,7 +82,7 @@ void Store::MoveY(bool LeftOrRight)
 
 bool Store::BuyItem(player& CurrentPlayer)
 {
-    Item* TempItem = this->StoreInventory.Get();
+    Item* TempItem = this->StoreInventory.GetItem();
     //std::cout << (int) CurrentPlayer.getMoney() - TempItem->getPrice() << '\n';
     if(((int)CurrentPlayer.getMoney() - TempItem->getPrice()) < 0)
     {
@@ -96,4 +96,12 @@ bool Store::BuyItem(player& CurrentPlayer)
     TempItem->setPrice(Item::CalculatePrice(*TempItem));
     this->FillStore();
     return true;
+}
+
+
+void Store::SellItem(player& CurrentPlayer)
+{
+    unsigned int ItemPrice = CurrentPlayer.GetItem()->getPrice();
+    CurrentPlayer.AddMoney(ItemPrice);
+    CurrentPlayer.RemoveItem();
 }

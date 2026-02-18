@@ -88,9 +88,7 @@ int performActionGame(player& CurrentPlayer)
             }
             else
             {
-                unsigned int ItemPrice = CurrentPlayer.GetItem()->getPrice();
-                CurrentPlayer.AddMoney(ItemPrice);
-                CurrentPlayer.RemoveItem();
+                Store::SellItem(CurrentPlayer);
                 break;
             }
         }while(!getchar());

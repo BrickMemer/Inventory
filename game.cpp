@@ -21,10 +21,12 @@ void game::RunGame()
         {
         case 0:
             return;
+            break;
         case 2:
             this->CurrentPlayer.ResetCorrdinates();
             ClearTerminal();
             this->RunStore();
+            break;
         }
     }
 }
@@ -36,16 +38,18 @@ void game::RunStore()
     bool IsStoreRunning = true;
     while (IsStoreRunning)
     {
-        this->store.Display();
+        this->store.DisplayStore();
         switch (performActionStore(this->CurrentPlayer, this->store))
         {
         case 0:
+            this->CurrentPlayer.ResetCorrdinates();
+            ClearTerminal();
             return;
         }
     }
 }
 
-void game::SellItem()
+void game::StopGame()
 {
-    unsigned int Price = (this->CurrentPlayer.GetItem()->getPrice());
+    this->IsRunning = false;
 }
