@@ -22,10 +22,7 @@ player::player() : PlayerInventory(5,5)
 
 void player::DisplayInventory()
 {
-    std::thread tD(&Inventory::DisplayInventory, &this->PlayerInventory);
-
-    tD.join();
-    //std::cout << "x: " << this->CurrentX << "y: " << this->CurrentY << '\r';
+    this->PlayerInventory.DisplayInventory();
 }
 bool player::MoveX(bool UpOrDown)
 {
@@ -72,9 +69,7 @@ Item* player::GetItem()
 
 void player::AlignItems()
 {
-    std::thread tA(&Inventory::Align, &this->PlayerInventory);
-
-    tA.join();
+    this->PlayerInventory.Align();
 }
 
 void player::RemoveItem()

@@ -3,15 +3,12 @@
 #include "inventory.hpp"
 #include "weapon.hpp"
 #include <algorithm>
-#include <thread>
-#include <future>
 
 class player
 {
 private:
     unsigned int Money = 0;
     Inventory PlayerInventory;
-    std::mutex mtx;
 public:
     player();
 
