@@ -3,6 +3,8 @@
 
 int main()
 {
+    std::system(CLEAR);
+
     player player1;
     game game1(player1);
 
@@ -10,8 +12,6 @@ int main()
         system("stty -echo");
         system("stty cbreak");
     #endif
-
-    std::system(CLEAR);
 
     game1.RunGame();
 
