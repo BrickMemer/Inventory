@@ -158,7 +158,7 @@ void Item::getInfo()
     std::cout << "5. Price: " << price << "\n";
 }
 
-unsigned int Item::CalculatePrice(Item& ItemToCalculate)
+unsigned int Item::CalculatePrice(const Item& ItemToCalculate)
 {
     return ItemToCalculate.getDurability() + ItemToCalculate.getAttribute().getDamage() + ItemToCalculate.getAttribute().getDefense() + ItemToCalculate.getAttribute().getEnergy() + ItemToCalculate.getAttribute().getHealth() + ItemToCalculate.getAttribute().getMana() + (ItemToCalculate.getLevel() * 10);
 }

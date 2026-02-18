@@ -17,7 +17,7 @@ public:
     void RunGame();
     void RunStore();
     bool getIsRunning() const;
-    void SellItem();
+    void StopGame();
 };
 
 #endif // GAME_HPP

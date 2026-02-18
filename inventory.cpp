@@ -15,33 +15,22 @@ Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
 }
 
 
-Item* Inventory::Get(const unsigned int x,const unsigned int y)
+Item* Inventory::GetItem()
 {
-    if(x >= this->Rows || y >= this->Columns)
+    if(!this->Items[this->CurrentX][this->CurrentY])
     {
         return nullptr;
-    }
-    if(this->Items[x][y])
-    {
-        return Items[x][y]->getItem();
     }
     else
     {
-        return nullptr;
+        return Items[this->CurrentX][this->CurrentY]->getItem();
     }
 }
 
-bool Inventory::Set(Item* Item, const unsigned int x,const unsigned int y)
+bool Inventory::SetItem(Item* item)
 {
-    if(x >= this->Rows || y >= this->Columns)
-    {
-        return false;
-    }
-    else
-    {
-        this->Items[x][y]->setItem(Item);
-        return true;
-    }
+    this->Items[this->CurrentX][this->CurrentY]->setItem(item);
+    return true;
 }
 
 bool Inventory::MoveOrSwap(int x,int y,int newx,int newy)
@@ -56,15 +45,15 @@ bool Inventory::MoveOrSwap(int x,int y,int newx,int newy)
     }
     else
     {
-        Item* TempItem = Get(x, y);
-        Item* TempItem2 = Get(newx, newy);
-        Set(TempItem, newx, newy);
-        Set(TempItem2, x, y);
+        Item* TempItem1 = this->Items[x][y]->getItem();
+        Item* TempItem2 = this->Items[newx][newy]->getItem();
+        this->Items[x][y]->setItem(TempItem2);
+        this->Items[newx][newy]->setItem(TempItem1);
         return true;
     }
 }
 
-bool Inventory::AddItem(Item* Item)
+bool Inventory::AddItem(Item* item)
 {
     for(int i = 0; i < this->Rows; i++)
     {
@@ -72,70 +61,58 @@ bool Inventory::AddItem(Item* Item)
         {
             if(this->Items[i][j]->getItem() == nullptr)
             {
-                std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
-                this->Items[i][j]->setItem(Item);
+                this->Items[i][j]->setItem(item);
                 return true;
             }
         }
     }
-    delete Item;
+
+    delete item;
     return false;
 }
 
-Item* Inventory::Drop(const unsigned int x,const unsigned int y)
+Item* Inventory::Drop()
 {
-    if(x >= this->Rows || y >= this->Columns)
+    if(!this->Items[this->CurrentX][this->CurrentY])
     {
         return nullptr;
     }
-    else if(this->Items[x][y]->getItem())
+    else
     {
-        Item* TempItem = Get(x, y);
-        this->Items[x][y]->setItem(nullptr);
+        Item* TempItem = this->Items[this->CurrentX][this->CurrentY]->getItem();
+        this->Items[this->CurrentX][this->CurrentY]->setItem(nullptr);
         return TempItem;
     }
-    else
-    {
-        return nullptr;
-    }
 }
 
-bool Inventory::Remove(const unsigned int x,const unsigned int y)
+bool Inventory::Remove()
 {
-    if(x >= this->Rows || y >= this->Columns)
+    if(!this->Items[this->CurrentX][this->CurrentY])
     {
         return false;
     }
-    else if(this->Items[x][y]->getItem())
+    else
     {
-        delete this->Items[x][y]->getItem();
-        this->Items[x][y]->setItem(nullptr);
+        delete this->Items[this->CurrentX][this->CurrentY]->getItem();
+        this->Items[this->CurrentX][this->CurrentY]->setItem(nullptr);
         return true;
     }
-    else
-    {
-        return false;
-    }
 }
 
-bool Inventory::GetInfo(const unsigned int x, const unsigned int y)
+bool Inventory::GetInfo()
 {
-    if(x >= this->Rows || y >= this->Columns)
+    if(!this->Items[this->CurrentX][this->getCurrentY()])
     {
         return false;
     }
-    else if(this->Items[x][y]->getItem())
+    else
     {
-        this->Items[x][y]->getItem()->getInfo();
+        this->Items[this->CurrentX][this->getCurrentY()]->getItem()->getInfo();
         return true;
     }
-    else
-    {
-        return false;
-    }
 }
 
-void Inventory::DisplayInventory(const unsigned int x, const unsigned int y)
+void Inventory::DisplayInventory()
 {
     unsigned short SpaceBetween = 24;
     for(size_t row = 0; row < this->Rows; row++)
@@ -146,7 +123,7 @@ void Inventory::DisplayInventory(const unsigned int x, const unsigned int y)
             bool isSelected = false;
             for(size_t col = 0; col < this->Columns; col++)
             {
-                if(col == x && row == y){
+                if(col == this->CurrentY && row == this->CurrentX){
                     isSelected = true;
                 }
                 std::cout << this->Items[row][col]->display(level, isSelected);
@@ -158,6 +135,7 @@ void Inventory::DisplayInventory(const unsigned int x, const unsigned int y)
     }
 }
 
+
 void Inventory::Align()
 {
     std::queue<std::pair<int, int>> FreeCordinates;
@@ -168,7 +146,6 @@ void Inventory::Align()
         {
             if(this->Items[row][col]->getItem() && FreeCordinates.size() > 0)
             {
-                std::unique_lock<std::shared_mutex> lock(this->Shared_mtx);
                 this->MoveOrSwap(row,col,FreeCordinates.front().first, FreeCordinates.front().second);
                 FreeCordinates.pop();
             }
@@ -186,19 +163,50 @@ void Inventory::Clear()
     {
         for(int col = 0; col < this->Columns; col++)
         {
-            this->Remove(row,col);
+            delete this->Items[this->CurrentX][this->CurrentY]->getItem();
+            this->Items[this->CurrentX][this->CurrentY]->setItem(nullptr);
         }
     }
 }
 
-unsigned int Inventory::GetColumnsMaxSize()
+void Inventory::ResetCorrdinates()
+{
+    this->CurrentX = 0;
+    this->CurrentY = 0;
+}
+
+bool Inventory::SetCorrdinates(const unsigned int newX, const unsigned int newY)
+{
+    if(newX >= this->Rows|| newY >= this->Columns)
+    {
+        return false;
+    }
+    else
+    {
+        this->CurrentX = newX;
+        this->CurrentY = newY;
+        return true;
+    }
+}
+
+unsigned int Inventory::GetColumnsMaxSize() const
 {
     return this->Columns;
 }
 
-unsigned int Inventory::GetRowsMaxSize()
+unsigned int Inventory::GetRowsMaxSize() const
 {
     return this->Rows;
+}
+
+unsigned int Inventory::getCurrentX() const
+{
+    return CurrentX;
+}
+
+unsigned int Inventory::getCurrentY() const
+{
+    return CurrentY;
 }
 
 Inventory::~Inventory()

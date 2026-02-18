@@ -42,12 +42,11 @@ public:
     void setMaxQuantity(int newMaxQuantity);
     int getPrice() const;
     void setPrice(int newPrice);
-    static unsigned int CalculatePrice(Item& ItemToCalculate);
-
+    Attribute getAttribute() const;
+    static unsigned int CalculatePrice(const Item& ItemToCalculate);
 
     void virtual use() = 0;
     void getInfo();
-    Attribute getAttribute() const;
 };
 
 #endif // ITEM_HPP
