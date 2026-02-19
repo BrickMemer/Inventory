@@ -1,0 +1,178 @@
+#include "singleCharacter.hpp"
+
+char getSingleChar() {
+#ifdef _WIN32
+    return _getch(); // Windows: Get character without Enter
+#elif __APPLE__
+    struct termios oldt, newt;
+    char ch;
+    tcgetattr(STDIN_FILENO, &oldt); // Get current terminal attributes
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO); // Disable line buffering & echo
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt); // Apply new attributes
+    ch = getchar(); // Read single character
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // Restore old attributes
+    return ch;
+#elif unix
+    return getchar();
+#endif
+}
+
+int performActionGame(player& CurrentPlayer)
+{
+    char input = getSingleChar();
+    switch(input)
+    {
+    case 'A':
+        CurrentPlayer.AlignItems();
+        break;
+    /*
+    case 'c':
+        CurrentPlayer.ClearItems();
+        break;
+    */
+    case 'q':
+        return 0;
+        break;
+    case 'h':
+        do
+        {
+            std::system(CLEAR);
+            std::cout << "Press w,a,s,d to move" << '\n'
+                      << "Press 'A' to align all the items in order" << '\n'
+                      << "Press 'q' to quit" << '\n'
+                      /*
+                      << "Press 'c' to clear inventory" << '\n'
+                        */
+                      << "Press 'n' to open store" << '\n'
+                      << "Press 'S' to sell item" << '\n'
+                      << '\n'
+                      << "Press any key to continue ...";
+        }while(!getchar());
+        break;
+    case 'i':
+        do
+        {
+            std::system(CLEAR);
+            if(CurrentPlayer.GetInfo() == false)
+            {
+                std::cout << "No valid item is present under your selection, please try again" << '\n'
+                          << "Press any key to continue ...";
+            }
+        }while(!getchar());
+        break;
+    case 'a':
+        CurrentPlayer.MoveY(true);
+        break;
+    case 'w':
+        CurrentPlayer.MoveX(true);
+        break;
+    case 'd':
+        CurrentPlayer.MoveY(false);
+        break;
+    case 's':
+        CurrentPlayer.MoveX(false);
+        break;
+    case 'n':
+        return 2;
+    case 'm':
+        do
+        {
+            std::system(CLEAR);
+            std::cout << "You currently have: " << CurrentPlayer.getMoney() << " money" << '\n';
+        }while(!getchar());
+        break;
+    case 'S':
+        do
+        {
+            std::system(CLEAR);
+            if(!CurrentPlayer.GetItem())
+            {
+                std::cout << "There is no item to sell";
+            }
+            else
+            {
+                Store::SellItem(CurrentPlayer);
+                break;
+            }
+        }while(!getchar());
+        break;
+    
+    default:
+        break;
+    }
+    std::system(CLEAR);
+    return 1;
+}
+
+int performActionStore(player& CurrentPlayer, Store& GameStore)
+{
+    char input = getSingleChar();
+    switch(input)
+    {
+    case 'a':
+        GameStore.MoveY(true);
+        break;
+    case 'd':
+        GameStore.MoveY(false);
+        break;
+    case 'h':
+        do
+        {
+            std::system(CLEAR);
+            std::cout << "Press a-d to move" << '\n'
+                      << "Press 'b' to buy an new item, price determent by the store may differ from the value it actually is << '\n';" << '\n'
+                      << '\n'
+                      << "Press any key to continue ...";
+        }while(!getchar());
+        break;
+    case 'i':
+    {
+        do
+        {
+            std::system(CLEAR);
+            GameStore.GetInfo();
+        }while(!getchar());
+        break;
+    }
+    case 'b':
+        std::system(CLEAR);
+        std::cout << "Press y if you want to buy this item, if not press n" << '\n';
+        input = getSingleChar();
+        if(input == 'y')
+        {
+            do
+            {
+                std::system(CLEAR);
+                if(GameStore.BuyItem(CurrentPlayer) == true)
+                {
+                    std::cout << "You had bought a new item (:" << '\n';
+                }
+                else
+                {
+                    std::cout << "You don't have enough space or money to buy new item ): " << '\n';
+                }
+                std:: cout << "You currently have: " << CurrentPlayer.getMoney() << '\n';
+            }while(!getchar());
+        }
+        break;
+    case 'm':
+        do
+        {
+            std::system(CLEAR);
+            std::cout << "You currently have: " << CurrentPlayer.getMoney() << " money" << '\n';
+        }while(!getchar());
+        break;
+    case 'q':
+        std::system(CLEAR);
+        return 0;
+        break;
+    }
+    std::system(CLEAR);
+    return 1;
+}
+
+void ClearTerminal()
+{
+    std::system(CLEAR);
+}

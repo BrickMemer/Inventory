@@ -6,7 +6,22 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(Inventory-New main.cpp
-    item.hpp item.cpp)
+    item.hpp item.cpp
+    inventory.hpp inventory.cpp
+    player.hpp player.cpp
+
+    attribute.hpp attribute.cpp
+    weapon.hpp weapon.cpp
+    block.hpp block.cpp
+    inventory.hpp inventory.cpp
+    singleCharacter.hpp singleCharacter.cpp
+    game.hpp game.cpp
+    inventorycell.hpp inventorycell.cpp
+    store.cpp
+    store.hpp
+
+
+)
 
 include(GNUInstallDirs)
 install(TARGETS Inventory-New
