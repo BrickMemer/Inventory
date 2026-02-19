@@ -26,9 +26,11 @@ int performActionGame(player& CurrentPlayer)
     case 'A':
         CurrentPlayer.AlignItems();
         break;
+    /*
     case 'c':
         CurrentPlayer.ClearItems();
         break;
+    */
     case 'q':
         return 0;
         break;
@@ -39,7 +41,9 @@ int performActionGame(player& CurrentPlayer)
             std::cout << "Press w,a,s,d to move" << '\n'
                       << "Press 'A' to align all the items in order" << '\n'
                       << "Press 'q' to quit" << '\n'
+                      /*
                       << "Press 'c' to clear inventory" << '\n'
+                        */
                       << "Press 'n' to open store" << '\n'
                       << "Press 'S' to sell item" << '\n'
                       << '\n'

@@ -101,13 +101,13 @@ bool Inventory::Remove()
 
 bool Inventory::GetInfo()
 {
-    if(!this->Items[this->CurrentX][this->getCurrentY()])
+    if(!this->Items[this->CurrentX][this->CurrentY]->getItem())
     {
         return false;
     }
     else
     {
-        this->Items[this->CurrentX][this->getCurrentY()]->getItem()->getInfo();
+        this->Items[this->CurrentX][this->CurrentY]->getItem()->getInfo();
         return true;
     }
 }
@@ -163,8 +163,11 @@ void Inventory::Clear()
     {
         for(int col = 0; col < this->Columns; col++)
         {
-            delete this->Items[this->CurrentX][this->CurrentY]->getItem();
-            this->Items[this->CurrentX][this->CurrentY]->setItem(nullptr);
+            if(this->Items[row][col])
+            {
+                delete this->Items[row][col];
+                this->Items[row][col] = nullptr;
+            }
         }
     }
 }
