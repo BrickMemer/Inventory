@@ -15,6 +15,7 @@ Item::Item() {
     this->durability = 100;
     this->maxQuantity = 64;
     this->price = 0;
+    this->isEquip = false;
 }
 
 Item::Item(const std::string &name, int maxQuantity, int price) :

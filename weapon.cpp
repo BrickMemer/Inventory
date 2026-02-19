@@ -18,7 +18,8 @@ void Weapon::use()
 {
     std::cout << "Attack!! " << std::endl;
     std::cout << "Damage : " << attribute.getDamage() << " Hp" << std::endl;
-    durability-=1;
+    durability-=10;
+
 }
 
 int Weapon::getDamage() const
