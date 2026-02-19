@@ -12,13 +12,14 @@ add_executable(Inventory-New main.cpp
 
     attribute.hpp attribute.cpp
     weapon.hpp weapon.cpp
-    block.hpp block.cpp
+
     inventory.hpp inventory.cpp
     singleCharacter.hpp singleCharacter.cpp
     game.hpp game.cpp
     inventorycell.hpp inventorycell.cpp
     store.cpp
     store.hpp
+    material.h material.cpp
 
 
 )
