@@ -11,11 +11,14 @@ private:
     player& CurrentPlayer;
     Store store;
     bool IsRunning = true;
+    void RunInventory();
+    void RunStore();
+    int RunMainMenu();
+    void DisplayMainMenu(const unsigned char& SelectedOption);
 public:
     game(player &CurrentPlayer);
 
     void RunGame();
-    void RunStore();
     bool getIsRunning() const;
     void StopGame();
 };

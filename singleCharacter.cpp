@@ -18,6 +18,32 @@ char getSingleChar() {
 #endif
 }
 
+int performActionMainMenu(unsigned char& SelectedOption)
+{
+    const char input = getSingleChar();
+
+    switch(input)
+    {
+    case 'w':
+        if(SelectedOption > 0)
+        {
+            SelectedOption--;
+        }
+        break;
+    case 's':
+        SelectedOption++;
+        break;
+    case 'q':
+        return 0;
+        break;
+    case 'z':
+        return 2;
+        break;
+    }
+    std::system(CLEAR);
+    return 1;
+}
+
 int performActionGame(player& CurrentPlayer)
 {
     char input = getSingleChar();
