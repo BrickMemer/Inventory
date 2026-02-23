@@ -20,6 +20,7 @@ add_executable(Inventory-New main.cpp
     store.cpp
     store.hpp
     material.h material.cpp
+    armor.h armor.cpp
 
 
 )
