@@ -17,10 +17,12 @@ Weapon::Weapon(const std::string &name, int price, int damage) : Item(1, name, c
     this->isCanEquip = true;
 }
 
-Weapon::Weapon(int level, const std::string &name, Rarity rarity, int durability, int damage): Item( level, name, rarity, 1, durability, true)
+Weapon::Weapon(int level, const std::string &name, Rarity rarity, int durability, int damage): Item(level, name, rarity, 1, durability, true)
 {
     this->attribute.setDamage(damage);
 }
+
+
 void Weapon::use()
 {
     std::cout << "Attack!! " << std::endl;
