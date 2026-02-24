@@ -1,4 +1,4 @@
-#include "enemy.h"
+#include "enemy.hpp"
 
 std::string Enemy::getName() const
 {

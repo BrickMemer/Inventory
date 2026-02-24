@@ -1,55 +1,51 @@
-#include "floor.h"
+#include "floor.hpp"
 
-floor::floor()
+Floor::Floor()
 {
-    this->level = 1;
-    this->enemies={
-        Enemy()
-    };
+    this->MakeFloor(1);
 }
 
-floor::floor(int level)
+Floor::Floor(int level)
 {
-    this->level = level;
-    switch (level) {
-    case 1:
-        this->enemies={
-            Enemy()
-        };
-        break;
-    default:
-        this->enemies={
-            Enemy(level, "Goblin", 5 * level, 10 * level, 0, 2 * level),
-            Enemy(level, "Rabit", 2 * level, 4 * level, 0, 1 * level)
-        };
-        break;
+    this->MakeFloor(level);
+}
+
+void Floor::MakeFloor(const int& level)
+{
+    for(int i = 0; i < level; i++)
+    {
+        this->enemies.push_back(new Orc());
     }
 }
 
-int floor::getLevel() const
-{
-    return level;
-}
-
-void floor::setLevel(int newLevel)
-{
-    level = newLevel;
-}
-
-std::vector<Enemy> floor::getEnemies() const
+std::vector<Enemy*> Floor::getEnemies() const
 {
     return enemies;
 }
 
-void floor::setEnemies(const std::vector<Enemy> &newEnemies)
+void Floor::setEnemies(const std::vector<Enemy*> &newEnemies)
 {
     enemies = newEnemies;
 }
 
-Enemy floor::getRandEnemy()
+bool Floor::DamageEnemy(unsigned int index, int damage)
+{
+    this->enemies[index]->setHp(this->enemies[index]->getHp() - damage);
+    if(this->enemies[index]->getHp() <= 0)
+    {
+        this->KillEnemy(index);
+        return true;
+    }
+    return false;
+}
+void Floor::KillEnemy(unsigned int index)
+{
+    delete this->enemies[index];
+    this->enemies[index] = nullptr;
+}
+
+Enemy* Floor::getRandEnemy()
 {
     int index = rand() % enemies.size();
     return enemies[index];
 }
-
-

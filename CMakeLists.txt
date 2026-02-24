@@ -19,9 +19,15 @@ add_executable(Inventory-New main.cpp
     inventorycell.hpp inventorycell.cpp
     store.cpp
     store.hpp
-    enemy.h enemy.cpp
-    dungeon.h dungeon.cpp
-    floor.h floor.cpp
+    enemy.hpp enemy.cpp
+    dungeon.hpp dungeon.cpp
+    floor.hpp floor.cpp
+    orc.hpp orc.cpp
+    fightingsystem.hpp fightingsystem.cpp
+    sprites/Orc.txt sprites/Walls.txt
+    battleground.cpp battleground.hpp sprites.cpp sprite.hpp
+    fightdisplay.hpp fightdisplay.cpp
+
 
 
 )

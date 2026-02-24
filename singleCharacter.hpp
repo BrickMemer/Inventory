@@ -23,6 +23,7 @@
 #endif
 
 char getSingleChar();
+int performActionMainMenu(unsigned char& SelectedOption);
 int performActionGame(player& CurrentPlayer);
 int performActionStore(player& CurrentPlayer, Store& GameStore);
 void ClearTerminal();
