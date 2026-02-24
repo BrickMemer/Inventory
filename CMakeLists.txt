@@ -20,6 +20,8 @@ add_executable(Inventory-New main.cpp
     store.cpp
     store.hpp
     enemy.h enemy.cpp
+    dungeon.h dungeon.cpp
+    floor.h floor.cpp
 
 
 )

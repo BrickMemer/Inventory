@@ -60,6 +60,11 @@ void Enemy::setXp(int newXp)
     xp = newXp;
 }
 
+int Enemy::Attak()
+{
+    return this->getDamage();
+}
+
 Enemy::Enemy():
     level(1),
     name("Slime"),
