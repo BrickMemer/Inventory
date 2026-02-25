@@ -1,5 +1,10 @@
 #include "player.hpp"
 
+player::player() : PlayerInventory(5,5)
+{
+    //this->PlayerInventory.AddItem(new Weapon());
+}
+
 unsigned int player::getMoney() const
 {
     return Money;
@@ -15,9 +20,73 @@ void player::SubstractMoney(unsigned int MoneyToSubstract)
     this->Money = this->Money - MoneyToSubstract;
 }
 
-player::player() : PlayerInventory(5,5)
+int player::getHealth() const
 {
-    this->PlayerInventory.AddItem(new Weapon());
+    return health;
+}
+
+void player::setHealth(int newHealth)
+{
+    health = newHealth;
+}
+
+int player::Attack() const
+{
+    return damage;
+}
+
+void player::setDamage()
+{
+    this->damage = 0;
+    int CurrentX = this->PlayerInventory.getCurrentX();
+    int CurrentY = this->PlayerInventory.getCurrentY();
+    for(int x = 0; x < this->PlayerInventory.GetColumnsMaxSize(); x++)
+    {
+        for(int y = 0; y < this->PlayerInventory.GetRowsMaxSize(); y++)
+        {
+            this->PlayerInventory.SetCorrdinates(x,y);
+            this->damage +=this->PlayerInventory.GetItem()->getAttribute().getDamage();
+        }
+    }
+    this->PlayerInventory.SetCorrdinates(CurrentX, CurrentY);
+}
+
+void player::RecalculateStats()
+{
+    this->setDefense();
+    this->setDamage();
+}
+
+void player::Death()
+{
+    this->PlayerInventory.Clear();
+    this->Money = 100;
+}
+
+void player::Revive()
+{
+    this->health = 100;
+}
+
+int player::getDefense() const
+{
+    return defense;
+}
+
+void player::setDefense()
+{
+    this->defense = 0;
+    int CurrentX = this->PlayerInventory.getCurrentX();
+    int CurrentY = this->PlayerInventory.getCurrentY();
+    for(int x = 0; x < this->PlayerInventory.GetColumnsMaxSize(); x++)
+    {
+        for(int y = 0; y < this->PlayerInventory.GetRowsMaxSize(); y++)
+        {
+            this->PlayerInventory.SetCorrdinates(x,y);
+            this->defense +=this->PlayerInventory.GetItem()->getAttribute().getDefense();
+        }
+    }
+    this->PlayerInventory.SetCorrdinates(CurrentX, CurrentY);
 }
 
 void player::DisplayInventory()
@@ -49,12 +118,21 @@ bool player::MoveY(bool LeftOrRight)
 
 bool player::AddItem(Item* item)
 {
-    return this->PlayerInventory.AddItem(item);
+    if(this->PlayerInventory.AddItem(item))
+    {
+        this->RecalculateStats();
+        return true;    return false;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void player::ClearItems()
 {
     this->PlayerInventory.Clear();
+    this->RecalculateStats();
 }
 
 bool player::GetInfo()
@@ -74,6 +152,7 @@ void player::AlignItems()
 
 void player::RemoveItem()
 {
+    this->RecalculateStats();
     this->PlayerInventory.Remove();
 }
 

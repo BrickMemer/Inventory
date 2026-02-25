@@ -1,4 +1,4 @@
-#include "enemy.h"
+#include "enemy.hpp"
 
 std::string Enemy::getName() const
 {
@@ -58,6 +58,11 @@ int Enemy::getXp() const
 void Enemy::setXp(int newXp)
 {
     xp = newXp;
+}
+
+int Enemy::Attak()
+{
+    return this->getDamage();
 }
 
 Enemy::Enemy():

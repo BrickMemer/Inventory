@@ -18,6 +18,57 @@ char getSingleChar() {
 #endif
 }
 
+int performActionDungeon(unsigned char& SelectedOption, player& CurrentPlayer)
+{
+    const char input = getSingleChar();
+
+    switch(input)
+    {
+    case 'a':
+        if(SelectedOption > 0)
+        {
+            SelectedOption--;
+        }
+        break;
+    case 'd':
+        SelectedOption++;
+        break;
+    case 'z':
+        return 2;
+        break;
+    case 'q':
+        return 0;
+    }
+    ClearTerminal();
+    return 1;
+}
+
+int performActionMainMenu(unsigned char& SelectedOption)
+{
+    const char input = getSingleChar();
+
+    switch(input)
+    {
+    case 'w':
+        if(SelectedOption > 0)
+        {
+            SelectedOption--;
+        }
+        break;
+    case 's':
+        SelectedOption++;
+        break;
+    case 'q':
+        return 0;
+        break;
+    case 'z':
+        return 2;
+        break;
+    }
+    std::system(CLEAR);
+    return 1;
+}
+
 int performActionGame(player& CurrentPlayer)
 {
     char input = getSingleChar();

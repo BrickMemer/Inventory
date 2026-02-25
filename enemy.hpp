@@ -24,6 +24,8 @@ public:
     void setDefense(int newDefense);
     int getXp() const;
     void setXp(int newXp);
+
+    int Attak();
 };
 
 #endif // ENEMY_H
