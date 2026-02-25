@@ -25,7 +25,7 @@ void dungeon::NewFloor()
     }
 }
 
-void dungeon::SimulateFight(player& CurrentPlayer)
+void dungeon::EnemyAttack(player& CurrentPlayer)
 {
     bool FightResult = FightingSystem::SimulateFight(CurrentPlayer, this->floors[this->curentFloor]);
     if(FightResult == false)
@@ -47,6 +47,11 @@ void dungeon::PlayerAttack(int damage, int index)
 Floor& dungeon::getFloor()
 {
     return this->floors[this->curentFloor];
+}
+
+Enemy& dungeon::GetEnemy(int index) const
+{
+    return *this->floors[this->curentFloor].getEnemies()[index];
 }
 
 bool dungeon::MoveForward()

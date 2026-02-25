@@ -73,6 +73,8 @@ int game::RunMainMenu()
         case 2:
             return CurrentOption;
             break;
+        default:
+            break;
         }
         if(CurrentOption >= 3)
         {
@@ -101,6 +103,8 @@ void game::RunInventory()
             ClearTerminal();
             this->RunStore();
             break;
+        default:
+            break;
         }
     }
 }
@@ -109,27 +113,70 @@ void game::RunDungeon()
 {
     dungeon GameDungeon;
 
-    int CurrentChoice = 0;
-    while(this->IsRunning)
+    bool IsDungeonRunning = true;
+    bool PlayerTurn = true;
+    unsigned char CurrentChoice = 0;
+    while(this->IsRunning == true && IsDungeonRunning == true)
     {
         ClearTerminal();
-        if(GameDungeon.MoveForward() == false)
-        {
-            CurrentPlayer.Revive();
-            return;
-        }
         GameDungeon.DisplayFight(CurrentChoice);
-        if(CurrentPlayer.getHealth() <= 0 )
+        if(PlayerTurn == true)
         {
-            CurrentPlayer.Revive();
-            return;
+            switch (performActionDungeon(CurrentChoice, this->CurrentPlayer))
+            {
+            case 0:
+                IsDungeonRunning = !IsDungeonRunning;
+                ClearTerminal();
+                break;
+            case 2:
+                switch(CurrentChoice)
+                {
+                case 0:
+                    GameDungeon.PlayerAttack(this->CurrentPlayer.Attack(), 0);
+                    ClearTerminal();
+                    do
+                    {
+                        std::cout << "You did: " << this->CurrentPlayer.Attack() << "damage" << '\n'
+                                  << "Current enemy health: " << GameDungeon.GetEnemy(0).getHp();
+                    }while(!getSingleChar());
+                    PlayerTurn = !PlayerTurn;
+                    break;
+                case 1:
+                    IsDungeonRunning = !IsDungeonRunning;
+                    ClearTerminal();
+                    break;
+                }
+                break;
+            default:
+                break;
+            }
         }
-        getSingleChar();
-        if (CurrentChoice >= 2)
+        if(CurrentPlayer.getHealth() <= 0)
+        {
+            IsDungeonRunning = !IsDungeonRunning;
+        }
+        else if(PlayerTurn == false)
+        {
+            GameDungeon.EnemyAttack(this->CurrentPlayer);
+            ClearTerminal();
+            do
+            {
+                std::cout << "Enemy attacked you for: " << GameDungeon.GetEnemy(0).getDamage() << "damage" << '\n'
+                          << "you currenty have: " << this->CurrentPlayer.getHealth() << "health";
+            }while(!getSingleChar());
+            PlayerTurn = !PlayerTurn;
+        }
+        if(GameDungeon.getFloor().IsEmpty() == true)
+        {
+            GameDungeon.MoveForward();
+        }
+        else if (CurrentChoice >= 2)
         {
             CurrentChoice--;
         }
     }
+    CurrentPlayer.Revive();
+    return;
 }
 
 void game::RunStore()
@@ -147,6 +194,8 @@ void game::RunStore()
             this->CurrentPlayer.ResetCorrdinates();
             ClearTerminal();
             return;
+        default:
+            break;
         }
     }
 }

@@ -21,6 +21,7 @@ public:
     std::vector<Enemy*> getEnemies() const;
     void setEnemies(const std::vector<Enemy*> &newEnemies);
     bool DamageEnemy(unsigned int index, int damage);
+    bool IsEmpty() const;
 
     Enemy* getRandEnemy();
 };

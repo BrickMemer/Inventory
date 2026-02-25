@@ -44,6 +44,11 @@ void Floor::KillEnemy(unsigned int index)
     this->enemies[index] = nullptr;
 }
 
+bool Floor::IsEmpty() const
+{
+    return this->enemies.size() <= 0;
+}
+
 Enemy* Floor::getRandEnemy()
 {
     int index = rand() % enemies.size();
