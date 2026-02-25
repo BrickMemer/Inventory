@@ -1,4 +1,4 @@
-#include "armor.h"
+#include "armor.hpp"
 
 Armor::Armor() {
     this->name = "Shield";

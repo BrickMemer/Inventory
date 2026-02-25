@@ -124,8 +124,20 @@ int performActionGame(player& CurrentPlayer)
     case 's':
         CurrentPlayer.MoveX(false);
         break;
-    case 'n':
-        return 2;
+    case 'z':
+        ClearTerminal();
+        do
+        {
+            if(CurrentPlayer.MoveToEquipment())
+            {
+                std::cout << "you have moved item into equipment";
+            }
+            else
+            {
+                std::cout << "you don't have enough space in equipment to move this item";
+            }
+        }while (!getSingleChar());
+        break;
     case 'm':
         do
         {

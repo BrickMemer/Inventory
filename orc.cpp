@@ -1,6 +1,6 @@
 #include "orc.hpp"
 
-Orc::Orc() : Enemy{1, "Orc", 10, 2, 3, 3}
+Orc::Orc() : Enemy{1, "Orc", 200, 10, 3, 3}
 {
 
 }

@@ -99,9 +99,8 @@ void game::RunInventory()
             return;
             break;
         case 2:
-            this->CurrentPlayer.ResetCorrdinates();
-            ClearTerminal();
-            this->RunStore();
+            break;
+        default:
             break;
         default:
             break;

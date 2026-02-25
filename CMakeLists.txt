@@ -28,8 +28,8 @@ add_executable(Inventory-New main.cpp
     battleground.cpp battleground.hpp sprites.cpp sprite.hpp
     fightdisplay.hpp fightdisplay.cpp
 
-    material.h material.cpp
-    armor.h armor.cpp
+    material.hpp material.cpp
+    armor.hpp armor.cpp
 )
 
 include(GNUInstallDirs)

@@ -2,6 +2,9 @@
 
 player::player() : PlayerInventory(5,5)
 {
+    this->PlayerInventory.ResetCorrdinates();
+    //this->PlayerInventory.AddItem(new Weapon());
+    this->Equipment = this->PlayerInventory.GetRow();
     //this->PlayerInventory.AddItem(new Weapon());
 }
 
@@ -38,17 +41,13 @@ int player::Attack() const
 void player::setDamage()
 {
     this->damage = 0;
-    int CurrentX = this->PlayerInventory.getCurrentX();
-    int CurrentY = this->PlayerInventory.getCurrentY();
-    for(int x = 0; x < this->PlayerInventory.GetColumnsMaxSize(); x++)
+    for(int x = 0; x < this->PlayerInventory.GetRowsMaxSize(); x++)
     {
-        for(int y = 0; y < this->PlayerInventory.GetRowsMaxSize(); y++)
+        if(this->Equipment[x]->getItem())
         {
-            this->PlayerInventory.SetCorrdinates(x,y);
-            this->damage +=this->PlayerInventory.GetItem()->getAttribute().getDamage();
+            this->damage += this->Equipment[x]->getItem()->getAttribute().getDamage();
         }
     }
-    this->PlayerInventory.SetCorrdinates(CurrentX, CurrentY);
 }
 
 void player::RecalculateStats()
@@ -76,17 +75,13 @@ int player::getDefense() const
 void player::setDefense()
 {
     this->defense = 0;
-    int CurrentX = this->PlayerInventory.getCurrentX();
-    int CurrentY = this->PlayerInventory.getCurrentY();
-    for(int x = 0; x < this->PlayerInventory.GetColumnsMaxSize(); x++)
+    for(int x = 0; x < this->PlayerInventory.GetRowsMaxSize(); x++)
     {
-        for(int y = 0; y < this->PlayerInventory.GetRowsMaxSize(); y++)
+        if(this->Equipment[x]->getItem())
         {
-            this->PlayerInventory.SetCorrdinates(x,y);
-            this->defense +=this->PlayerInventory.GetItem()->getAttribute().getDefense();
+            this->defense += this->Equipment[x]->getItem()->getAttribute().getDefense();
         }
     }
-    this->PlayerInventory.SetCorrdinates(CurrentX, CurrentY);
 }
 
 void player::DisplayInventory()
@@ -116,12 +111,34 @@ bool player::MoveY(bool LeftOrRight)
     }
 }
 
+bool player::MoveToEquipment()
+{
+    int EquipmentFreeSpace = -1;
+    for (int i = 0; i < this->PlayerInventory.GetRowsMaxSize(); ++i)
+    {
+        if(!this->Equipment[i])
+        {
+            EquipmentFreeSpace = i;
+        }
+    }
+    if(EquipmentFreeSpace < 0)
+    {
+        return false;
+    }
+    else
+    {
+        this->PlayerInventory.MoveOrSwap(this->PlayerInventory.getCurrentX(), this->PlayerInventory.getCurrentY(), 0, EquipmentFreeSpace);
+        return true;
+    }
+    this->RecalculateStats();
+}
+
 bool player::AddItem(Item* item)
 {
     if(this->PlayerInventory.AddItem(item))
     {
         this->RecalculateStats();
-        return true;    return false;
+        return true;
     }
     else
     {

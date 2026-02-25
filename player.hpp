@@ -7,6 +7,7 @@
 class player
 {
 private:
+    InventoryCell** Equipment;
     int health = 100;
     int defense = 0;
     int damage = 0;
@@ -26,6 +27,8 @@ public:
     Item* GetItem();
     void RemoveItem();
     void ResetCorrdinates();
+    bool MoveToEquipment();
+
     void Death();
     void Revive();
     unsigned int getMoney() const;
