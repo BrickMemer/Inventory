@@ -3,8 +3,8 @@
 
 #include "inventory.hpp"
 #include "weapon.hpp"
-#include "armor.h"
-#include "material.h"
+#include "armor.hpp"
+#include "material.hpp"
 #include "random"
 #include "player.hpp"
 

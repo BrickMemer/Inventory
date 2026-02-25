@@ -7,6 +7,8 @@ public:
     Armor();
     Armor(int level, const std::string &name, Rarity rarity,int durability, int defense);
     void use() override;
+
+    void SetDefense(int NewDefense);
 };
 
 #endif // ARMOR_H
