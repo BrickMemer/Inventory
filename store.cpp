@@ -113,6 +113,7 @@ bool Store::BuyItem(player& CurrentPlayer)
     }
     CurrentPlayer.SubstractMoney(TempItem->getPrice());
     TempItem->setPrice(Item::CalculatePrice(*TempItem));
+    this->StoreInventory.SetItem(nullptr);
     this->StoreInventory.AddItem(this->AddNewItem(this->StoreInventory.getCurrentY()));
     return true;
 }

@@ -91,31 +91,6 @@ void game::RunInventory()
 
     while(this->IsRunning)
     {
-        this->DisplayMainMenu(CurrentOption);
-        switch(performActionMainMenu(CurrentOption))
-        {
-        case 0:
-            StopGame();
-            break;
-        case 2:
-            return CurrentOption;
-        }
-        if(CurrentOption >= 2)
-        {
-           CurrentOption--;
-        }
-    }
-    StopGame();
-    return 99;
-}
-
-void game::RunInventory()
-{
-    ClearTerminal();
-    std::cout << "Welcome to Inventory Symulator, if you need help, press 'h'" << '\n';
-
-    while(this->IsRunning)
-    {
         ClearTerminal();
         this->CurrentPlayer.DisplayInventory();
         switch(performActionGame(this->CurrentPlayer))
@@ -143,6 +118,19 @@ void game::RunDungeon()
     while(this->IsRunning == true && IsDungeonRunning == true)
     {
         ClearTerminal();
+        if(GameDungeon.getFloor().IsEmpty() == true)
+        {
+            if(GameDungeon.MoveForward() == false)
+            {
+                std::cout << "You sad complited the dungeon";
+                IsDungeonRunning = !IsDungeonRunning;
+                continue;
+            }
+            do
+            {
+                std::cout << "You had defeted the enemy, your currently gained: " << MoneyGained;
+            }while(!getSingleChar());
+        }
         GameDungeon.DisplayFight(CurrentChoice);
         if(PlayerTurn == true)
         {
@@ -157,15 +145,28 @@ void game::RunDungeon()
                 {
                 case 0:
                 {
-                    MoneyGained += GameDungeon.PlayerAttack(this->CurrentPlayer.Attack(), 0);
                     ClearTerminal();
-                    do
+                    int TempMoney = GameDungeon.PlayerAttack(this->CurrentPlayer.Attack(), 0);
+                    if(TempMoney > 0)
                     {
-                        std::cout << "You did: " << this->CurrentPlayer.Attack() << "damage" << '\n'
-                                  << "Current enemy health: " << GameDungeon.GetEnemy(0).getHp();
-                    }while(!getSingleChar());
+                        MoneyGained += TempMoney;
+                        do
+                        {
+                            std::cout << "You had defeted the selected enemy";
+                        }while(!getSingleChar());
+                        break;
+                    }
+                    else
+                    {
+                        do
+                        {
+                            std::cout << "You did: " << this->CurrentPlayer.Attack() << "damage" << '\n'
+                                      << "Current enemy health: " << GameDungeon.GetEnemy(0).getHp();
+                        }while(!getSingleChar());
                         PlayerTurn = !PlayerTurn;
-                    break;
+                        break;
+                    }
+
                 }
                 case 1:
                     IsDungeonRunning = !IsDungeonRunning;
@@ -180,6 +181,7 @@ void game::RunDungeon()
         if(CurrentPlayer.getHealth() <= 0)
         {
             IsDungeonRunning = !IsDungeonRunning;
+            this->CurrentPlayer.Death();
         }
         else if(PlayerTurn == false)
         {
@@ -187,16 +189,12 @@ void game::RunDungeon()
             ClearTerminal();
             do
             {
-                std::cout << "Enemy attacked you for: " << GameDungeon.GetEnemy(0).getDamage() << "damage" << '\n'
+                std::cout << "Enemy attacked you for: " << GameDungeon.GetEnemy(0).getDamage() << " damage" << '\n'
                           << "you currenty have: " << this->CurrentPlayer.getHealth() << "health";
             }while(!getSingleChar());
             PlayerTurn = !PlayerTurn;
         }
-        if(GameDungeon.getFloor().IsEmpty() == true)
-        {
-            GameDungeon.MoveForward();
-        }
-        else if (CurrentChoice >= 2)
+        if (CurrentChoice >= 2)
         {
             CurrentChoice--;
         }

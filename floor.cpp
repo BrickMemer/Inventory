@@ -43,6 +43,7 @@ void Floor::KillEnemy(unsigned int index)
 {
     delete this->enemies[index];
     this->enemies[index] = nullptr;
+    this->enemies.erase(this->enemies.begin() + index);
 }
 
 bool Floor::IsEmpty() const

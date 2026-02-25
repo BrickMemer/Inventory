@@ -58,12 +58,13 @@ Enemy& dungeon::GetEnemy(int index) const
 
 bool dungeon::MoveForward()
 {
-    if(++this->curentFloor >= this->Size)
+    if(this->curentFloor + 1 >= this->Size)
     {
         return false;
     }
     else
     {
+        this->curentFloor++;
         return true;
     }
 }

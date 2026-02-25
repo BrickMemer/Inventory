@@ -59,7 +59,7 @@ void player::RecalculateStats()
 void player::Death()
 {
     this->PlayerInventory.Clear();
-    this->Money = 100;
+    this->Money = 250;
 }
 
 void player::Revive()

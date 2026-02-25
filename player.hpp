@@ -11,7 +11,7 @@ private:
     int health = 100;
     int defense = 0;
     int damage = 0;
-    unsigned int Money = 200;
+    unsigned int Money = 250;
     Inventory PlayerInventory;
 public:
     player();

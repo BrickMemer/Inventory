@@ -166,11 +166,8 @@ void Inventory::Clear()
     {
         for(int col = 0; col < this->Columns; col++)
         {
-            if(this->Items[row][col])
-            {
-                delete this->Items[row][col];
-                this->Items[row][col] = new InventoryCell();
-            }
+            delete this->Items[row][col];
+            this->Items[row][col] = new InventoryCell();
         }
     }
 }
