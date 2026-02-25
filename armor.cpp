@@ -15,6 +15,10 @@ Armor::Armor(int level, const std::string &name, Rarity rarity, int durability, 
     this->attribute.setDefense(defense);
 }
 
+void Armor::SetDefense(int NewDefense)
+{
+    this->attribute.setDefense(NewDefense);
+}
 
 void Armor::use()
 {

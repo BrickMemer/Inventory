@@ -61,7 +61,6 @@ int game::RunMainMenu()
 {
     ClearTerminal();
     static unsigned char CurrentOption = 0;
-
     while(this->IsRunning)
     {
         this->DisplayMainMenu(CurrentOption);
@@ -92,6 +91,32 @@ void game::RunInventory()
 
     while(this->IsRunning)
     {
+        this->DisplayMainMenu(CurrentOption);
+        switch(performActionMainMenu(CurrentOption))
+        {
+        case 0:
+            StopGame();
+            break;
+        case 2:
+            return CurrentOption;
+        }
+        if(CurrentOption >= 2)
+        {
+           CurrentOption--;
+        }
+    }
+    StopGame();
+    return 99;
+}
+
+void game::RunInventory()
+{
+    ClearTerminal();
+    std::cout << "Welcome to Inventory Symulator, if you need help, press 'h'" << '\n';
+
+    while(this->IsRunning)
+    {
+        ClearTerminal();
         this->CurrentPlayer.DisplayInventory();
         switch(performActionGame(this->CurrentPlayer))
         {
@@ -99,8 +124,6 @@ void game::RunInventory()
             return;
             break;
         case 2:
-            break;
-        default:
             break;
         default:
             break;

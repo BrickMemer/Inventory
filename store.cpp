@@ -8,48 +8,67 @@ Store::Store() : StoreInventory(1, this->StoreSize)
 
 void Store::FillStore()
 {
-    while(this->StoreInventory.AddItem(AddNewItem()) == true);
+    for(int i = 0; i < this->StoreSize; i++)
+    {
+        this->StoreInventory.AddItem(this->AddNewItem(i));
+    };
 }
 
-Item* Store::AddNewItem()
+Item* Store::AddNewItem(int index)
 {
-    Weapon* TempItem = new Weapon();
+    Item* TempItem;
     unsigned short RandomChance = rand() % 7;
+    switch(index)
+    {
+    case 0:
+    {
+        Weapon* TempWeapon = new Weapon;
+        TempWeapon->setDamage((1 + 10 * RandomChance) + rand() % (11 + 10 * RandomChance));
+        TempItem = TempWeapon;
+        break;
+    }
+    case 1:
+    {
+        Armor* TempArmor = new Armor;
+        TempArmor->SetDefense((1 + 10 * RandomChance) + rand() % (11 + 10 * RandomChance));
+        TempItem = TempArmor;
+        break;
+    }
+    case 2:
+    case 3:
+    {
+        Material* TempMaterial = new Material;
+        TempItem = TempMaterial;
+    }
+    };
     switch(RandomChance)
     {
         case 0:
             TempItem->setRarity(common);
-            TempItem->setDamage(1 + rand() % 11);
             TempItem->setDurability(11 + rand() % 21);
             break;
         case 1:
             TempItem->setRarity(uncommon);
-            TempItem->setDamage(11 + rand() % 21);
             TempItem->setDurability(21 + rand() % 31);
             break;
         case 2:
             TempItem->setRarity(rare);
-            TempItem->setDamage(21 + rand() % 31);
             TempItem->setDurability(31 + rand() % 41);
             break;
         case 3:
             TempItem->setRarity(epic);
-            TempItem->setDamage(31 + rand() % 41);
             TempItem->setDurability(41 + rand() % 51);
             break;
         case 4:
             TempItem->setRarity(legendary);
-            TempItem->setDamage(41 + rand() % 51);
             TempItem->setDurability(51 + rand() % 61);
             break;
         case 5:
             TempItem->setRarity(mythie);
-            TempItem->setDamage(51 + rand() % 61);
             TempItem->setDurability(61 + rand() % 71);
             break;
         case 6:
             TempItem->setRarity(unique);
-            TempItem->setDamage(61 + rand() % 71);
             TempItem->setDurability(71 + rand() % 81);
             break;
     };
@@ -94,7 +113,7 @@ bool Store::BuyItem(player& CurrentPlayer)
     }
     CurrentPlayer.SubstractMoney(TempItem->getPrice());
     TempItem->setPrice(Item::CalculatePrice(*TempItem));
-    this->FillStore();
+    this->StoreInventory.AddItem(this->AddNewItem(this->StoreInventory.getCurrentY()));
     return true;
 }
 

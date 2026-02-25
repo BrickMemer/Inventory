@@ -18,6 +18,7 @@ char getSingleChar() {
 #endif
 }
 
+
 int performActionDungeon(unsigned char& SelectedOption, player& CurrentPlayer)
 {
     const char input = getSingleChar();
