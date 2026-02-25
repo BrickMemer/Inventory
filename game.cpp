@@ -16,6 +16,7 @@ void game::RunGame()
 {
     while(this->IsRunning)
     {
+        ClearTerminal();
         this->CurrentPlayer.DisplayInventory();
         switch(performActionGame(this->CurrentPlayer))
         {
@@ -23,9 +24,6 @@ void game::RunGame()
             return;
             break;
         case 2:
-            this->CurrentPlayer.ResetCorrdinates();
-            ClearTerminal();
-            this->RunStore();
             break;
         }
     }

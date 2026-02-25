@@ -73,7 +73,7 @@ int performActionGame(player& CurrentPlayer)
     case 's':
         CurrentPlayer.MoveX(false);
         break;
-    case 'n':
+    case 'z':
         return 2;
     case 'm':
         do

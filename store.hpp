@@ -3,6 +3,8 @@
 
 #include "inventory.hpp"
 #include "weapon.hpp"
+#include "armor.h"
+#include "material.h"
 #include "random"
 #include "player.hpp"
 
@@ -13,7 +15,7 @@ private:
     Inventory StoreInventory;
 
     void FillStore();
-    Item* AddNewItem();
+    Item* AddNewItem(int index);
 public:
     Store();
 
