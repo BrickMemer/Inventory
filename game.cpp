@@ -102,6 +102,8 @@ void game::RunInventory()
             break;
         default:
             break;
+        default:
+            break;
         }
     }
 }
