@@ -14,7 +14,6 @@ Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
     }
 }
 
-
 Item* Inventory::GetItem()
 {
     if(!this->Items[this->CurrentX][this->CurrentY])
