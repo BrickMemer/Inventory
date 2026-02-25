@@ -8,7 +8,7 @@ class FightDisplay
 public:
     FightDisplay();
 
-    static void DislplayFight(const Floor& CurrentFloor);
+    static void DislplayFight(const Floor& CurrentFloor, const int& CurrentChoice);
 };
 
 #endif // FIGHTDISPLAY_HPP

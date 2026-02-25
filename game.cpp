@@ -108,6 +108,8 @@ void game::RunInventory()
 void game::RunDungeon()
 {
     dungeon GameDungeon;
+
+    int CurrentChoice = 0;
     while(this->IsRunning)
     {
         ClearTerminal();
@@ -116,13 +118,17 @@ void game::RunDungeon()
             CurrentPlayer.Revive();
             return;
         }
-        GameDungeon.DisplayFight();
+        GameDungeon.DisplayFight(CurrentChoice);
         if(CurrentPlayer.getHealth() <= 0 )
         {
             CurrentPlayer.Revive();
             return;
         }
         getSingleChar();
+        if (CurrentChoice >= 2)
+        {
+            CurrentChoice--;
+        }
     }
 }
 

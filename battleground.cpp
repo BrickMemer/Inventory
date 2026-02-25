@@ -12,7 +12,7 @@ void BattleGround::AddSprite(const std::string& SpriteName)
     }
 }
 
-void BattleGround::DrawBattleGround()
+int BattleGround::DrawBattleGround() const
 {
     const int spacebetween = 16;
     for (int i = 0; i < 23; i++)
@@ -39,6 +39,13 @@ void BattleGround::DrawBattleGround()
         }
         std::cout << '\n';
     }
+    const int TotalLength = this->Sprites[0]->GetLineOfSprite(0).size() + this->Sprites[1]->GetLineOfSprite(0).size() + this->Sprites[2]->GetLineOfSprite(0).size() + spacebetween * 2;
+    for (int var = 0; var < TotalLength; ++var)
+    {
+        std::cout << '-';
+    }
+    std::cout << '\n';
+    return TotalLength;
 }
 
 BattleGround::~BattleGround()

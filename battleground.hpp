@@ -6,7 +6,7 @@ class BattleGround
 {
 public:
     void AddSprite(const std::string& SpriteName);
-    void DrawBattleGround();
+    int DrawBattleGround() const;
     
     ~BattleGround();
 private:

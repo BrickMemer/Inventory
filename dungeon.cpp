@@ -34,9 +34,9 @@ void dungeon::SimulateFight(player& CurrentPlayer)
     }
 }
 
-void dungeon::DisplayFight()
+void dungeon::DisplayFight(const int& CurrentChoice)
 {
-    FightDisplay::DislplayFight(this->getFloor());
+    FightDisplay::DislplayFight(this->getFloor(), CurrentChoice);
 }
 
 void dungeon::PlayerAttack(int damage, int index)
