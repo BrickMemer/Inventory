@@ -25,13 +25,14 @@ void dungeon::NewFloor()
     }
 }
 
-void dungeon::EnemyAttack(player& CurrentPlayer)
+bool dungeon::EnemyAttack(player& CurrentPlayer)
 {
     bool FightResult = FightingSystem::SimulateFight(CurrentPlayer, this->floors[this->curentFloor]);
-    if(FightResult == false)
+    if(FightResult == true)
     {
         CurrentPlayer.Death();
     }
+    return FightResult;
 }
 
 void dungeon::DisplayFight(const int& CurrentChoice)
@@ -39,9 +40,10 @@ void dungeon::DisplayFight(const int& CurrentChoice)
     FightDisplay::DislplayFight(this->getFloor(), CurrentChoice);
 }
 
-void dungeon::PlayerAttack(int damage, int index)
+int dungeon::PlayerAttack(int damage, int index)
 {
-    this->floors[this->curentFloor].DamageEnemy(index, damage);
+    const int MoneyGained = this->floors[this->curentFloor].DamageEnemy(index, damage);
+    return MoneyGained;
 }
 
 Floor& dungeon::getFloor()

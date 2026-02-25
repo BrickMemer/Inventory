@@ -116,6 +116,8 @@ void game::RunDungeon()
     bool IsDungeonRunning = true;
     bool PlayerTurn = true;
     unsigned char CurrentChoice = 0;
+    unsigned int MoneyGained = 0;
+
     while(this->IsRunning == true && IsDungeonRunning == true)
     {
         ClearTerminal();
@@ -132,15 +134,17 @@ void game::RunDungeon()
                 switch(CurrentChoice)
                 {
                 case 0:
-                    GameDungeon.PlayerAttack(this->CurrentPlayer.Attack(), 0);
+                {
+                    MoneyGained += GameDungeon.PlayerAttack(this->CurrentPlayer.Attack(), 0);
                     ClearTerminal();
                     do
                     {
                         std::cout << "You did: " << this->CurrentPlayer.Attack() << "damage" << '\n'
                                   << "Current enemy health: " << GameDungeon.GetEnemy(0).getHp();
                     }while(!getSingleChar());
-                    PlayerTurn = !PlayerTurn;
+                        PlayerTurn = !PlayerTurn;
                     break;
+                }
                 case 1:
                     IsDungeonRunning = !IsDungeonRunning;
                     ClearTerminal();
@@ -175,7 +179,12 @@ void game::RunDungeon()
             CurrentChoice--;
         }
     }
+    do
+    {
+        std::cout << "You gained: " << MoneyGained << " money";
+    } while (!getSingleChar());
     CurrentPlayer.Revive();
+    CurrentPlayer.AddMoney(MoneyGained);
     return;
 }
 

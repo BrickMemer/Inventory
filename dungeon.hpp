@@ -17,8 +17,8 @@ public:
     void GenerateDungeon();
     void NewFloor();
     void DisplayFight(const int& CurrentChoice);
-    void PlayerAttack(int damage, int index);
-    void EnemyAttack(player& CurrentPlayer);
+    int PlayerAttack(int damage, int index);
+    bool EnemyAttack(player& CurrentPlayer);
     bool MoveForward();
     Enemy& GetEnemy(int index) const;
     Floor& getFloor();

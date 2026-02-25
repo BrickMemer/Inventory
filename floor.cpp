@@ -28,15 +28,16 @@ void Floor::setEnemies(const std::vector<Enemy*> &newEnemies)
     enemies = newEnemies;
 }
 
-bool Floor::DamageEnemy(unsigned int index, int damage)
+int Floor::DamageEnemy(unsigned int index, int damage)
 {
     this->enemies[index]->setHp(this->enemies[index]->getHp() - damage);
     if(this->enemies[index]->getHp() <= 0)
     {
+        const int GainedMoney = this->enemies[index]->getXp();
         this->KillEnemy(index);
-        return true;
+        return GainedMoney;
     }
-    return false;
+    return 0;
 }
 void Floor::KillEnemy(unsigned int index)
 {

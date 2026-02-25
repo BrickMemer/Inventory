@@ -5,10 +5,10 @@ bool FightingSystem::SimulateFight(player& currentPlayer, Floor& CurrentFloor)
     currentPlayer.setHealth(currentPlayer.getHealth() + currentPlayer.getDefense() - CurrentFloor.getRandEnemy()->Attak());
     if(currentPlayer.getHealth() < 0)
     {
-        return false;
+        return true;
     }
     else
     {
-        return true;
+        return false;
     }
 }
