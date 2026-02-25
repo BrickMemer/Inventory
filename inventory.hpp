@@ -27,6 +27,7 @@ public:
     void Align();
     void Clear();
     void ResetCorrdinates();
+    InventoryCell** GetRow();
     bool SetCorrdinates(const unsigned int newX, const unsigned int newY);
     unsigned int GetRowsMaxSize() const;
     unsigned int GetColumnsMaxSize() const;

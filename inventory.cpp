@@ -135,6 +135,10 @@ void Inventory::DisplayInventory()
     }
 }
 
+InventoryCell** Inventory::GetRow()
+{
+    return this->Items[CurrentX];
+}
 
 void Inventory::Align()
 {

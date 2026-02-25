@@ -7,6 +7,7 @@
 class player
 {
 private:
+    InventoryCell** Equipment;
     unsigned int Money = 0;
     Inventory PlayerInventory;
 public:
@@ -23,6 +24,7 @@ public:
     Item* GetItem();
     void RemoveItem();
     void ResetCorrdinates();
+    bool MoveToEquipment();
 
     unsigned int getMoney() const;
     void AddMoney(unsigned int MoneyToAdd);
