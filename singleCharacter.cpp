@@ -18,6 +18,57 @@ char getSingleChar() {
 #endif
 }
 
+int performActionDungeon(unsigned char& SelectedOption, player& CurrentPlayer)
+{
+    const char input = getSingleChar();
+
+    switch(input)
+    {
+    case 'a':
+        if(SelectedOption > 0)
+        {
+            SelectedOption--;
+        }
+        break;
+    case 'd':
+        SelectedOption++;
+        break;
+    case 'z':
+        return 2;
+        break;
+    case 'q':
+        return 0;
+    }
+    ClearTerminal();
+    return 1;
+}
+
+int performActionMainMenu(unsigned char& SelectedOption)
+{
+    const char input = getSingleChar();
+
+    switch(input)
+    {
+    case 'w':
+        if(SelectedOption > 0)
+        {
+            SelectedOption--;
+        }
+        break;
+    case 's':
+        SelectedOption++;
+        break;
+    case 'q':
+        return 0;
+        break;
+    case 'z':
+        return 2;
+        break;
+    }
+    std::system(CLEAR);
+    return 1;
+}
+
 int performActionGame(player& CurrentPlayer)
 {
     char input = getSingleChar();
@@ -73,8 +124,20 @@ int performActionGame(player& CurrentPlayer)
     case 's':
         CurrentPlayer.MoveX(false);
         break;
-    case 'n':
-        return 2;
+    case 'z':
+        ClearTerminal();
+        do
+        {
+            if(CurrentPlayer.MoveToEquipment())
+            {
+                std::cout << "you have moved item into equipment";
+            }
+            else
+            {
+                std::cout << "you don't have enough space in equipment to move this item";
+            }
+        }while (!getSingleChar());
+        break;
     case 'm':
         do
         {

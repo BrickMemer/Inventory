@@ -1,10 +1,7 @@
-#include <iostream>
 #include "game.hpp"
 
 int main()
 {
-    std::system(CLEAR);
-
     player player1;
     game game1(player1);
 

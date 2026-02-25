@@ -14,7 +14,6 @@ Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
     }
 }
 
-
 Item* Inventory::GetItem()
 {
     if(!this->Items[this->CurrentX][this->CurrentY])
@@ -170,7 +169,7 @@ void Inventory::Clear()
             if(this->Items[row][col])
             {
                 delete this->Items[row][col];
-                this->Items[row][col] = nullptr;
+                this->Items[row][col] = new InventoryCell();
             }
         }
     }
@@ -220,6 +219,13 @@ Inventory::~Inventory()
 {
     for(int i = 0; i < this->Rows; i++)
     {
+        for(int j = 0; j < this->Columns; j++)
+        {
+            if(this->Items[i][j])
+            {
+                delete this->Items[i][j];
+            }
+        }
         delete[] this->Items[i];
     }
     delete[] this->Items;

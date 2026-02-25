@@ -3,8 +3,9 @@
 player::player() : PlayerInventory(5,5)
 {
     this->PlayerInventory.ResetCorrdinates();
-    this->PlayerInventory.AddItem(new Weapon());
+    //this->PlayerInventory.AddItem(new Weapon());
     this->Equipment = this->PlayerInventory.GetRow();
+    //this->PlayerInventory.AddItem(new Weapon());
 }
 
 unsigned int player::getMoney() const
@@ -20,6 +21,67 @@ void player::AddMoney(unsigned int MoneyToAdd)
 void player::SubstractMoney(unsigned int MoneyToSubstract)
 {
     this->Money = this->Money - MoneyToSubstract;
+}
+
+int player::getHealth() const
+{
+    return health;
+}
+
+void player::setHealth(int newHealth)
+{
+    health = newHealth;
+}
+
+int player::Attack() const
+{
+    return damage;
+}
+
+void player::setDamage()
+{
+    this->damage = 0;
+    for(int x = 0; x < this->PlayerInventory.GetRowsMaxSize(); x++)
+    {
+        if(this->Equipment[x]->getItem())
+        {
+            this->damage += this->Equipment[x]->getItem()->getAttribute().getDamage();
+        }
+    }
+}
+
+void player::RecalculateStats()
+{
+    this->setDefense();
+    this->setDamage();
+}
+
+void player::Death()
+{
+    this->PlayerInventory.Clear();
+    this->Money = 100;
+}
+
+void player::Revive()
+{
+    this->health = 100;
+}
+
+int player::getDefense() const
+{
+    return defense;
+}
+
+void player::setDefense()
+{
+    this->defense = 0;
+    for(int x = 0; x < this->PlayerInventory.GetRowsMaxSize(); x++)
+    {
+        if(this->Equipment[x]->getItem())
+        {
+            this->defense += this->Equipment[x]->getItem()->getAttribute().getDefense();
+        }
+    }
 }
 
 void player::DisplayInventory()
@@ -68,16 +130,26 @@ bool player::MoveToEquipment()
         this->PlayerInventory.MoveOrSwap(this->PlayerInventory.getCurrentX(), this->PlayerInventory.getCurrentY(), 0, EquipmentFreeSpace);
         return true;
     }
+    this->RecalculateStats();
 }
 
 bool player::AddItem(Item* item)
 {
-    return this->PlayerInventory.AddItem(item);
+    if(this->PlayerInventory.AddItem(item))
+    {
+        this->RecalculateStats();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 void player::ClearItems()
 {
     this->PlayerInventory.Clear();
+    this->RecalculateStats();
 }
 
 bool player::GetInfo()
@@ -97,6 +169,7 @@ void player::AlignItems()
 
 void player::RemoveItem()
 {
+    this->RecalculateStats();
     this->PlayerInventory.Remove();
 }
 
