@@ -23,9 +23,11 @@ protected:
     Attribute attribute;
     int maxQuantity;
     int price;
+
+    bool isCanEquip;
 public:
     Item();
-    Item(const std::string &name, int maxQuantity, int price);
+    Item(int level, const std::string &name, Rarity rarity, int maxQuantity, int durability, bool isCanEquip);
     virtual ~Item();
 
     //Getters and Setters

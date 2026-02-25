@@ -15,37 +15,17 @@ Item::Item() {
     this->durability = 100;
     this->maxQuantity = 64;
     this->price = 0;
+    this->isCanEquip = false;
 }
 
-Item::Item(const std::string &name, int maxQuantity, int price) :
+Item::Item(int level, const std::string &name, Rarity rarity, int maxQuantity, int durability, bool isCanEquip) :
     name(name),
-    level(1),
-    durability(100),
-    maxQuantity(maxQuantity)
+    level(level),
+    durability(durability),
+    maxQuantity(maxQuantity),
+    rarity(rarity),
+    isCanEquip(isCanEquip)
 {
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(1,1000);
-    int randNum = dist6(rng);
-    if(randNum < COMMON_PROCENT){
-        rarity = common;
-    }
-    if(randNum >= COMMON_PROCENT && randNum < UNCMMON_PROCENT){
-        rarity = uncommon;
-    }
-    if(randNum >= UNCMMON_PROCENT && randNum < RARE_PROCENT){
-        rarity = rare;
-    }
-    if(randNum >= RARE_PROCENT && randNum < EPIC_PROCENT){
-        rarity = epic;
-    }
-    if(randNum >= EPIC_PROCENT && randNum < LEGENDARY_PROCENT){
-        rarity = legendary;
-    }
-    if(randNum >= LEGENDARY_PROCENT && randNum < MYTHIE_PROCENT){
-        rarity = mythie;
-    }
-
     this->price = this->CalculatePrice(*this);
 }
 

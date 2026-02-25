@@ -12,7 +12,7 @@ add_executable(Inventory-New main.cpp
 
     attribute.hpp attribute.cpp
     weapon.hpp weapon.cpp
-    block.hpp block.cpp
+
     inventory.hpp inventory.cpp
     singleCharacter.hpp singleCharacter.cpp
     game.hpp game.cpp
@@ -28,8 +28,8 @@ add_executable(Inventory-New main.cpp
     battleground.cpp battleground.hpp sprites.cpp sprite.hpp
     fightdisplay.hpp fightdisplay.cpp
 
-
-
+    material.h material.cpp
+    armor.h armor.cpp
 )
 
 include(GNUInstallDirs)
