@@ -47,10 +47,10 @@ Current game loop of the game is that player will buy new items and sell them fo
 <img width="1908" height="1036" alt="image" src="https://github.com/user-attachments/assets/4405bfdb-5373-4319-8522-afa5b66673ab" /> <br>
 
 ## Current features of our program ✨
-  Dungeon to fight in
-  Equipment to use your items
-  Upgrading items
-  And more!
+  Dungeon to fight in <br>
+  Equipment to use your items <br>
+  Upgrading items <br>
+  And more! <br>
 
 ## Plans for the future 🔮
 Add ability to save current progress <br>
