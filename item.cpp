@@ -142,3 +142,32 @@ unsigned int Item::CalculatePrice(const Item& ItemToCalculate)
 {
     return ItemToCalculate.getDurability() + ItemToCalculate.getAttribute().getDamage() + ItemToCalculate.getAttribute().getDefense() + ItemToCalculate.getAttribute().getEnergy() + ItemToCalculate.getAttribute().getHealth() + ItemToCalculate.getAttribute().getMana() + (ItemToCalculate.getLevel() * 10);
 }
+
+void Item::upgrade()
+{
+    this->level ++;
+    this->durability = durability + level * 100;
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(1,1000);
+    int randNum = dist6(rng);
+    if(randNum < COMMON_PROCENT){
+        rarity = common;
+    }
+    if(randNum >= COMMON_PROCENT && randNum < UNCMMON_PROCENT){
+        rarity = uncommon;
+    }
+    if(randNum >= UNCMMON_PROCENT && randNum < RARE_PROCENT){
+        rarity = rare;
+    }
+    if(randNum >= RARE_PROCENT && randNum < EPIC_PROCENT){
+        rarity = epic;
+    }
+    if(randNum >= EPIC_PROCENT && randNum < LEGENDARY_PROCENT){
+        rarity = legendary;
+    }
+    if(randNum >= LEGENDARY_PROCENT && randNum < MYTHIE_PROCENT){
+        rarity = mythie;
+    }
+
+}
