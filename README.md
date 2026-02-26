@@ -29,6 +29,7 @@ To download it that way you need to have git
 cmake -S <the downloaded folder directory> -B <directory where do you want it to install into>
 cmake --build <directory where did you tell it to install into>
 ```
+### After that you have to move folder sprite from your downloaded folder into the build directory
 
 #3 To run the app you need to open the terminal and copy the commands
 
@@ -38,7 +39,7 @@ cd <directory where did you tell it to install into>
 ```
 
 ## The concept of gameplay 🎮
-Current game loop of the game is that player will buy new items and sell them for a much higher price
+Current game loop of the game is that player will buy new items and sell them for a much higher price and killing enemies for money
 
 ## Screenshots of the app 📷
 <img width="1908" height="1036" alt="image" src="https://github.com/user-attachments/assets/a5497ba0-f0bd-498a-a0a2-5ad470fc3b33" /> <br>
@@ -46,14 +47,13 @@ Current game loop of the game is that player will buy new items and sell them fo
 <img width="1908" height="1036" alt="image" src="https://github.com/user-attachments/assets/4405bfdb-5373-4319-8522-afa5b66673ab" /> <br>
 
 ## Current features of our program ✨
-  Lightweight.
-  Fast performance.
-  And small in size.
+  Dungeon to fight in
+  Equipment to use your items
+  Upgrading items
+  And more!
 
 ## Plans for the future 🔮
 Add ability to save current progress <br>
-Add player abilities <br>
 Create settings <br>
 Add description for items <br>
-Create more types of items <br>
 Add a proper GUI
