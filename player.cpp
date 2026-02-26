@@ -56,6 +56,26 @@ void player::RecalculateStats()
     this->setDamage();
 }
 
+bool player::UpgradeItem()
+{
+    if(this->Money < 150)
+    {
+        return false;
+    }
+    else
+    {
+        if(this->PlayerInventory.UpgradeItem())
+        {
+            this->RecalculateStats();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
 void player::Death()
 {
     this->PlayerInventory.Clear();

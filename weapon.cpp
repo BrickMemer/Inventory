@@ -30,6 +30,22 @@ void Weapon::use()
     durability-=10;
 }
 
+bool Weapon::upgrade()
+{
+    bool Result = Item::upgrade();
+    if(Result == false)
+    {
+        return false;
+    }
+    else
+    {
+        //std::cout << this->getDamage() << '\n';
+        this->setDamage((int)this->getDamage() + 10);
+        //std::cout << this->getDamage() << '\n';
+        return true;
+    }
+}
+
 int Weapon::getDamage() const
 {
     return this->attribute.getDamage();

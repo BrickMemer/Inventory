@@ -28,7 +28,7 @@ public:
     void RemoveItem();
     void ResetCorrdinates();
     bool MoveToEquipment();
-
+    bool UpgradeItem();
     void Death();
     void Revive();
     unsigned int getMoney() const;

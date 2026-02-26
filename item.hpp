@@ -47,7 +47,7 @@ public:
     Attribute getAttribute() const;
     static unsigned int CalculatePrice(const Item& ItemToCalculate);
 
-    void upgrade();
+    bool virtual upgrade();
 
     void virtual use() = 0;
     void getInfo();

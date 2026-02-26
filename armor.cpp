@@ -24,3 +24,24 @@ void Armor::use()
 {
     durability-=10;
 }
+
+int Armor::GetDefense()
+{
+    return this->attribute.getDefense();
+}
+
+bool Armor::upgrade()
+{
+    bool Result = Item::upgrade();
+    if(Result == false)
+    {
+        return false;
+    }
+    else
+    {
+        //std::cout << this->GetDefense() << '\n';
+        this->SetDefense((int)this->GetDefense() + 10);
+        //std::cout << this->GetDefense() << '\n';
+        return true;
+    }
+}

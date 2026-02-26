@@ -134,6 +134,11 @@ void Inventory::DisplayInventory()
     }
 }
 
+bool Inventory::UpgradeItem()
+{
+    return this->Items[this->getCurrentX()][this->getCurrentY()]->getItem()->upgrade();
+}
+
 InventoryCell** Inventory::GetRow()
 {
     return this->Items[CurrentX];

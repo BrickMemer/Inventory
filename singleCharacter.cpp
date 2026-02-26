@@ -96,8 +96,8 @@ int performActionGame(player& CurrentPlayer)
                       /*
                       << "Press 'c' to clear inventory" << '\n'
                         */
-                      << "Press 'n' to open store" << '\n'
                       << "Press 'S' to sell item" << '\n'
+                      << "Press 'u to upgrade an item" << '\n'
                       << '\n'
                       << "Press any key to continue ...";
         }while(!getchar());
@@ -119,6 +119,41 @@ int performActionGame(player& CurrentPlayer)
     case 'w':
         CurrentPlayer.MoveX(true);
         break;
+    case 'u':
+    {
+        bool HasChoosen = false;
+        do
+        {
+            std::system(CLEAR);
+            std::cout << "Are you sure you want to upgrade this item, it will cost you 150 money" << '\n'
+                      << "Press y, or n to continue";
+            switch(getchar())
+            {
+            case('y'):
+                HasChoosen = true;
+                break;
+            case('n'):
+                HasChoosen = true;
+                ClearTerminal();
+                return 1;
+                break;
+            }
+        }while(!HasChoosen);
+        do
+        {
+            std::system(CLEAR);
+            if(CurrentPlayer.UpgradeItem() == false)
+            {
+                std::cout << "You don't have enough money, or the item is already upgraded to it's max level" << '\n'
+                          << "Press any key to continue ...";
+            }
+            else
+            {
+                std::cout << "You have upgraded your selected item" << '\n'
+                          << "Press any key to continue ...";
+            }
+        }while(!getchar());
+    }
     case 'd':
         CurrentPlayer.MoveY(false);
         break;

@@ -2,7 +2,7 @@
 
 game::game(player &CurrentPlayer) : CurrentPlayer(CurrentPlayer)
 {
-    //this->CurrentPlayer.AddItem(new Weapon);
+    this->CurrentPlayer.AddItem(new Weapon);
     ClearTerminal();
 }
 
@@ -124,12 +124,13 @@ void game::RunDungeon()
             {
                 std::cout << "You sad complited the dungeon";
                 IsDungeonRunning = !IsDungeonRunning;
-                continue;
             }
             do
             {
                 std::cout << "You had defeted the enemy, your currently gained: " << MoneyGained;
+                ClearTerminal();
             }while(!getSingleChar());
+            continue;
         }
         GameDungeon.DisplayFight(CurrentChoice);
         if(PlayerTurn == true)
@@ -160,7 +161,7 @@ void game::RunDungeon()
                     {
                         do
                         {
-                            std::cout << "You did: " << this->CurrentPlayer.Attack() << "damage" << '\n'
+                            std::cout << "You did: " << this->CurrentPlayer.Attack() << " damage" << '\n'
                                       << "Current enemy health: " << GameDungeon.GetEnemy(0).getHp();
                         }while(!getSingleChar());
                         PlayerTurn = !PlayerTurn;

@@ -12,8 +12,10 @@ public:
     //Getters and Setters
     int getDamage() const;
     void setDamage(int newDamage);
+    bool UpgradeItem();
 
     void use() override;
+    bool upgrade() override;
 };
 
 #endif // WEAPON_H
