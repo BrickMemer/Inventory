@@ -24,7 +24,7 @@ add_executable(Inventory-New main.cpp
     floor.hpp floor.cpp
     orc.hpp orc.cpp
     fightingsystem.hpp fightingsystem.cpp
-    sprites/Orc.txt sprites/Walls.txt
+    sprites/Orc.txt sprites/BrickWall.txt
     battleground.cpp battleground.hpp sprites.cpp sprite.hpp
     fightdisplay.hpp fightdisplay.cpp
 

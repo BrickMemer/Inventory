@@ -1,17 +1,9 @@
 #include "fightdisplay.hpp"
-#include "battleground.hpp"
 
 FightDisplay::FightDisplay() {}
 
-void FightDisplay::DislplayFight(const Floor& CurrentFloor, const int& CurrentChoice)
+void FightDisplay::DislplayFight(const Floor& CurrentFloor, const int& CurrentChoice, BattleGround& battleground)
 {
-    BattleGround battleground;
-    battleground.AddSprite("Walls");
-    for (const auto enemy : CurrentFloor.getEnemies())
-    {
-        battleground.AddSprite(enemy->getName());
-    }
-    battleground.AddSprite("Walls");
     const int TotalLenght =  battleground.DrawBattleGround();
     for(int i = 0; i < 6; ++i)
     {

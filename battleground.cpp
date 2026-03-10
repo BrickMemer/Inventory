@@ -1,15 +1,17 @@
 #include "battleground.hpp"
-#include "sprite.hpp"
-#include <string>
-#include <vector>
+
+BattleGround::BattleGround(std::vector<std::string>& SpritesNames)
+{
+    for(unsigned short i = 0; i < SpritesNames.size(); i++)
+    {
+        this->AddSprite(SpritesNames[i]);
+    }
+    this->Sprites[this->Sprites.size() - 1]->ReverseSprite();
+}
 
 void BattleGround::AddSprite(const std::string& SpriteName)
 {
     this->Sprites.push_back(new Sprite(SpriteName));
-    if(Sprites.size() == 3)
-    {
-        Sprites[2]->ReverseSprite();
-    }
 }
 
 int BattleGround::DrawBattleGround() const
@@ -17,21 +19,9 @@ int BattleGround::DrawBattleGround() const
     const int spacebetween = 16;
     for (int i = 0; i < 23; i++)
     {
-        for (int j = 0; j < 3;j++)
+        for (int j = 0; j < this->GetSpritesAmount(); j++)
         {
-            switch(j)
-            {
-                case 0:
-                    std::cout << this->Sprites[j]->GetLineOfSprite(i);
-                    break;
-                case 1:
-                    std::cout << this->Sprites[j]->GetLineOfSprite(i);
-                    break;
-                case 2:
-                    //this->Sprites[j]->ReverseSprite();
-                    std::cout << this->Sprites[j]->GetLineOfSprite(i);
-                    break;
-            };
+            std::cout << this->Sprites[j]->GetLineOfSprite(i);
             for(int k = 0; k < spacebetween; k++)
             {
                 std::cout << ' ';
@@ -46,6 +36,11 @@ int BattleGround::DrawBattleGround() const
     }
     std::cout << '\n';
     return TotalLength;
+}
+
+int BattleGround::GetSpritesAmount() const
+{
+    return this->Sprites.size();
 }
 
 BattleGround::~BattleGround()
