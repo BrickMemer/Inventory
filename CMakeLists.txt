@@ -14,7 +14,7 @@ add_executable(Inventory-New main.cpp
     weapon.hpp weapon.cpp
 
     inventory.hpp inventory.cpp
-    singleCharacter.hpp singleCharacter.cpp
+    performActions.hpp performActions.cpp
     game.hpp game.cpp
     inventorycell.hpp inventorycell.cpp
     store.cpp

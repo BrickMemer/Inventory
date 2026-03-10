@@ -3,7 +3,7 @@
 
 #include "player.hpp"
 #include "store.hpp"
-#include "singleCharacter.hpp"
+#include "performActions.hpp"
 #include "dungeon.hpp"
 
 class game

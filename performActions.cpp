@@ -1,4 +1,4 @@
-#include "singleCharacter.hpp"
+#include "performActions.hpp"
 
 char getSingleChar() {
 #ifdef _WIN32

@@ -191,7 +191,7 @@ void game::RunDungeon()
             do
             {
                 std::cout << "Enemy attacked you for: " << GameDungeon.GetEnemy(0).getDamage() << " damage" << '\n'
-                          << "you currenty have: " << this->CurrentPlayer.getHealth() << "health";
+                          << "you currenty have: " << this->CurrentPlayer.getHealth() << " health";
             }while(!getSingleChar());
             PlayerTurn = !PlayerTurn;
         }
