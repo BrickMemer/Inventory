@@ -2,17 +2,18 @@
 #define PLAYER_HPP
 #include "inventory.hpp"
 #include "weapon.hpp"
+#include "equipment.hpp"
 #include <algorithm>
 
 class player
 {
 private:
-    InventoryCell** Equipment;
     int health = 100;
     int defense = 0;
     int damage = 0;
     unsigned int Money = 250;
     Inventory PlayerInventory;
+    Equipment PlayerEquipment;
 public:
     player();
 

@@ -9,6 +9,8 @@ public:
     FightDisplay();
 
     static void DislplayFight(const Floor& CurrentFloor, const int& CurrentChoice);
+
+
 };
 
 #endif // FIGHTDISPLAY_HPP
