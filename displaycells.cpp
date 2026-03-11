@@ -10,7 +10,7 @@ void DisplayCells::DisplayFullCells(int rows, std::vector<std::string> ArrayOfTe
         {
             for(int column = 0; column < std::floor(ArrayOfTextToDisplay.size() / rows); column++)
             {
-                std::cout << DisplayCell::display(level, SelectedColumn*(SelectedRow+1)==column+row, ArrayOfTextToDisplay[column]);
+                std::cout << DisplayCell::display(level, SelectedColumn==column && SelectedRow==row, ArrayOfTextToDisplay[column+row]);
             }
             std::cout << '\n';
         }
