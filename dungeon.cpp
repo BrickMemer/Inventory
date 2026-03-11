@@ -37,15 +37,7 @@ bool dungeon::EnemyAttack(player& CurrentPlayer)
 
 void dungeon::DisplayFight(const int& CurrentChoice, const std::string& BackGroundSpritesName)
 {
-    std::vector<std::string> BattleGroundSpritesNames;
-    BattleGroundSpritesNames.push_back(BackGroundSpritesName);
-    for(auto Enemie : this->getFloor().getEnemies())
-    {
-        BattleGroundSpritesNames.push_back(Enemie->getName());
-    }
-    BattleGroundSpritesNames.push_back(BackGroundSpritesName);
-    BattleGround battleground(BattleGroundSpritesNames);
-    FightDisplay::DislplayFight(this->getFloor(), CurrentChoice, battleground);
+    FightDisplay::DislplayFight(this->getFloor(), CurrentChoice);
 }
 
 int dungeon::PlayerAttack(int damage, int index)

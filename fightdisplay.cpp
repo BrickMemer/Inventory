@@ -4,15 +4,16 @@
 
 FightDisplay::FightDisplay() {}
 
-void FightDisplay::DislplayFight(const Floor& CurrentFloor, const int& CurrentChoice, BattleGround& battleground)
+void FightDisplay::DislplayFight(const Floor& CurrentFloor, const int& CurrentChoice)
 {
-    BattleGround battleground;
-    battleground.AddSprite("BrickWall");
+    std::vector<std::string> BattleGroundSpritesNames;
+    BattleGroundSpritesNames.push_back("BrickWall");
     for (const auto enemy : CurrentFloor.getEnemies())
     {
-        battleground.AddSprite(enemy->getName());
+        BattleGroundSpritesNames.push_back(enemy->getName());
     }
-    battleground.AddSprite("BrickWall");
+    BattleGroundSpritesNames.push_back("BrickWall");
+    BattleGround battleground(BattleGroundSpritesNames);
     const int TotalLenght =  battleground.DrawBattleGround();
     DisplayCells::DisplayFullCells(1, std::vector<std::string>{"fight", "leave", "act", "items"}, CurrentChoice, 0);
 }
