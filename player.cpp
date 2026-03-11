@@ -1,10 +1,9 @@
 #include "player.hpp"
 
-player::player() : PlayerInventory(5,5)
+player::player() : PlayerInventory(5,5), PlayerEquipment(this->PlayerInventory.GetRow())
 {
     this->PlayerInventory.ResetCorrdinates();
     //this->PlayerInventory.AddItem(new Weapon());
-    this->Equipment = this->PlayerInventory.GetRow();
     //this->PlayerInventory.AddItem(new Weapon());
 }
 
@@ -43,9 +42,9 @@ void player::setDamage()
     this->damage = 0;
     for(int x = 0; x < this->PlayerInventory.GetRowsMaxSize(); x++)
     {
-        if(this->Equipment[x]->getItem())
+        if(this->PlayerEquipment.GetItem(x))
         {
-            this->damage += this->Equipment[x]->getItem()->getAttribute().getDamage();
+            this->damage += this->PlayerEquipment.GetItem(x)->getAttribute().getDamage();
         }
     }
 }
@@ -97,9 +96,9 @@ void player::setDefense()
     this->defense = 0;
     for(int x = 0; x < this->PlayerInventory.GetRowsMaxSize(); x++)
     {
-        if(this->Equipment[x]->getItem())
+        if(this->PlayerEquipment.GetItem(x))
         {
-            this->defense += this->Equipment[x]->getItem()->getAttribute().getDefense();
+            this->defense += this->PlayerEquipment.GetItem(x)->getAttribute().getDefense();
         }
     }
 }
@@ -136,7 +135,7 @@ bool player::MoveToEquipment()
     int EquipmentFreeSpace = -1;
     for (int i = 0; i < this->PlayerInventory.GetRowsMaxSize(); ++i)
     {
-        if(!this->Equipment[i])
+        if(!this->PlayerEquipment.GetItem(i))
         {
             EquipmentFreeSpace = i;
         }

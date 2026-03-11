@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "displaycells.hpp"
 
 game::game(player &CurrentPlayer) : CurrentPlayer(CurrentPlayer)
 {

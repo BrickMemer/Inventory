@@ -1,7 +1,7 @@
 #ifndef INVENTORY_HPP
 #define INVENTORY_HPP
 #include "item.hpp"
-#include "inventorycell.hpp"
+#include "Displaycell.hpp"
 #include <iostream>
 #include <queue>
 
@@ -10,7 +10,7 @@ class Inventory
 private:
     unsigned int Rows;
     unsigned int Columns;
-    InventoryCell*** Items;
+    Item*** Items;
     unsigned int CurrentX = 0;
     unsigned int CurrentY = 0;
 public:
@@ -28,7 +28,7 @@ public:
     void Clear();
     void ResetCorrdinates();
     bool UpgradeItem();
-    InventoryCell** GetRow();
+    Item** GetRow();
     bool SetCorrdinates(const unsigned int newX, const unsigned int newY);
     unsigned int GetRowsMaxSize() const;
     unsigned int GetColumnsMaxSize() const;

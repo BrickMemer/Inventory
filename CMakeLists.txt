@@ -16,7 +16,7 @@ add_executable(Inventory-New main.cpp
     inventory.hpp inventory.cpp
     singleCharacter.hpp singleCharacter.cpp
     game.hpp game.cpp
-    inventorycell.hpp inventorycell.cpp
+    Displaycell.hpp Displaycell.cpp
     store.cpp
     store.hpp
     enemy.hpp enemy.cpp
@@ -24,12 +24,14 @@ add_executable(Inventory-New main.cpp
     floor.hpp floor.cpp
     orc.hpp orc.cpp
     fightingsystem.hpp fightingsystem.cpp
-    sprites/Orc.txt sprites/Walls.txt
     battleground.cpp battleground.hpp sprites.cpp sprite.hpp
     fightdisplay.hpp fightdisplay.cpp
 
     material.hpp material.cpp
     armor.hpp armor.cpp
+    displaycells.hpp displaycells.cpp
+    sprites/BrickWall.txt sprites/Orc.txt
+    equipment.hpp equipment.cpp
 )
 
 include(GNUInstallDirs)
