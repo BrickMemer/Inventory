@@ -133,7 +133,7 @@ void game::RunDungeon()
             }while(!getSingleChar());
             continue;
         }
-        GameDungeon.DisplayFight(CurrentChoice);
+        GameDungeon.DisplayFight(CurrentChoice, "BrickWall");
         if(PlayerTurn == true)
         {
             switch (performActionDungeon(CurrentChoice, this->CurrentPlayer))

@@ -4,6 +4,7 @@
 #include<vector>
 #include "floor.hpp"
 #include "player.hpp"
+#include "battleground.hpp"
 
 class dungeon
 {
@@ -16,7 +17,7 @@ public:
 
     void GenerateDungeon();
     void NewFloor();
-    void DisplayFight(const int& CurrentChoice);
+    void DisplayFight(const int& CurrentChoice, const std::string& BackGroundSpritesName);
     int PlayerAttack(int damage, int index);
     bool EnemyAttack(player& CurrentPlayer);
     bool MoveForward();

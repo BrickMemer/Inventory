@@ -4,7 +4,7 @@
 
 FightDisplay::FightDisplay() {}
 
-void FightDisplay::DislplayFight(const Floor& CurrentFloor, const int& CurrentChoice)
+void FightDisplay::DislplayFight(const Floor& CurrentFloor, const int& CurrentChoice, BattleGround& battleground)
 {
     BattleGround battleground;
     battleground.AddSprite("BrickWall");
