@@ -33,6 +33,7 @@ add_executable(Inventory-New main.cpp
     displaycells.hpp displaycells.cpp
     sprites/BrickWall.txt sprites/Orc.txt
     equipment.hpp equipment.cpp
+    padding.hpp padding.cpp
 )
 
 include(GNUInstallDirs)

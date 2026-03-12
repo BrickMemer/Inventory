@@ -1,4 +1,5 @@
 #include "battleground.hpp"
+#include "padding.hpp"
 
 BattleGround::BattleGround(std::vector<std::string>& SpritesNames)
 {
@@ -16,16 +17,13 @@ void BattleGround::AddSprite(const std::string& SpriteName)
 
 int BattleGround::DrawBattleGround() const
 {
-    const int spacebetween = 16;
+    const int spacebetween = 36;
     for (int i = 0; i < 23; i++)
     {
         for (int j = 0; j < this->GetSpritesAmount(); j++)
         {
             std::cout << this->Sprites[j]->GetLineOfSprite(i);
-            for(int k = 0; k < spacebetween; k++)
-            {
-                std::cout << ' ';
-            }
+            Padding::PaddingLeft(spacebetween);
         }
         std::cout << '\n';
     }
