@@ -1,4 +1,5 @@
 #include "inventory.hpp"
+#include "displaycells.hpp"
 
 Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
     Columns(Columns)
@@ -113,31 +114,20 @@ bool Inventory::GetInfo()
 
 void Inventory::DisplayInventory()
 {
-    unsigned short SpaceBetween = 24;
-    for (int row = 0; row < this->Rows; ++row) {
-        bool isSelected = false;
-        for(int level = 0; level < 6; level++)
+    std::vector<std::string> ItemsNames;
+    ItemsNames.resize(this->Columns*this->Rows);
+    for (int x = 0; x < this->Rows; x++)
+    {
+        for(int y = 0; y < this->Columns; y++)
         {
-            for(size_t col = 0; col < this->Columns; col++)
+            if(this->Items[x][y])
             {
-                std::string NameToDisplay;
-                if(col == this->CurrentY && row == this->CurrentX){
-                    isSelected = true;
-                }
-                if(!this->Items[row][col])
-                {
-                    NameToDisplay = "";
-                }
-                else
-                {
-                    NameToDisplay = this->Items[row][col]->getName();
-                }
-                std::cout << DisplayCell::display(level, isSelected, NameToDisplay);
-                isSelected = false;
+                ItemsNames[x*this->Rows+y] = this->Items[x][y]->getName();
             }
-        std::cout << "\n";
         }
     }
+
+    DisplayCells::DisplayFullCells(this->Rows, ItemsNames, this->getCurrentY(), this->getCurrentX());
 }
 
 bool Inventory::UpgradeItem()
