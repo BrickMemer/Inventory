@@ -8,7 +8,7 @@ void DisplayCells::DisplayFullCells(int rows, std::vector<std::string> ArrayOfTe
 {
     for(int row = 0; row < rows; row++)
     {
-        for(int level = 0; level < 6; level++)
+        for(int level = 0; level < 7; level++)
         {
             Padding::PaddingLeft(PaddingLeftAmount);
             for(int column = 0; column < std::floor(ArrayOfTextToDisplay.size() / rows); column++)

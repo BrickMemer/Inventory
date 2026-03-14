@@ -127,7 +127,7 @@ void Inventory::DisplayInventory()
         }
     }
 
-    DisplayCells::DisplayFullCells(this->Rows, ItemsNames, this->getCurrentY(), this->getCurrentX());
+    DisplayCells::DisplayFullCells(this->Rows, ItemsNames, this->getCurrentY(), this->getCurrentX(), 0);
 }
 
 bool Inventory::UpgradeItem()
