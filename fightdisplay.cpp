@@ -15,5 +15,5 @@ void FightDisplay::DislplayFight(const Floor& CurrentFloor, const int& CurrentCh
     BattleGroundSpritesNames.push_back("BrickWall");
     BattleGround battleground(BattleGroundSpritesNames);
     battleground.DrawBattleGround();
-    DisplayCells::DisplayFullCells(1, std::vector<std::string>{"fight", "leave", "act", "items"}, CurrentChoice, 0, 24);
+    DisplayCells::DisplayFullCells(1, std::vector<std::string>{"fight", "leave", "act", "items"}, CurrentChoice, 0, 24, 24, 6);
 }
