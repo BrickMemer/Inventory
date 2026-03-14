@@ -1,5 +1,5 @@
-#ifndef SINGLECHARACTER_H
-#define SINGLECHARACTER_H
+#ifndef PERFORMACTIONS_H
+#define PERFORMACTIONS_H
 
 #include <iostream>
 #include "player.hpp"
@@ -29,4 +29,4 @@ int performActionStore(player& CurrentPlayer, Store& GameStore);
 int performActionDungeon(unsigned char& SelectedOption, player& CurrentPlayer);
 void ClearTerminal();
 
-#endif // SINGLECHARACTER_H
+#endif // PERFORMACTIONS_H

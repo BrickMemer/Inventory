@@ -1,15 +1,16 @@
 #include "inventory.hpp"
+#include "displaycells.hpp"
 
 Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
     Columns(Columns)
 {
-    this->Items = new InventoryCell**[Rows];
+    this->Items = new Item**[Rows];
     for(unsigned int i = 0; i < this->Rows; i++)
     {
-        this->Items[i] = new InventoryCell*[Columns];
+        this->Items[i] = new Item*[Columns];
         for(unsigned int j = 0; j < this->Columns; j++)
         {
-            this->Items[i][j] = new InventoryCell();
+            this->Items[i][j] = nullptr;
         }
     }
 }
@@ -22,13 +23,13 @@ Item* Inventory::GetItem()
     }
     else
     {
-        return Items[this->CurrentX][this->CurrentY]->getItem();
+        return Items[this->CurrentX][this->CurrentY];
     }
 }
 
 bool Inventory::SetItem(Item* item)
 {
-    this->Items[this->CurrentX][this->CurrentY]->setItem(item);
+    this->Items[this->CurrentX][this->CurrentY] = item;
     return true;
 }
 
@@ -44,10 +45,10 @@ bool Inventory::MoveOrSwap(int x,int y,int newx,int newy)
     }
     else
     {
-        Item* TempItem1 = this->Items[x][y]->getItem();
-        Item* TempItem2 = this->Items[newx][newy]->getItem();
-        this->Items[x][y]->setItem(TempItem2);
-        this->Items[newx][newy]->setItem(TempItem1);
+        Item* TempItem1 = this->Items[x][y];
+        Item* TempItem2 = this->Items[newx][newy];
+        this->Items[x][y] = TempItem2;
+        this->Items[newx][newy] =TempItem1;
         return true;
     }
 }
@@ -58,9 +59,9 @@ bool Inventory::AddItem(Item* item)
     {
         for(int j = 0; j < this->Columns; j++)
         {
-            if(this->Items[i][j]->getItem() == nullptr)
+            if(this->Items[i][j] == nullptr)
             {
-                this->Items[i][j]->setItem(item);
+                this->Items[i][j] = item;
                 return true;
             }
         }
@@ -78,8 +79,8 @@ Item* Inventory::Drop()
     }
     else
     {
-        Item* TempItem = this->Items[this->CurrentX][this->CurrentY]->getItem();
-        this->Items[this->CurrentX][this->CurrentY]->setItem(nullptr);
+        Item* TempItem = this->Items[this->CurrentX][this->CurrentY];
+        this->Items[this->CurrentX][this->CurrentY] = nullptr;
         return TempItem;
     }
 }
@@ -92,54 +93,49 @@ bool Inventory::Remove()
     }
     else
     {
-        delete this->Items[this->CurrentX][this->CurrentY]->getItem();
-        this->Items[this->CurrentX][this->CurrentY]->setItem(nullptr);
+        delete this->Items[this->CurrentX][this->CurrentY];
+        this->Items[this->CurrentX][this->CurrentY] = nullptr;
         return true;
     }
 }
 
 bool Inventory::GetInfo()
 {
-    if(!this->Items[this->CurrentX][this->CurrentY]->getItem())
+    if(!this->Items[this->CurrentX][this->CurrentY])
     {
         return false;
     }
     else
     {
-        this->Items[this->CurrentX][this->CurrentY]->getItem()->getInfo();
+        this->Items[this->CurrentX][this->CurrentY]->getInfo();
         return true;
     }
 }
 
 void Inventory::DisplayInventory()
 {
-    unsigned short SpaceBetween = 24;
-    for(size_t row = 0; row < this->Rows; row++)
+    std::vector<std::string> ItemsNames;
+    ItemsNames.resize(this->Columns*this->Rows);
+    for (int x = 0; x < this->Rows; x++)
     {
-        int levels = 6;
-        std::string NameToDisplay;
-        for (int level = 0; level < levels; ++level) {
-            bool isSelected = false;
-            for(size_t col = 0; col < this->Columns; col++)
+        for(int y = 0; y < this->Columns; y++)
+        {
+            if(this->Items[x][y])
             {
-                if(col == this->CurrentY && row == this->CurrentX){
-                    isSelected = true;
-                }
-                std::cout << this->Items[row][col]->display(level, isSelected);
-                isSelected = false;
+                ItemsNames[x*this->Rows+y] = this->Items[x][y]->getName();
             }
-            std::cout << "\n";
         }
-
     }
+
+    DisplayCells::DisplayFullCells(this->Rows, ItemsNames, this->getCurrentY(), this->getCurrentX(), 0, 24, 6);
 }
 
 bool Inventory::UpgradeItem()
 {
-    return this->Items[this->getCurrentX()][this->getCurrentY()]->getItem()->upgrade();
+    return this->Items[this->getCurrentX()][this->getCurrentY()]->upgrade();
 }
 
-InventoryCell** Inventory::GetRow()
+Item** Inventory::GetRow()
 {
     return this->Items[CurrentX];
 }
@@ -152,12 +148,12 @@ void Inventory::Align()
     {
         for(int col = 0; col < this->Columns; col++)
         {
-            if(this->Items[row][col]->getItem() && FreeCordinates.size() > 0)
+            if(this->Items[row][col] && FreeCordinates.size() > 0)
             {
                 this->MoveOrSwap(row,col,FreeCordinates.front().first, FreeCordinates.front().second);
                 FreeCordinates.pop();
             }
-            else if(!this->Items[row][col]->getItem())
+            else if(!this->Items[row][col])
             {
                 FreeCordinates.push(std::make_pair(row,col));
             }
@@ -172,7 +168,7 @@ void Inventory::Clear()
         for(int col = 0; col < this->Columns; col++)
         {
             delete this->Items[row][col];
-            this->Items[row][col] = new InventoryCell();
+            this->Items[row][col] = nullptr;
         }
     }
 }

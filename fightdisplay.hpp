@@ -2,6 +2,7 @@
 #define FIGHTDISPLAY_HPP
 
 #include "floor.hpp"
+#include "battleground.hpp"
 
 class FightDisplay
 {

@@ -35,7 +35,7 @@ bool dungeon::EnemyAttack(player& CurrentPlayer)
     return FightResult;
 }
 
-void dungeon::DisplayFight(const int& CurrentChoice)
+void dungeon::DisplayFight(const int& CurrentChoice, const std::string& BackGroundSpritesName)
 {
     FightDisplay::DislplayFight(this->getFloor(), CurrentChoice);
 }

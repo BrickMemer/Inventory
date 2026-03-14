@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "displaycells.hpp"
 
 game::game(player &CurrentPlayer) : CurrentPlayer(CurrentPlayer)
 {
@@ -132,7 +133,7 @@ void game::RunDungeon()
             }while(!getSingleChar());
             continue;
         }
-        GameDungeon.DisplayFight(CurrentChoice);
+        GameDungeon.DisplayFight(CurrentChoice, "BrickWall");
         if(PlayerTurn == true)
         {
             switch (performActionDungeon(CurrentChoice, this->CurrentPlayer))
@@ -191,7 +192,7 @@ void game::RunDungeon()
             do
             {
                 std::cout << "Enemy attacked you for: " << GameDungeon.GetEnemy(0).getDamage() << " damage" << '\n'
-                          << "you currenty have: " << this->CurrentPlayer.getHealth() << "health";
+                          << "you currenty have: " << this->CurrentPlayer.getHealth() << " health";
             }while(!getSingleChar());
             PlayerTurn = !PlayerTurn;
         }
