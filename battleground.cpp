@@ -1,5 +1,6 @@
 #include "battleground.hpp"
 #include "padding.hpp"
+#include <iostream>
 
 BattleGround::BattleGround(std::vector<std::string>& SpritesNames)
 {
@@ -27,11 +28,20 @@ int BattleGround::DrawBattleGround() const
         }
         std::cout << '\n';
     }
-    const int TotalLength = this->Sprites[0]->GetLineOfSprite(0).size() + this->Sprites[1]->GetLineOfSprite(0).size() + this->Sprites[2]->GetLineOfSprite(0).size() + spacebetween * 2;
+    
+    unsigned int TotalLength = spacebetween * 2;
+    
+    //Adds all sprites lenght
+    for(auto* sprite : this->Sprites)
+    {
+        TotalLength += sprite->GetLineOfSprite(0).length();
+    }
+    
     for (int var = 0; var < TotalLength; ++var)
     {
         std::cout << '-';
     }
+    
     std::cout << '\n';
     return TotalLength;
 }

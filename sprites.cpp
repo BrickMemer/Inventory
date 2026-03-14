@@ -1,4 +1,7 @@
 #include "sprite.hpp"
+#include <fstream>
+#include <algorithm>
+#include <iostream>
 
 Sprite::Sprite(const std::string& SpriteName)
 {
@@ -25,7 +28,7 @@ void Sprite::ReverseSprite()
 {
     for(int i = 0; i < SpriteData.size();)
     {
-            // Initialize left to the beginning
+    // Initialize left to the beginning
     // and right to the end
         int left = 0, right = SpriteData[i].size() - 1;
   

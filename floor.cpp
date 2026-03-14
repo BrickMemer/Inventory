@@ -28,6 +28,7 @@ void Floor::setEnemies(const std::vector<Enemy*> &newEnemies)
     enemies = newEnemies;
 }
 
+//Damage enemy, if enemies health lower then zero, delete it.
 int Floor::DamageEnemy(unsigned int index, int damage)
 {
     this->enemies[index]->setHp(this->enemies[index]->getHp() - damage);
@@ -39,6 +40,7 @@ int Floor::DamageEnemy(unsigned int index, int damage)
     }
     return 0;
 }
+
 void Floor::KillEnemy(unsigned int index)
 {
     delete this->enemies[index];
@@ -51,6 +53,7 @@ bool Floor::IsEmpty() const
     return this->enemies.size() <= 0;
 }
 
+//Get random enemy
 Enemy* Floor::getRandEnemy()
 {
     int index = rand() % enemies.size();

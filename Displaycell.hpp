@@ -5,6 +5,7 @@
 class DisplayCell
 {
 public:
+    //static function that returns a part of a cell
     static std::string display(const int& level, const bool& isSelected, const std::string& TextInside, const int& CellWidth, const int& CellHeight);
 };
 
