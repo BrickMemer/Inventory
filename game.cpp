@@ -82,7 +82,7 @@ int game::RunMainMenu()
         }
     }
     StopGame();
-    return 99;
+    return -1;
 }
 
 void game::RunInventory()
@@ -109,6 +109,10 @@ void game::RunInventory()
 
 void game::RunDungeon()
 {
+    /*
+    *    Configuration
+    */
+
     dungeon GameDungeon;
 
     bool IsDungeonRunning = true;
@@ -116,24 +120,36 @@ void game::RunDungeon()
     unsigned char CurrentChoice = 0;
     unsigned int MoneyGained = 0;
 
+    //While the game is running and dungeon is running
     while(this->IsRunning == true && IsDungeonRunning == true)
     {
         ClearTerminal();
         if(GameDungeon.getFloor().IsEmpty() == true)
         {
+            // if there is no more floors to go throw, end the dungeon
             if(GameDungeon.MoveForward() == false)
             {
                 std::cout << "You sad complited the dungeon";
                 IsDungeonRunning = !IsDungeonRunning;
             }
-            do
+            else
             {
-                std::cout << "You had defeted the enemy, your currently gained: " << MoneyGained;
-                ClearTerminal();
-            }while(!getSingleChar());
-            continue;
+                do
+                {
+                    std::cout << "You had defeted the enemy, your currently gained: " << MoneyGained;
+                    ClearTerminal();
+                }while(!getSingleChar());
+                continue;
+            }
         }
+
+        // Display the Dungeon
+
         GameDungeon.DisplayFight(CurrentChoice, "BrickWall");
+
+        //
+
+        //If it's player turn
         if(PlayerTurn == true)
         {
             switch (performActionDungeon(CurrentChoice, this->CurrentPlayer))
@@ -174,17 +190,24 @@ void game::RunDungeon()
                     IsDungeonRunning = !IsDungeonRunning;
                     ClearTerminal();
                     break;
+                default:
+                    break;
                 }
                 break;
+
             default:
                 break;
             }
         }
-        if(CurrentPlayer.getHealth() <= 0)
+
+        //else If player health is lower or equal to zero, end run
+        else if(CurrentPlayer.getHealth() <= 0)
         {
             IsDungeonRunning = !IsDungeonRunning;
             this->CurrentPlayer.Death();
         }
+
+        //else if it's not player move, random monster will do his.
         else if(PlayerTurn == false)
         {
             GameDungeon.EnemyAttack(this->CurrentPlayer);
@@ -196,11 +219,14 @@ void game::RunDungeon()
             }while(!getSingleChar());
             PlayerTurn = !PlayerTurn;
         }
+        // Return player, if he want to go future with the choices then 2
         if (CurrentChoice >= 2)
         {
             CurrentChoice--;
         }
     }
+
+    // After the run, show how much gold you've gained
     do
     {
         std::cout << "You gained: " << MoneyGained << " money";
