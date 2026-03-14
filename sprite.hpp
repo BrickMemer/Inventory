@@ -1,11 +1,8 @@
 #ifndef SPRITE_HPP
 #define SPRITE_HPP
 
-#include <iostream>
 #include <string>
 #include <vector>
-#include <fstream>
-#include <algorithm>
 
 class Sprite {
 private:
