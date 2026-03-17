@@ -29,9 +29,9 @@ void player::recalculateAttributes() {
 player::player() : PlayerInventory(5,5), PlayerEquipment() 
 {
     this->PlayerInventory.ResetCorrdinates();
-    Weapon* defaultSword = new Weapon("Sword", 100, 10); 
-    this->PlayerEquipment.equip(EquipmentSlot::Weapon, defaultSword);
-    this->recalculateAttributes();
+    // Weapon* defaultSword = new Weapon("Sword", 100, 10);
+    // this->PlayerEquipment.equip(EquipmentSlot::Weapon, defaultSword);
+    // this->recalculateAttributes();
 }
 
 unsigned int player::getMoney() const
@@ -105,6 +105,7 @@ int player::getDefense() const
 
 void player::DisplayInventory()
 {
+    this->PlayerEquipment.DisplayEquipment();
     this->PlayerInventory.DisplayInventory();
 }
 bool player::MoveX(bool UpOrDown)
@@ -140,7 +141,7 @@ bool player::MoveToEquipment()
     if (item->getIsCanEquip()) {
         if (this->PlayerEquipment.get(EquipmentSlot::Weapon) == nullptr) {
             this->PlayerEquipment.equip(EquipmentSlot::Weapon, item);
-            this->PlayerInventory.Remove();
+            this->PlayerInventory.Drop();
             this->recalculateAttributes();
             return true;
         }

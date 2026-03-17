@@ -13,11 +13,14 @@ class Equipment {
 public:
     Equipment();
 
-    bool equip(EquipmentSlot slot, Item* item); 
-    Item* unequip(EquipmentSlot slot);         
-    Item* get(EquipmentSlot slot) const;        
+    bool equip(EquipmentSlot slot, Item* item);
+    Item* unequip(EquipmentSlot slot);
+    Item* get(EquipmentSlot slot) const;
 
     std::map<EquipmentSlot, Item*> getAll() const;
+
+    // Display equipment in a beautiful way
+    void DisplayEquipment() const;
 
 private:
     std::map<EquipmentSlot, Item*> slots;

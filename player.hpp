@@ -17,7 +17,7 @@ private:
 public:
     player();
 
-    void DisplayInventory();
+    void DisplayInventory(); // Now calls Inventory::DisplayInventory with PlayerEquipment
 
     bool AddItem(Item* item);
     void AlignItems();
