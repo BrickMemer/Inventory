@@ -46,6 +46,7 @@ public:
     void setPrice(int newPrice);
     Attribute getAttribute() const;
     static unsigned int CalculatePrice(const Item& ItemToCalculate);
+    bool getIsCanEquip();
 
     bool virtual upgrade();
 

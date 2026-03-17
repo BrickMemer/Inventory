@@ -143,6 +143,11 @@ unsigned int Item::CalculatePrice(const Item& ItemToCalculate)
     return ItemToCalculate.getDurability() + ItemToCalculate.getAttribute().getDamage() + ItemToCalculate.getAttribute().getDefense() + ItemToCalculate.getAttribute().getEnergy() + ItemToCalculate.getAttribute().getHealth() + ItemToCalculate.getAttribute().getMana() + (ItemToCalculate.getLevel() * 10);
 }
 
+bool Item::getIsCanEquip()
+{
+    return this->isCanEquip;
+}
+
 bool Item::upgrade()
 {
     if(level + 1 > 6)
