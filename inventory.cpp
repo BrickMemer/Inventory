@@ -1,17 +1,17 @@
 #include "inventory.hpp"
+#include <nlohmann/json.hpp>
+#include <queue>
+#include <fstream>
 #include "displaycells.hpp"
+#include "weapon.hpp"
 
-Inventory::Inventory(unsigned int Rows, unsigned int Columns) : Rows(Rows),
-    Columns(Columns)
+Inventory::Inventory(unsigned int Rows, unsigned int Columns)
 {
-    this->Items = new Item**[Rows];
-    for(unsigned int i = 0; i < this->Rows; i++)
+    this->Items.resize(Rows);
+
+    for(auto& ItemRow: this->Items)
     {
-        this->Items[i] = new Item*[Columns];
-        for(unsigned int j = 0; j < this->Columns; j++)
-        {
-            this->Items[i][j] = nullptr;
-        }
+        ItemRow.resize(Columns);
     }
 }
 
@@ -35,7 +35,7 @@ bool Inventory::SetItem(Item* item)
 
 bool Inventory::MoveOrSwap(int x,int y,int newx,int newy)
 {
-    if(x >= this->Rows || y >= this->Columns || newx >= this->Rows || newy >= this->Columns)
+    if(x >= this->Items.size() || y >= this->Items[0].size() || newx >= this->Items.size() || newy >= this->Items[0].size())
     {
         return false;
     }
@@ -55,9 +55,9 @@ bool Inventory::MoveOrSwap(int x,int y,int newx,int newy)
 
 bool Inventory::AddItem(Item* item)
 {
-    for(int i = 0; i < this->Rows; i++)
+    for(int i = 0; i < this->Items.size(); i++)
     {
-        for(int j = 0; j < this->Columns; j++)
+        for(int j = 0; j < this->Items[0].size(); j++)
         {
             if(this->Items[i][j] == nullptr)
             {
@@ -115,19 +115,19 @@ bool Inventory::GetInfo()
 void Inventory::DisplayInventory()
 {
     std::vector<std::string> ItemsNames;
-    ItemsNames.resize(this->Columns*this->Rows);
-    for (int x = 0; x < this->Rows; x++)
+    ItemsNames.resize(this->Items[0].size()*this->Items.size());
+    for (int x = 0; x < this->Items.size(); x++)
     {
-        for(int y = 0; y < this->Columns; y++)
+        for(int y = 0; y < this->Items[0].size(); y++)
         {
             if(this->Items[x][y])
             {
-                ItemsNames[x*this->Rows+y] = this->Items[x][y]->getName();
+                ItemsNames[x*this->Items.size()+y] = this->Items[x][y]->getName();
             }
         }
     }
 
-    DisplayCells::DisplayFullCells(this->Rows, ItemsNames, this->getCurrentY(), this->getCurrentX(), 0, 24, 6);
+    DisplayCells::DisplayFullCells(this->Items.size(), ItemsNames, this->getCurrentY(), this->getCurrentX(), 0, 24, 6);
 }
 
 bool Inventory::UpgradeItem()
@@ -137,16 +137,16 @@ bool Inventory::UpgradeItem()
 
 Item** Inventory::GetRow()
 {
-    return this->Items[CurrentX];
+    return this->Items[CurrentX].data();
 }
 
 void Inventory::Align()
 {
     std::queue<std::pair<int, int>> FreeCordinates;
 
-    for(int row = 0; row < this->Rows; row++)
+    for(int row = 0; row < this->Items.size(); row++)
     {
-        for(int col = 0; col < this->Columns; col++)
+        for(int col = 0; col < this->Items[col].size(); col++)
         {
             if(this->Items[row][col] && FreeCordinates.size() > 0)
             {
@@ -163,9 +163,9 @@ void Inventory::Align()
 
 void Inventory::Clear()
 {
-    for(int row = 0; row < this->Rows; row++)
+    for(int row = 0; row < this->Items.size(); row++)
     {
-        for(int col = 0; col < this->Columns; col++)
+        for(int col = 0; col < this->Items[col].size(); col++)
         {
             delete this->Items[row][col];
             this->Items[row][col] = nullptr;
@@ -181,7 +181,7 @@ void Inventory::ResetCorrdinates()
 
 bool Inventory::SetCorrdinates(const unsigned int newX, const unsigned int newY)
 {
-    if(newX >= this->Rows|| newY >= this->Columns)
+    if(newX >= this->Items.size()|| newY >= this->Items[0].size())
     {
         return false;
     }
@@ -195,12 +195,12 @@ bool Inventory::SetCorrdinates(const unsigned int newX, const unsigned int newY)
 
 unsigned int Inventory::GetColumnsMaxSize() const
 {
-    return this->Columns;
+    return this->Items.size();
 }
 
 unsigned int Inventory::GetRowsMaxSize() const
 {
-    return this->Rows;
+    return this->Items[0].size();
 }
 
 unsigned int Inventory::getCurrentX() const
@@ -213,18 +213,89 @@ unsigned int Inventory::getCurrentY() const
     return CurrentY;
 }
 
+void Inventory::SaveInventory()
+{
+    nlohmann::json SaveFile = nlohmann::json::array();
+
+    for(int i = 0; i < this->Items.size(); i++)
+    {
+        nlohmann::json SaveFileRow = nlohmann::json::array();
+        for(int j = 0; j < this->Items[i].size(); j++)
+        {
+            if(this->Items[i][j])
+            {
+                SaveFileRow.push_back(this->Items[i][j]->to_json());
+            }
+            else
+            {
+                SaveFileRow.push_back(NULL);
+            }
+        }
+        SaveFile.push_back(SaveFileRow);
+    }
+
+    std::ofstream outputFile("saves/Inventory.json");
+    outputFile << SaveFile;
+    outputFile.close();
+}
+
+void Inventory::LoadInventory()
+{
+    //to do, finish laading
+    /*
+    nlohmann::json LoadedInventory;
+
+    // Read from a file
+    std::ifstream inputFile("saves/data.json");
+    if (inputFile.is_open()) {
+        inputFile >> LoadedInventory;
+        inputFile.close();
+    } else {
+        std::cerr << "Failed to open file!" << std::endl;
+        return;
+    }
+
+    for(int i = 0; i < this->Items.size(); i++)
+    {
+        for(int j = 0; j < this->Items[i].size(); j++)
+        {
+            Item* item;
+            if(!LoadedInventory[i][j])
+            {
+                continue;
+            }
+            else
+            {
+                if(this->Items[i][j])
+                {
+                    delete this->Items[i][j];
+                    this->Items[i][j] = nullptr;
+                }
+                Attribute attribute = Attribute(LoadedInventory[i][j]["attribute"]["mana"], LoadedInventory[i][j]["attribute"]["health"], LoadedInventory[i][j]["attribute"]["energy"], LoadedInventory[i][j]["attribute"]["defense"], LoadedInventory[i][j]["attribute"]["damage"]);
+                switch(std::atoi(std::string(LoadedInventory[i][j]["name"]).data()))
+                {
+                    case std::atoi("sword"):
+                    {
+                        item = new Weapon(LoadedInventory[i][j]["level"], LoadedInventory[i][j]["name"], LoadedInventory[i][j]["rarity"], LoadedInventory[i][j]["durability"], attribute.getDamage());
+                    }
+                }
+            }
+        }
+    }
+    */
+}
+
 Inventory::~Inventory()
 {
-    for(int i = 0; i < this->Rows; i++)
+    this->SaveInventory();
+    for(int i = 0; i < this->Items.size(); i++)
     {
-        for(int j = 0; j < this->Columns; j++)
+        for(int j = 0; j < this->Items[i].size(); j++)
         {
             if(this->Items[i][j])
             {
                 delete this->Items[i][j];
             }
         }
-        delete[] this->Items[i];
     }
-    delete[] this->Items;
 }

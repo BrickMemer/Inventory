@@ -42,6 +42,9 @@ public:
     int Attack() const;
     void setDamage();
     void RecalculateStats();
+    void LoadInventory();
+
+    ~player();
 };
 
 #endif // PLAYER_HPP

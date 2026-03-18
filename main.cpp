@@ -2,8 +2,7 @@
 
 int main()
 {
-    player player1;
-    game game1(player1);
+    game game1;
 
     #ifdef unix
         system("stty -echo");

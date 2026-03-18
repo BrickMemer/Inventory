@@ -2,6 +2,7 @@
 #define ITEM_HPP
 
 #include <string>
+#include <nlohmann/json.hpp>
 #include "attribute.hpp"
 enum Rarity{
     common,
@@ -46,6 +47,7 @@ public:
     void setPrice(int newPrice);
     Attribute getAttribute() const;
     static unsigned int CalculatePrice(const Item& ItemToCalculate);
+    nlohmann::json to_json() const;
 
     bool virtual upgrade();
 

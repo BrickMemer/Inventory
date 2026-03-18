@@ -1,7 +1,7 @@
 #include "game.hpp"
 #include "displaycells.hpp"
 
-game::game(player &CurrentPlayer) : CurrentPlayer(CurrentPlayer)
+game::game()
 {
     this->CurrentPlayer.AddItem(new Weapon);
     ClearTerminal();
@@ -234,6 +234,11 @@ void game::RunDungeon()
     CurrentPlayer.Revive();
     CurrentPlayer.AddMoney(MoneyGained);
     return;
+}
+
+void game::LoadPlayer()
+{
+    CurrentPlayer.LoadInventory();
 }
 
 void game::RunStore()

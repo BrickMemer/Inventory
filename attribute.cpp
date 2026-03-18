@@ -67,3 +67,8 @@ void Attribute::setDamage(int newDamage)
 {
     damage = newDamage;
 }
+
+nlohmann::json Attribute::to_json() const
+{
+    return nlohmann::json({{"mana", this->mana}, {"health", this->health}, {"energy", this->energy}, {"defense", this->defense}, {"damage", this->damage}});
+}

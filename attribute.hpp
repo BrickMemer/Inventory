@@ -1,6 +1,7 @@
 #ifndef ATTRIBUTE_H
 #define ATTRIBUTE_H
 #include <iostream>
+#include <nlohmann/json.hpp>
 class Attribute
 {
 private:
@@ -20,6 +21,8 @@ public:
     void setDefense(int newDefense);
     int getDamage() const;
     void setDamage(int newDamage);
+
+    nlohmann::json to_json() const;
 };
 
 #endif // ATTRIBUTE_H

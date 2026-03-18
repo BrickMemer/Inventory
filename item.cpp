@@ -179,3 +179,8 @@ bool Item::upgrade()
     }
     return true;
 }
+
+nlohmann::json Item::to_json() const
+{
+    return nlohmann::json({{"name", this->name}, {"rarity", this->rarity}, {"level", this->level}, {"durability", this->durability}, {"attribute", this->attribute.to_json()}, {"maxQuantity", this->maxQuantity}, {"price", this->price}});
+}
