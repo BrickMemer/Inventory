@@ -33,6 +33,8 @@ public:
     unsigned int GetRowsMaxSize() const;
     unsigned int GetColumnsMaxSize() const;
 
+    void SaveInventory();
+
     ~Inventory();
     unsigned int getCurrentX() const;
     unsigned int getCurrentY() const;
