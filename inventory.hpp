@@ -3,14 +3,12 @@
 #include "item.hpp"
 #include "Displaycell.hpp"
 #include <iostream>
-#include <queue>
+#include <vector>
 
 class Inventory
 {
 private:
-    unsigned int Rows;
-    unsigned int Columns;
-    Item*** Items;
+    std::vector<std::vector<Item*>> Items;
     unsigned int CurrentX = 0;
     unsigned int CurrentY = 0;
 public:
@@ -32,6 +30,9 @@ public:
     bool SetCorrdinates(const unsigned int newX, const unsigned int newY);
     unsigned int GetRowsMaxSize() const;
     unsigned int GetColumnsMaxSize() const;
+
+    void SaveInventory();
+    void LoadInventory();
 
     ~Inventory();
     unsigned int getCurrentX() const;

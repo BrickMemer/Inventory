@@ -9,7 +9,7 @@
 class game
 {
 private:
-    player& CurrentPlayer;
+    player CurrentPlayer;
     Store store;
     bool IsRunning = true;
     void RunInventory();
@@ -17,8 +17,9 @@ private:
     int RunMainMenu();
     void DisplayMainMenu(const unsigned char& SelectedOption);
 public:
-    game(player &CurrentPlayer);
+    game();
 
+    void LoadPlayer();
     void RunDungeon();
     void RunGame();
     bool getIsRunning() const;

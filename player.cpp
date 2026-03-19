@@ -196,3 +196,13 @@ void player::ResetCorrdinates()
 {
     this->PlayerInventory.ResetCorrdinates();
 }
+
+void player::LoadInventory()
+{
+    this->PlayerInventory.LoadInventory();
+}
+
+player::~player()
+{
+    //this->PlayerInventory.SaveInventory();
+}
