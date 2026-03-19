@@ -48,6 +48,8 @@ public:
     Attribute getAttribute() const;
     static unsigned int CalculatePrice(const Item& ItemToCalculate);
     nlohmann::json to_json() const;
+    bool getIsCanEquip();
+
 
     bool virtual upgrade();
 
