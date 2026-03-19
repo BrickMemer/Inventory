@@ -3,6 +3,7 @@
 #include "item.hpp"
 #include <map>
 #include <string>
+#include <nlohmann/json.hpp>
 
 enum class EquipmentSlot {
     Weapon,
@@ -21,7 +22,7 @@ public:
 
     // Display equipment in a beautiful way
     void DisplayEquipment() const;
-
+    ~Equipment();
 private:
     std::map<EquipmentSlot, Item*> slots;
 };
