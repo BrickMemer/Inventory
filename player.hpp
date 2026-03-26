@@ -16,6 +16,7 @@ private:
     Equipment PlayerEquipment;
 public:
     player();
+    player(const nlohmann::json& SavedJson);
 
     void DisplayInventory();
 

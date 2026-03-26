@@ -17,6 +17,16 @@ Attribute::Attribute(int mana, int health, int energy, int defense, int damage):
 
 }
 
+Attribute::Attribute(nlohmann::json SavedAttribute):
+    mana{SavedAttribute["mana"]},
+    health{SavedAttribute["health"]},
+    energy{SavedAttribute["energy"]},
+    defense{SavedAttribute["defense"]},
+    damage{SavedAttribute["damage"]}
+{
+
+}
+
 
 int Attribute::getMana() const
 {

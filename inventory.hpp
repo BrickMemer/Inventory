@@ -13,6 +13,7 @@ private:
     unsigned int CurrentY = 0;
 public:
     Inventory(unsigned int Rows, unsigned int Columns);
+    Inventory(nlohmann::json SavedInvetory);
 
     bool SetItem(Item* item);
     Item* GetItem();
@@ -26,7 +27,7 @@ public:
     void Clear();
     void ResetCorrdinates();
     bool UpgradeItem();
-    Item** GetRow();
+    std::vector<Item*>* GetRow();
     bool SetCorrdinates(const unsigned int newX, const unsigned int newY);
     unsigned int GetRowsMaxSize() const;
     unsigned int GetColumnsMaxSize() const;

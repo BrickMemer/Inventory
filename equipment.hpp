@@ -5,12 +5,12 @@
 class Equipment
 {
 public:
-    Equipment(Item** EquipmentItems);
+    Equipment(std::vector<Item*>* EquipmentItems);
 
     //void DisplayEquipment(int x, int y);
     Item* GetItem(int index);
 private:
-    Item** EquipmentItems;
+    std::vector<Item*>* EquipmentItems;
 };
 
 #endif // EQUIPMENT_HPP

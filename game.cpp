@@ -1,9 +1,14 @@
 #include "game.hpp"
 #include "displaycells.hpp"
+#include <fstream>
 
 game::game()
 {
-    this->CurrentPlayer.AddItem(new Weapon);
+    std::ifstream SavedFile("saves/Inventory.json");
+    nlohmann::json Json;
+    SavedFile >> Json;
+    this->CurrentPlayer = player(Json);
+    //this->CurrentPlayer.AddItem(new Weapon);
     ClearTerminal();
 }
 

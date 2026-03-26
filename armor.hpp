@@ -6,6 +6,7 @@ class Armor : public Item
 public:
     Armor();
     Armor(int level, const std::string &name, Rarity rarity,int durability, int defense);
+    Armor(const nlohmann::json& SavedArmor);
     void use() override;
     bool upgrade() override;
 

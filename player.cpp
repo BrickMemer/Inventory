@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include <fstream>
 
 player::player() : PlayerInventory(5,5), PlayerEquipment(this->PlayerInventory.GetRow())
 {
@@ -6,6 +7,9 @@ player::player() : PlayerInventory(5,5), PlayerEquipment(this->PlayerInventory.G
     //this->PlayerInventory.AddItem(new Weapon());
     //this->PlayerInventory.AddItem(new Weapon());
 }
+
+player::player(const nlohmann::json& SavedJson) : PlayerInventory(SavedJson), PlayerEquipment(this->PlayerInventory.GetRow())
+{}
 
 unsigned int player::getMoney() const
 {
@@ -96,7 +100,7 @@ void player::setDefense()
     this->defense = 0;
     for(int x = 0; x < this->PlayerInventory.GetRowsMaxSize(); x++)
     {
-        if(this->PlayerEquipment.GetItem(x))
+        if(this->PlayerEquipment.GetItem(x) != nullptr)
         {
             this->defense += this->PlayerEquipment.GetItem(x)->getAttribute().getDefense();
         }

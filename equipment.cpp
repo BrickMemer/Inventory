@@ -2,12 +2,18 @@
 #include <vector>
 #include "displaycells.hpp"
 
-Equipment::Equipment(Item** EquipmentItems) : EquipmentItems(EquipmentItems)
+Equipment::Equipment(std::vector<Item*>* EquipmentItems) : EquipmentItems(EquipmentItems)
 {
 
 }
 
 Item* Equipment::GetItem(int index)
 {
-    return !this->EquipmentItems[index] ? nullptr : this->EquipmentItems[index];
+    /*
+    if (!&this->EquipmentItems[index])
+    {
+        return nullptr;
+    }
+    */
+    return nullptr;
 }

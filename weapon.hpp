@@ -6,6 +6,7 @@ class Weapon: public Item
 {
 public:
     Weapon();
+    Weapon(nlohmann::json SavedWeapon);
     Weapon(const std::string &name, int price, int damage);
     Weapon(int level, const std::string &name, Rarity rarity, int durability, int damage);
 

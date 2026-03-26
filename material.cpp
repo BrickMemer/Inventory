@@ -15,7 +15,7 @@ Material::Material(int level, std::string name, Rarity rarity, int maxQuantity) 
 
 }
 
-
+Material::Material(const nlohmann::json& SavedMaterial) : Item(SavedMaterial) {}
 
 void Material::use()
 {

@@ -10,6 +10,11 @@ Armor::Armor() {
     this->attribute.setDefense(5);
 }
 
+Armor::Armor(const nlohmann::json& SavedArmor) : Item(SavedArmor)
+{
+
+}
+
 Armor::Armor(int level, const std::string &name, Rarity rarity, int durability, int defense): Item(level, name, rarity, 1, durability, true)
 {
     this->attribute.setDefense(defense);

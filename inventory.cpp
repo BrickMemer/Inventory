@@ -4,6 +4,8 @@
 #include <fstream>
 #include "displaycells.hpp"
 #include "weapon.hpp"
+#include "armor.hpp"
+#include "material.hpp"
 
 Inventory::Inventory(unsigned int Rows, unsigned int Columns)
 {
@@ -14,6 +16,45 @@ Inventory::Inventory(unsigned int Rows, unsigned int Columns)
         ItemRow.resize(Columns);
     }
 }
+
+
+Inventory::Inventory(nlohmann::json SavedInvetory)
+{
+    int Rows = SavedInvetory.size();
+    int Columns = SavedInvetory[0].size();
+
+    this->Items.resize(Rows);
+
+    for(int i = 0; i < this->Items.size(); i++)
+    {
+        this->Items[i].resize(Columns);
+        for(int j = 0; j < this->Items[i].size(); j++)
+        {
+            if(SavedInvetory[i][j] == NULL)
+            {
+                this->Items[i][j] = nullptr;
+            }
+            else
+            {
+                if(SavedInvetory[i][j]["name"] == "Sword")
+                {
+                    this->Items[i][j] = new Weapon(SavedInvetory[i][j]);
+                }
+
+                else if(SavedInvetory[i][j]["name"] == "Shield")
+                {
+                    this->Items[i][j] = new Armor(SavedInvetory[i][j]);
+                }
+
+                else if(SavedInvetory[i][j]["name"] == "Stick")
+                {
+                    this->Items[i][j] = new Material(SavedInvetory[i][j]);
+                }
+            }
+        }
+    }
+}
+
 
 Item* Inventory::GetItem()
 {
@@ -118,7 +159,7 @@ void Inventory::DisplayInventory()
     ItemsNames.resize(this->Items[0].size()*this->Items.size());
     for (int x = 0; x < this->Items.size(); x++)
     {
-        for(int y = 0; y < this->Items[0].size(); y++)
+        for(int y = 0; y < this->Items[x].size(); y++)
         {
             if(this->Items[x][y])
             {
@@ -135,9 +176,9 @@ bool Inventory::UpgradeItem()
     return this->Items[this->getCurrentX()][this->getCurrentY()]->upgrade();
 }
 
-Item** Inventory::GetRow()
+std::vector<Item*>* Inventory::GetRow()
 {
-    return this->Items[CurrentX].data();
+    return &this->Items[CurrentX];
 }
 
 void Inventory::Align()
