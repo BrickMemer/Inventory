@@ -11,7 +11,7 @@ Weapon::Weapon() {
     this->isCanEquip = true;
 }
 
-Weapon::Weapon(nlohmann::json SavedWeapon) : Item(SavedWeapon) {};
+Weapon::Weapon(const nlohmann::json& SavedWeapon) : Item(SavedWeapon) {};
 
 Weapon::Weapon(const std::string &name, int price, int damage) : Item(1, name, common, 1, 100, true)
 {

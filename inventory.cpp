@@ -254,7 +254,7 @@ unsigned int Inventory::getCurrentY() const
     return CurrentY;
 }
 
-void Inventory::SaveInventory()
+void Inventory::SaveInventory(const std::string& FileName)
 {
     nlohmann::json SaveFile = nlohmann::json::array();
 
@@ -275,7 +275,7 @@ void Inventory::SaveInventory()
         SaveFile.push_back(SaveFileRow);
     }
 
-    std::ofstream outputFile("saves/Inventory.json");
+    std::ofstream outputFile("saves/"+FileName+".json");
     outputFile << SaveFile;
     outputFile.close();
 }
@@ -328,7 +328,7 @@ void Inventory::LoadInventory()
 
 Inventory::~Inventory()
 {
-    this->SaveInventory();
+    //this->SaveInventory();
     for(int i = 0; i < this->Items.size(); i++)
     {
         for(int j = 0; j < this->Items[i].size(); j++)

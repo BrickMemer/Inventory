@@ -28,7 +28,7 @@ protected:
     bool isCanEquip;
 public:
     Item();
-    Item(nlohmann::json SavedItem);
+    Item(const nlohmann::json& SavedItem);
     Item(int level, const std::string &name, Rarity rarity, int maxQuantity, int durability, bool isCanEquip);
     virtual ~Item();
 

@@ -9,7 +9,7 @@
 class game
 {
 private:
-    player CurrentPlayer;
+    player* CurrentPlayer;
     Store store;
     bool IsRunning = true;
     void RunInventory();
@@ -18,6 +18,7 @@ private:
     void DisplayMainMenu(const unsigned char& SelectedOption);
 public:
     game();
+    ~game();
 
     void LoadPlayer();
     void RunDungeon();

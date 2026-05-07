@@ -32,7 +32,7 @@ public:
     unsigned int GetRowsMaxSize() const;
     unsigned int GetColumnsMaxSize() const;
 
-    void SaveInventory();
+    void SaveInventory(const std::string& FileName);
     void LoadInventory();
 
     ~Inventory();

@@ -208,5 +208,5 @@ void player::LoadInventory()
 
 player::~player()
 {
-    //this->PlayerInventory.SaveInventory();
+    this->PlayerInventory.SaveInventory("Inventory");
 }

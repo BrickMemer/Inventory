@@ -18,17 +18,18 @@ Item::Item() {
     this->isCanEquip = false;
 }
 
-Item::Item(nlohmann::json SavedItem):
-    name{SavedItem["name"]},
-    rarity{SavedItem["rarity"]},
-    level{SavedItem["level"]},
-    durability{SavedItem["durability"]},
-    maxQuantity{SavedItem["maxQuantity"]},
-    price{SavedItem["price"]},
-    attribute{SavedItem["attribute"]}
-{
-
-}
+Item::Item(const nlohmann::json& SavedItem) :
+    name(SavedItem["name"].get<std::string>()),
+    level(SavedItem["level"]),
+    durability(SavedItem["durability"]),
+    maxQuantity(SavedItem["maxQuantity"]),
+    rarity(SavedItem["rarity"]),
+    isCanEquip(true),
+    attribute(SavedItem["attribute"]),
+    price(SavedItem["price"])
+    {
+        std::cout << SavedItem["name"].get<std::string>() << '\n';
+    }
 
 Item::Item(int level, const std::string &name, Rarity rarity, int maxQuantity, int durability, bool isCanEquip) :
     name(name),
