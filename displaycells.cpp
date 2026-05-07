@@ -17,7 +17,7 @@ void DisplayCells::DisplayFullCells(const int& rows, const std::vector<std::stri
             Padding::PaddingLeft(PaddingLeftAmount);
             for(int column = 0; column < columns; column++)
             {
-                std::cout << DisplayCell::display(level, SelectedColumn==column && SelectedRow==row, ArrayOfTextToDisplay[column+row], CellWidth, CellHeight);
+                std::cout << DisplayCell::display(level, SelectedColumn==column && SelectedRow==row, ArrayOfTextToDisplay[column+row*rows], CellWidth, CellHeight);
             }
             std::cout << '\n';
         }

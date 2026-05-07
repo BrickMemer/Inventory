@@ -12,6 +12,7 @@ enum class EquipmentSlot {
 
 class Equipment {
 public:
+    Equipment(std::vector<Item*>* EquipmentItems);
     Equipment();
 
     bool equip(EquipmentSlot slot, Item* item);
@@ -24,6 +25,7 @@ public:
     void DisplayEquipment() const;
     ~Equipment();
 private:
+    std::vector<Item*>* EquipmentItems;
     std::map<EquipmentSlot, Item*> slots;
 };
 

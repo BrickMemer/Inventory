@@ -47,6 +47,8 @@ void Equipment::DisplayEquipment() const {
     std::cout << bottom << "\n" << std::endl;
 }
 
+Equipment::Equipment(std::vector<Item*>* EquipmentItems) : EquipmentItems(EquipmentItems)
+{
 
 Equipment::Equipment() {}
 
@@ -56,6 +58,15 @@ bool Equipment::equip(EquipmentSlot slot, Item* item) {
     return true;
 }
 
+Item* Equipment::GetItem(int index)
+{
+    /*
+    if (!&this->EquipmentItems[index])
+    {
+        return nullptr;
+    }
+    */
+    return nullptr;
 Item* Equipment::unequip(EquipmentSlot slot) {
     auto it = slots.find(slot);
     if (it != slots.end()) {

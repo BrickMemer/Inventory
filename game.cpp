@@ -1,10 +1,28 @@
 #include "game.hpp"
 #include "displaycells.hpp"
+#include <fstream>
 
 game::game()
 {
-    this->CurrentPlayer.AddItem(new Weapon);
+    std::ifstream SavedFile("saves/Inventory.json");
+    if(SavedFile.is_open())
+    {
+        nlohmann::json Json;
+        SavedFile >> Json;
+        this->CurrentPlayer = new player(Json);
+    }
+    else
+    {
+        this->CurrentPlayer = new player();
+    }
+
+    //this->CurrentPlayer.AddItem(new Weapon);
     ClearTerminal();
+}
+
+game::~game()
+{
+    delete this->CurrentPlayer;
 }
 
 bool game::getIsRunning() const
@@ -93,8 +111,8 @@ void game::RunInventory()
     while(this->IsRunning)
     {
         ClearTerminal();
-        this->CurrentPlayer.DisplayInventory();
-        switch(performActionGame(this->CurrentPlayer))
+        this->CurrentPlayer->DisplayInventory();
+        switch(performActionGame(*this->CurrentPlayer))
         {
         case 0:
             return;
@@ -152,7 +170,7 @@ void game::RunDungeon()
         //If it's player turn
         if(PlayerTurn == true)
         {
-            switch (performActionDungeon(CurrentChoice, this->CurrentPlayer))
+            switch (performActionDungeon(CurrentChoice, *this->CurrentPlayer))
             {
             case 0:
                 IsDungeonRunning = !IsDungeonRunning;
@@ -164,7 +182,7 @@ void game::RunDungeon()
                 case 0:
                 {
                     ClearTerminal();
-                    int TempMoney = GameDungeon.PlayerAttack(this->CurrentPlayer.Attack(), 0);
+                    int TempMoney = GameDungeon.PlayerAttack(this->CurrentPlayer->Attack(), 0);
                     if(TempMoney > 0)
                     {
                         MoneyGained += TempMoney;
@@ -178,7 +196,7 @@ void game::RunDungeon()
                     {
                         do
                         {
-                            std::cout << "You did: " << this->CurrentPlayer.Attack() << " damage" << '\n'
+                            std::cout << "You did: " << this->CurrentPlayer->Attack() << " damage" << '\n'
                                       << "Current enemy health: " << GameDungeon.GetEnemy(0).getHp();
                         }while(!getSingleChar());
                         PlayerTurn = !PlayerTurn;
@@ -201,21 +219,21 @@ void game::RunDungeon()
         }
 
         //else If player health is lower or equal to zero, end run
-        else if(CurrentPlayer.getHealth() <= 0)
+        else if(CurrentPlayer->getHealth() <= 0)
         {
             IsDungeonRunning = !IsDungeonRunning;
-            this->CurrentPlayer.Death();
+            this->CurrentPlayer->Death();
         }
 
         //else if it's not player move, random monster will do his.
         else if(PlayerTurn == false)
         {
-            GameDungeon.EnemyAttack(this->CurrentPlayer);
+            GameDungeon.EnemyAttack(*this->CurrentPlayer);
             ClearTerminal();
             do
             {
                 std::cout << "Enemy attacked you for: " << GameDungeon.GetEnemy(0).getDamage() << " damage" << '\n'
-                          << "you currenty have: " << this->CurrentPlayer.getHealth() << " health";
+                          << "you currenty have: " << this->CurrentPlayer->getHealth() << " health";
             }while(!getSingleChar());
             PlayerTurn = !PlayerTurn;
         }
@@ -231,14 +249,14 @@ void game::RunDungeon()
     {
         std::cout << "You gained: " << MoneyGained << " money";
     } while (!getSingleChar());
-    CurrentPlayer.Revive();
-    CurrentPlayer.AddMoney(MoneyGained);
+    CurrentPlayer->Revive();
+    CurrentPlayer->AddMoney(MoneyGained);
     return;
 }
 
 void game::LoadPlayer()
 {
-    CurrentPlayer.LoadInventory();
+    CurrentPlayer->LoadInventory();
 }
 
 void game::RunStore()
@@ -250,10 +268,10 @@ void game::RunStore()
     while (IsStoreRunning)
     {
         this->store.DisplayStore();
-        switch (performActionStore(this->CurrentPlayer, this->store))
+        switch (performActionStore(*this->CurrentPlayer, this->store))
         {
         case 0:
-            this->CurrentPlayer.ResetCorrdinates();
+            this->CurrentPlayer->ResetCorrdinates();
             ClearTerminal();
             return;
         default:

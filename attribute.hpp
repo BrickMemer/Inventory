@@ -8,6 +8,7 @@ private:
     int mana = 0, health = 0, energy = 0, defense = 0, damage = 0;
 public:
     Attribute();
+    Attribute(nlohmann::json SavedAttribute);
     Attribute(int mana, int health, int energy , int defense, int damage);
 
     //Getters and Setters

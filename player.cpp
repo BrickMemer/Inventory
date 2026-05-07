@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include <fstream>
 bool player::equipItem(EquipmentSlot slot, Item* item) {
     if (!item || !item->getIsCanEquip()) return false;
     PlayerEquipment.equip(slot, item);
@@ -33,6 +34,9 @@ player::player() : PlayerInventory(5,5), PlayerEquipment()
     // this->PlayerEquipment.equip(EquipmentSlot::Weapon, defaultSword);
     // this->recalculateAttributes();
 }
+
+player::player(const nlohmann::json& SavedJson) : PlayerInventory(SavedJson), PlayerEquipment(this->PlayerInventory.GetRow())
+{}
 
 unsigned int player::getMoney() const
 {
@@ -101,6 +105,17 @@ int player::getDefense() const
     return defense;
 }
 
+void player::setDefense()
+{
+    this->defense = 0;
+    for(int x = 0; x < this->PlayerInventory.GetRowsMaxSize(); x++)
+    {
+        if(this->PlayerEquipment.GetItem(x) != nullptr)
+        {
+            this->defense += this->PlayerEquipment.GetItem(x)->getAttribute().getDefense();
+        }
+    }
+}
 
 
 void player::DisplayInventory()
@@ -204,5 +219,5 @@ void player::LoadInventory()
 
 player::~player()
 {
-    //this->PlayerInventory.SaveInventory();
+    this->PlayerInventory.SaveInventory("Inventory");
 }
