@@ -18,7 +18,7 @@ public:
     player();
     player(const nlohmann::json& SavedJson);
 
-    void DisplayInventory();
+    void DisplayInventory(); // Now calls Inventory::DisplayInventory with PlayerEquipment
 
     bool AddItem(Item* item);
     void AlignItems();
@@ -39,7 +39,11 @@ public:
     int getHealth() const;
     void setHealth(int newHealth);
     int getDefense() const;
-    void setDefense();
+
+    // Equipment system methods
+    bool equipItem(EquipmentSlot slot, Item* item);
+    Item* unequipItem(EquipmentSlot slot);
+    void recalculateAttributes();
     int Attack() const;
     void setDamage();
     void RecalculateStats();
