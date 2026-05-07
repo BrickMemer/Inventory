@@ -1,4 +1,5 @@
 #include "equipment.hpp"
+#include <fstream>
 // Modern and beautiful equipment display
 void Equipment::DisplayEquipment() const {
     const char* top =    "+---------------------------------------+";
@@ -44,6 +45,25 @@ void Equipment::DisplayEquipment() const {
         if (i != (int)EquipmentSlot::Armor) std::cout << sep << std::endl;
     }
     std::cout << bottom << "\n" << std::endl;
+}
+
+void Equipment::SaveEquipment(const std::string& FileName)
+{
+    nlohmann::json SaveFile = nlohmann::json::array();
+
+    for(const auto& slot : this->slots)
+    {
+        SaveFile.push_back({slot.first, slot.second->to_json()});
+    }
+
+    std::ofstream outputFile("saves/"+FileName+".json");
+    outputFile << SaveFile;
+    outputFile.close();
+}
+
+Equipment::~Equipment()
+{
+    this->SaveEquipment("Equipment");
 }
 
 
