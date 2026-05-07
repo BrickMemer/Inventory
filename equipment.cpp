@@ -1,5 +1,4 @@
 #include "equipment.hpp"
-#include <fstream>
 // Modern and beautiful equipment display
 void Equipment::DisplayEquipment() const {
     const char* top =    "+---------------------------------------+";
@@ -14,9 +13,9 @@ void Equipment::DisplayEquipment() const {
         EquipmentSlot slot = static_cast<EquipmentSlot>(i);
         std::string slotName;
         switch (slot) {
-            case EquipmentSlot::Weapon: slotName = "Weapon"; break;
-            case EquipmentSlot::Armor: slotName = "Armor"; break;
-            default: slotName = "Unknown"; break;
+        case EquipmentSlot::Weapon: slotName = "Weapon"; break;
+        case EquipmentSlot::Armor: slotName = "Armor"; break;
+        default: slotName = "Unknown"; break;
         }
         std::cout << "|  [" << slotName << "] ";
         auto it = slots.find(slot);
@@ -47,8 +46,6 @@ void Equipment::DisplayEquipment() const {
     std::cout << bottom << "\n" << std::endl;
 }
 
-Equipment::Equipment(std::vector<Item*>* EquipmentItems) : EquipmentItems(EquipmentItems)
-{
 
 Equipment::Equipment() {}
 
@@ -58,15 +55,6 @@ bool Equipment::equip(EquipmentSlot slot, Item* item) {
     return true;
 }
 
-Item* Equipment::GetItem(int index)
-{
-    /*
-    if (!&this->EquipmentItems[index])
-    {
-        return nullptr;
-    }
-    */
-    return nullptr;
 Item* Equipment::unequip(EquipmentSlot slot) {
     auto it = slots.find(slot);
     if (it != slots.end()) {
@@ -84,24 +72,4 @@ Item* Equipment::get(EquipmentSlot slot) const {
 
 std::map<EquipmentSlot, Item*> Equipment::getAll() const {
     return slots;
-}
-
-Equipment::~Equipment()
-{
-    nlohmann::json EquipmentSave = nlohmann::json::array();
-    for (auto const& x : this->slots)
-    {
-        if(x.second)
-        {
-            EquipmentSave.push_back(std::make_pair(x.first, x.second->to_json()));
-        }
-        else
-        {
-            EquipmentSave.push_back(std::make_pair(x.first, NULL));
-        }
-    }
-
-    std::ofstream outputFile("saves/Equipment.json");
-    outputFile << EquipmentSave;
-    outputFile.close();
 }

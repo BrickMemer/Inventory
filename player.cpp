@@ -35,7 +35,7 @@ player::player() : PlayerInventory(5,5), PlayerEquipment()
     // this->recalculateAttributes();
 }
 
-player::player(const nlohmann::json& SavedJson) : PlayerInventory(SavedJson), PlayerEquipment(this->PlayerInventory.GetRow())
+player::player(const nlohmann::json& SavedJson) : PlayerInventory(SavedJson), PlayerEquipment()
 {}
 
 unsigned int player::getMoney() const
@@ -103,18 +103,6 @@ void player::Revive()
 int player::getDefense() const
 {
     return defense;
-}
-
-void player::setDefense()
-{
-    this->defense = 0;
-    for(int x = 0; x < this->PlayerInventory.GetRowsMaxSize(); x++)
-    {
-        if(this->PlayerEquipment.GetItem(x) != nullptr)
-        {
-            this->defense += this->PlayerEquipment.GetItem(x)->getAttribute().getDefense();
-        }
-    }
 }
 
 
