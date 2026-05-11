@@ -15,37 +15,30 @@ Item::Item() {
     this->durability = 100;
     this->maxQuantity = 64;
     this->price = 0;
+    this->isCanEquip = false;
 }
 
-Item::Item(const std::string &name, int maxQuantity, int price) :
-    name(name),
-    level(1),
-    durability(100),
-    maxQuantity(maxQuantity)
-{
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(1,1000);
-    int randNum = dist6(rng);
-    if(randNum < COMMON_PROCENT){
-        rarity = common;
-    }
-    if(randNum >= COMMON_PROCENT && randNum < UNCMMON_PROCENT){
-        rarity = uncommon;
-    }
-    if(randNum >= UNCMMON_PROCENT && randNum < RARE_PROCENT){
-        rarity = rare;
-    }
-    if(randNum >= RARE_PROCENT && randNum < EPIC_PROCENT){
-        rarity = epic;
-    }
-    if(randNum >= EPIC_PROCENT && randNum < LEGENDARY_PROCENT){
-        rarity = legendary;
-    }
-    if(randNum >= LEGENDARY_PROCENT && randNum < MYTHIE_PROCENT){
-        rarity = mythie;
+Item::Item(const nlohmann::json& SavedItem) :
+    name(SavedItem["name"].get<std::string>()),
+    level(SavedItem["level"]),
+    durability(SavedItem["durability"]),
+    maxQuantity(SavedItem["maxQuantity"]),
+    rarity(SavedItem["rarity"]),
+    isCanEquip(true),
+    attribute(SavedItem["attribute"]),
+    price(SavedItem["price"])
+    {
+        std::cout << SavedItem["name"].get<std::string>() << '\n';
     }
 
+Item::Item(int level, const std::string &name, Rarity rarity, int maxQuantity, int durability, bool isCanEquip) :
+    name(name),
+    level(level),
+    durability(durability),
+    maxQuantity(maxQuantity),
+    rarity(rarity),
+    isCanEquip(isCanEquip)
+{
     this->price = this->CalculatePrice(*this);
 }
 
@@ -161,4 +154,51 @@ void Item::getInfo()
 unsigned int Item::CalculatePrice(const Item& ItemToCalculate)
 {
     return ItemToCalculate.getDurability() + ItemToCalculate.getAttribute().getDamage() + ItemToCalculate.getAttribute().getDefense() + ItemToCalculate.getAttribute().getEnergy() + ItemToCalculate.getAttribute().getHealth() + ItemToCalculate.getAttribute().getMana() + (ItemToCalculate.getLevel() * 10);
+}
+
+bool Item::getIsCanEquip()
+{
+    return this->isCanEquip;
+}
+
+bool Item::upgrade()
+{
+    if(level + 1 > 6)
+    {
+        return false;
+    }
+    this->level ++;
+    this->durability += level * 100;
+    switch (level)
+    {
+    case 0:
+        this->rarity = common;
+        break;
+    case 1:
+        this->rarity = uncommon;
+        break;
+    case 2:
+        this->rarity = rare;
+        break;
+    case 3:
+        this->rarity = epic;
+        break;
+    case 4:
+        this->rarity = legendary;
+        break;
+    case 5:
+        this->rarity = mythie;
+        break;
+    case 6:
+        this->rarity = unique;
+        break;
+    default:
+        break;
+    }
+    return true;
+}
+
+nlohmann::json Item::to_json() const
+{
+    return nlohmann::json({{"name", this->name}, {"rarity", this->rarity}, {"level", this->level}, {"durability", this->durability}, {"attribute", this->attribute.to_json()}, {"maxQuantity", this->maxQuantity}, {"price", this->price}});
 }

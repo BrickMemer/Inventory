@@ -2,6 +2,7 @@
 #define ITEM_HPP
 
 #include <string>
+#include <nlohmann/json.hpp>
 #include "attribute.hpp"
 enum Rarity{
     common,
@@ -23,9 +24,12 @@ protected:
     Attribute attribute;
     int maxQuantity;
     int price;
+
+    bool isCanEquip;
 public:
     Item();
-    Item(const std::string &name, int maxQuantity, int price);
+    Item(const nlohmann::json& SavedItem);
+    Item(int level, const std::string &name, Rarity rarity, int maxQuantity, int durability, bool isCanEquip);
     virtual ~Item();
 
     //Getters and Setters
@@ -44,6 +48,11 @@ public:
     void setPrice(int newPrice);
     Attribute getAttribute() const;
     static unsigned int CalculatePrice(const Item& ItemToCalculate);
+    nlohmann::json to_json() const;
+    bool getIsCanEquip();
+
+
+    bool virtual upgrade();
 
     void virtual use() = 0;
     void getInfo();

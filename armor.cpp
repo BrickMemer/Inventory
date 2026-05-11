@@ -1,0 +1,52 @@
+#include "armor.hpp"
+
+Armor::Armor() {
+    this->name = "Shield";
+    this->maxQuantity = 1;
+    this->price = 10;
+    this->rarity = common;
+    this->durability = 100;
+    this->isCanEquip = true;
+    this->attribute.setDefense(5);
+}
+
+Armor::Armor(const nlohmann::json& SavedArmor) : Item(SavedArmor)
+{
+
+}
+
+Armor::Armor(int level, const std::string &name, Rarity rarity, int durability, int defense): Item(level, name, rarity, 1, durability, true)
+{
+    this->attribute.setDefense(defense);
+}
+
+void Armor::SetDefense(int NewDefense)
+{
+    this->attribute.setDefense(NewDefense);
+}
+
+void Armor::use()
+{
+    durability-=10;
+}
+
+int Armor::GetDefense()
+{
+    return this->attribute.getDefense();
+}
+
+bool Armor::upgrade()
+{
+    bool Result = Item::upgrade();
+    if(Result == false)
+    {
+        return false;
+    }
+    else
+    {
+        //std::cout << this->GetDefense() << '\n';
+        this->SetDefense((int)this->GetDefense() + 10);
+        //std::cout << this->GetDefense() << '\n';
+        return true;
+    }
+}

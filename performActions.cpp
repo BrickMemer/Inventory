@@ -1,4 +1,4 @@
-#include "singleCharacter.hpp"
+#include "performActions.hpp"
 
 char getSingleChar() {
 #ifdef _WIN32
@@ -16,6 +16,58 @@ char getSingleChar() {
 #elif unix
     return getchar();
 #endif
+}
+
+
+int performActionDungeon(unsigned char& SelectedOption, player& CurrentPlayer)
+{
+    const char input = getSingleChar();
+
+    switch(input)
+    {
+    case 'a':
+        if(SelectedOption > 0)
+        {
+            SelectedOption--;
+        }
+        break;
+    case 'd':
+        SelectedOption++;
+        break;
+    case 'z':
+        return 2;
+        break;
+    case 'q':
+        return 0;
+    }
+    ClearTerminal();
+    return 1;
+}
+
+int performActionMainMenu(unsigned char& SelectedOption)
+{
+    const char input = getSingleChar();
+
+    switch(input)
+    {
+    case 'w':
+        if(SelectedOption > 0)
+        {
+            SelectedOption--;
+        }
+        break;
+    case 's':
+        SelectedOption++;
+        break;
+    case 'q':
+        return 0;
+        break;
+    case 'z':
+        return 2;
+        break;
+    }
+    std::system(CLEAR);
+    return 1;
 }
 
 int performActionGame(player& CurrentPlayer)
@@ -44,8 +96,8 @@ int performActionGame(player& CurrentPlayer)
                       /*
                       << "Press 'c' to clear inventory" << '\n'
                         */
-                      << "Press 'n' to open store" << '\n'
                       << "Press 'S' to sell item" << '\n'
+                      << "Press 'u to upgrade an item" << '\n'
                       << '\n'
                       << "Press any key to continue ...";
         }while(!getchar());
@@ -67,14 +119,61 @@ int performActionGame(player& CurrentPlayer)
     case 'w':
         CurrentPlayer.MoveX(true);
         break;
+    case 'u':
+    {
+        bool HasChoosen = false;
+        do
+        {
+            std::system(CLEAR);
+            std::cout << "Are you sure you want to upgrade this item, it will cost you 150 money" << '\n'
+                      << "Press y, or n to continue";
+            switch(getchar())
+            {
+            case('y'):
+                HasChoosen = true;
+                break;
+            case('n'):
+                HasChoosen = true;
+                ClearTerminal();
+                return 1;
+                break;
+            }
+        }while(!HasChoosen);
+        do
+        {
+            std::system(CLEAR);
+            if(CurrentPlayer.UpgradeItem() == false)
+            {
+                std::cout << "You don't have enough money, or the item is already upgraded to it's max level" << '\n'
+                          << "Press any key to continue ...";
+            }
+            else
+            {
+                std::cout << "You have upgraded your selected item" << '\n'
+                          << "Press any key to continue ...";
+            }
+        }while(!getchar());
+    }
     case 'd':
         CurrentPlayer.MoveY(false);
         break;
     case 's':
         CurrentPlayer.MoveX(false);
         break;
-    case 'n':
-        return 2;
+    case 'z':
+        ClearTerminal();
+        do
+        {
+            if(CurrentPlayer.MoveToEquipment())
+            {
+                std::cout << "you have moved item into equipment";
+            }
+            else
+            {
+                std::cout << "you don't have enough space in equipment to move this item";
+            }
+        }while (!getSingleChar());
+        break;
     case 'm':
         do
         {

@@ -17,6 +17,16 @@ Attribute::Attribute(int mana, int health, int energy, int defense, int damage):
 
 }
 
+Attribute::Attribute(nlohmann::json SavedAttribute):
+    mana{SavedAttribute["mana"]},
+    health{SavedAttribute["health"]},
+    energy{SavedAttribute["energy"]},
+    defense{SavedAttribute["defense"]},
+    damage{SavedAttribute["damage"]}
+{
+
+}
+
 
 int Attribute::getMana() const
 {
@@ -66,4 +76,9 @@ int Attribute::getDamage() const
 void Attribute::setDamage(int newDamage)
 {
     damage = newDamage;
+}
+
+nlohmann::json Attribute::to_json() const
+{
+    return nlohmann::json({{"mana", this->mana}, {"health", this->health}, {"energy", this->energy}, {"defense", this->defense}, {"damage", this->damage}});
 }

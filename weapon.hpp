@@ -6,13 +6,17 @@ class Weapon: public Item
 {
 public:
     Weapon();
-    Weapon(const std::string &name, int maxQuantity, int price, int damage);
+    Weapon(const nlohmann::json& SavedWeapon);
+    Weapon(const std::string &name, int price, int damage);
+    Weapon(int level, const std::string &name, Rarity rarity, int durability, int damage);
 
     //Getters and Setters
     int getDamage() const;
     void setDamage(int newDamage);
+    bool UpgradeItem();
 
     void use() override;
+    bool upgrade() override;
 };
 
 #endif // WEAPON_H

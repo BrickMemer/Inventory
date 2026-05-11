@@ -2,20 +2,27 @@
 #define GAME_HPP
 
 #include "player.hpp"
-#include "singleCharacter.hpp"
 #include "store.hpp"
+#include "performActions.hpp"
+#include "dungeon.hpp"
 
 class game
 {
 private:
-    player& CurrentPlayer;
+    player* CurrentPlayer;
     Store store;
     bool IsRunning = true;
-public:
-    game(player &CurrentPlayer);
-
-    void RunGame();
+    void RunInventory();
     void RunStore();
+    int RunMainMenu();
+    void DisplayMainMenu(const unsigned char& SelectedOption);
+public:
+    game();
+    ~game();
+
+    void LoadPlayer();
+    void RunDungeon();
+    void RunGame();
     bool getIsRunning() const;
     void StopGame();
 };
