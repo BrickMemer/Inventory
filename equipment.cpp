@@ -1,4 +1,7 @@
 #include "equipment.hpp"
+#include "weapon.hpp"
+#include "material.hpp"
+#include "armor.hpp"
 #include <fstream>
 // Modern and beautiful equipment display
 void Equipment::DisplayEquipment() const {
@@ -61,6 +64,47 @@ void Equipment::SaveEquipment(const std::string& FileName)
     outputFile.close();
 }
 
+void Equipment::LoadEquipment(const nlohmann::json &EquipmentJson)
+{
+    for(auto it = EquipmentJson.begin(); it != EquipmentJson.end(); ++it)
+    {
+        Item* EquipmentItem;
+        const nlohmann::json& pair = *it;           // element is [key, value]
+        int key = pair.at(0).get<int>();            // numeric key
+        const nlohmann::json& val = pair.at(1);     // object value
+        std::string name = val.at("name").get<std::string>();
+
+        if(name == "Sword")
+        {
+            EquipmentItem = new Weapon(val);
+        }
+
+        else if(name == "Shield")
+        {
+            EquipmentItem = new Armor(val);
+        }
+
+        else if(name == "Stick")
+        {
+            EquipmentItem = new Material(val);
+        }
+        EquipmentSlot KeyName;
+        switch(key)
+        {
+        case 0:
+            KeyName = EquipmentSlot::Weapon;
+            break;
+        case 1:
+            KeyName = EquipmentSlot::Armor;
+            break;
+        default:
+            continue;
+        };
+
+        this->slots.insert({KeyName, EquipmentItem});
+    }
+}
+
 Equipment::~Equipment()
 {
     this->SaveEquipment("Equipment");
@@ -68,6 +112,11 @@ Equipment::~Equipment()
 
 
 Equipment::Equipment() {}
+
+Equipment::Equipment(const nlohmann::json& EquipmentJson)
+{
+    this->LoadEquipment(EquipmentJson);
+}
 
 bool Equipment::equip(EquipmentSlot slot, Item* item) {
     if (!item || !item->getIsCanEquip()) return false;

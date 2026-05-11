@@ -13,6 +13,7 @@ enum class EquipmentSlot {
 class Equipment {
 public:
     Equipment();
+    Equipment(const nlohmann::json& EquipmentJson);
 
     bool equip(EquipmentSlot slot, Item* item);
     Item* unequip(EquipmentSlot slot);

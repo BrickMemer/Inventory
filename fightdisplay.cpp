@@ -23,5 +23,5 @@ void FightDisplay::DislplayFight(const Floor& CurrentFloor, const int& CurrentCh
     //Draw is to the screen
     battleground.DrawBattleGround();
     //Display all the actions avalible
-    DisplayCells::DisplayFullCells(1, std::vector<std::string>{"fight", "leave", "act", "items"}, CurrentChoice, 0, 24, 24, 6);
+    DisplayCells::DisplayFullCells(1, std::vector<std::string>{"fight", "leave"}, CurrentChoice, 0, 55, 24, 6);
 }

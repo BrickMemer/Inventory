@@ -35,7 +35,7 @@ player::player() : PlayerInventory(5,5), PlayerEquipment()
     // this->recalculateAttributes();
 }
 
-player::player(const nlohmann::json& SavedJson) : PlayerInventory(SavedJson), PlayerEquipment()
+player::player(const nlohmann::json& SavedJsonInvetory, const nlohmann::json& SavedJsonEquipment) : PlayerInventory(SavedJsonInvetory), PlayerEquipment(SavedJsonEquipment)
 {}
 
 unsigned int player::getMoney() const

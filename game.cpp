@@ -4,12 +4,16 @@
 
 game::game()
 {
-    std::ifstream SavedFile("saves/Inventory.json");
-    if(SavedFile.is_open())
+    std::ifstream SavedInventoryFile("saves/Inventory.json");
+    std::ifstream SavedEquipmentFile("saves/Equipment.json");
+    if(SavedInventoryFile.is_open() && SavedEquipmentFile.is_open())
     {
-        nlohmann::json Json;
-        SavedFile >> Json;
-        this->CurrentPlayer = new player(Json);
+        nlohmann::json InventoryJson;
+        nlohmann::json EquipmentJson;
+        SavedInventoryFile >> InventoryJson;
+        SavedEquipmentFile >> EquipmentJson;
+
+        this->CurrentPlayer = new player(InventoryJson, EquipmentJson);
     }
     else
     {

@@ -16,7 +16,7 @@ private:
     Equipment PlayerEquipment;
 public:
     player();
-    player(const nlohmann::json& SavedJson);
+    player(const nlohmann::json& SavedJsonInvetory, const nlohmann::json& SavedJsonEquipment);
 
     void DisplayInventory(); // Now calls Inventory::DisplayInventory with PlayerEquipment
 
